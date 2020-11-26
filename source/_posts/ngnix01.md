@@ -9,7 +9,7 @@ tags: nginx
 keywords: nginx
 ---
 
-
+## 简介及安装
 
 ### 一、nginx概述
 
@@ -26,16 +26,16 @@ keywords: nginx
 
 2. 负载均衡
 
-   ​	nginx服务器收到请求后，分发到不同的服务器上去处理，提高系统负载的过程，也就是我们所说的负载均衡。
+   nginx服务器收到请求后，分发到不同的服务器上去处理，提高系统负载的过程，也就是我们所说的负载均衡。
 
-3. 动静分离
+3. Web缓存
 
-   ​	nginx根据请求资源类型转发到职责不同的服务器上，静态资源请求转发到静态资源服务器，动态资源请求则转发动态资源服务器上。
+   Nginx可以对不同的文件做不同的缓存处理，配置灵活，并且支持FastCGI_Cache，主要用于对FastCGI的动态程序进行缓存。配合着第三方的ngx_cache_purge，对制定的URL缓存内容可以的进行增删管理
 
 
 ### 三、nginx安装
 
-#### 设置存储库YUM安装
+#### YUM安装
 
 1. 安装先决条件：
 
@@ -79,7 +79,22 @@ keywords: nginx
 
    `573B FD6B 3D8F BC64 1079 A6AB ABF5 BD82 7BD9 BF62`
 
-6. YUM安装默认位置：
+6. 命令手册 例：/usr/bin/nginx -v 查看版本情况
+
+> ```shell
+> -?,-h         : this help
+> -v            : show version and exit
+> -V            : show version and configure options then exit
+> -t            : test configuration and exit
+> -T            : test configuration, dump it and exit
+> -q            : suppress non-error messages during configuration testing
+> -s signal     : send signal to a master process: stop, quit, reopen, reload
+> -p prefix     : set prefix path (default: NONE)
+> -c filename   : set configuration file (default: conf/nginx.conf)
+> -g directives : set global directives out of configuration file
+> ```
+
+7. YUM安装默认位置：
 
 > ```shell
 > /usr/sbin/nginx   //执行程序位置
@@ -93,15 +108,20 @@ keywords: nginx
 
 1. 安装所需依赖
 
+   - gcc是编程语言编译器，支持c、c++等，而nginx是由C语言编写而成，所以手动安装的编译过程要依赖gcc编译器。
+- pcre库是一组函数，它们使用与 Perl 5 相同的语法和语义实现正则表达式模式匹配，nginx的请求分发需要用到正则匹配。 其中devel代表供开发使用，包括头文件链接库等， 如果安装基于pcre开发的程序，只需要安装pcre包就行了，但编译使用了PCRE库的源代码，则需要pcre-devel。
+   - zlib 是通用的压缩库，nginx的压缩模块需要用到，主要对网络传输的资源进行压缩以提高传输效率。
+- nginx涉及到很多加密、解密的功能。如https中需要用到加密解密，所以编译的时候需要使用openssl
+
 > ```shell
-> yum install -y gcc、pcre-devel、zlib-devel、openssl-devel  //解决依赖
+> yum install -y gcc、pcre-devel、zlib-devel、openssl-devel  //解决依赖问题
 > ```
 
 2. 下载并解压nginx程序包
 
 > ```shell
 > wget https://nginx.org/download/nginx-1.18.0.tar.gz
-> tar zxvf nginx-1.11.6.tar.gz
+> tar zxvf nginx-1.18.0.tar.gz
 > ```
 
 3. 进入解压文件夹构建程序
@@ -113,10 +133,10 @@ keywords: nginx
    如不指定 则./configure --help里面有个path，就是默认安装路径
    关于nginx的configure更多选项设置 详见 [Configure]
 
-   [Configure]: http://nginx.org/en/docs/configure.html	"nginx官方指导"
+   [Configure]: http://nginx.org/en/docs/configure.html
 
 > ```shell
-> cd nginx-1.11.6
+> cd nginx-1.18.0
 > ./configure ./configure --prefix=/usr/local/nginx    
 > ```
 
@@ -144,7 +164,7 @@ keywords: nginx
 > touch /usr/lib/systemd/system/nginx.service
 > ```
 
-编辑文件内容为：
+​	编辑文件内容为：
 
 > ```shell
 > [Unit]
@@ -165,7 +185,7 @@ keywords: nginx
 > WantedBy=multi-user.target
 > ```
 
-常用命令
+​	常用命令
 
 > ```shell
 > systemctl start nginx
