@@ -1,6 +1,6 @@
 ---
 title: nginx的web服务
-date: 2020-11-27 23:17:22
+date: 2020-11-27 20:18:22
 author: noslime
 categories: nginx
 tags: nginx
