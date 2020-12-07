@@ -1,5 +1,5 @@
 ---
-title: nginx探索之旅二
+title: nginx配置文件
 date: 2020-11-24 21:23:22
 author: noslime
 categories: nginx
@@ -11,7 +11,7 @@ keywords: nginx
 
 nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下
 
-<img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/nginx.conf.png" alt="n" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/nginx.conf.png" alt="nginx.conf.png" style="zoom:80%;" />
 
 ### 全局块
 
@@ -83,7 +83,7 @@ events {
 
 http全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。
 
-以下给出一些参数设置，其中一些设置属于其他模块，但经常用到，文中为了方便描述，全写在了一起。其中很多参数可以设置在http、server、location处，实际应根据具体业务设置位置。 一般来说，设置的位置越在内层，优先级越高。 详见nginx [官网文档]
+以下给出一些参数设置，为了方便描述，全写在了一起。其中很多参数可以设置在http、server、location处，实际应根据具体业务设置位置。 一般来说，设置的位置越在内层，优先级越高。 详见nginx [官方文档]
 
 [官方文档]: http://nginx.org/en/docs/http/ngx_http_core_module.html
 
@@ -222,6 +222,21 @@ nginx会在没有完全读完后端响应就开始向客户端传送数据，所
 > ​	#$body_bytes_sent ：记录发送给客户端文件主体内容大小；
 > ​	#$http_referer：用来记录从那个页面链接访问过来的；
 > ​	#$http_user_agent：记录客户浏览器的相关信息；
+>
+> 如下生成一种json格式的日志
+>
+> ```
+> log_format main_json '{"@timestamp":"$time_local",'
+> '"client_ip": "$remote_addr",'
+> '"request": "$request",'
+> '"status": "$status",'
+> '"bytes": "$body_bytes_sent",'
+> '"x_forwarded": "$http_x_forwarded_for",'
+> '"referer": "$http_referer"'
+> '}';
+> access_log logs/access_json.log main_json;
+> 
+> ```
 
 2. 临时文件存储位置 	
 
@@ -271,7 +286,7 @@ http {
         server srv3.example.com;
     }
     # 2、最小连接负载均衡
-    # nginx将尝试不使用过多的请求使繁忙的应用服务器过载，而是将新请求分发到不太繁忙的服务器
+    # nginx将尝试不使用存在过多的请求的应用服务器，而是将新请求分发到不太繁忙的服务器
     upstream myapp1 {
         least_conn;
         server srv1.example.com;
@@ -384,7 +399,6 @@ http {
          location ~*.(gif|jpg|jpeg)$ { 
 	      #所有静态文件直接读取硬盘
               root pic ;
-	      
 	      #expires定义用户浏览器缓存的时间为3天，如果静态页面不常更新，可以设置更长，
 	      #这样可以节省带宽和缓解服务器的压力
               expires 3d; #缓存3天
@@ -395,7 +409,6 @@ http {
         location = /50x.html {
             root   html;
         }
- 
 }
 ```
 

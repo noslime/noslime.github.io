@@ -149,7 +149,7 @@ socialLink:
 toc:
   enable: true
   heading: h2, h3, h4
-  collapseDepth: 0 # 目录默认展开层级
+  collapseDepth: 1 # 目录默认展开层级
   showToggleBtn: true # 是否显示切换TOC目录展开收缩的按钮
 
 # 代码块相关
@@ -473,9 +473,6 @@ featureImages:
 - /medias/featureimages/18.jpg
 - /medias/featureimages/19.jpg
 - /medias/featureimages/20.jpg
-- /medias/featureimages/21.jpg
-- /medias/featureimages/22.jpg
-- /medias/featureimages/23.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则

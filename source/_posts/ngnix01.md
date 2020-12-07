@@ -1,5 +1,5 @@
 ---
-title: nginx探索之旅一
+title: nginx简介及安装
 date: 2020-11-23 14:42:22
 author: noslime
 top: true
@@ -9,7 +9,7 @@ tags: nginx
 keywords: nginx
 ---
 
-## 简介及安装
+nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装。
 
 ### 一、nginx概述
 
@@ -21,7 +21,7 @@ keywords: nginx
 
 1. 反向代理
 
-   -  正向代理：局域网中的客户端(如浏览器)访问Internet，通过配置代理访问，这种代理就是正向代理。正向代理目标服务器是可见的。
+   -  正向代理：局域网中的客户端(如浏览器)访问Internet，通过配置代理访问，这种代理用户访问网站代理就是正向代理。
    -  反向代理：向代理服务器发送请求，反向代理转发到实际服务器，客户端不需要做任何配置。目标服务器对客户端是透明的。
 
 2. 负载均衡
@@ -109,18 +109,21 @@ keywords: nginx
 1. 安装所需依赖
 
    - gcc是编程语言编译器，支持c、c++等，而nginx是由C语言编写而成，所以手动安装的编译过程要依赖gcc编译器。
-- pcre库是一组函数，它们使用与 Perl 5 相同的语法和语义实现正则表达式模式匹配，nginx的请求分发需要用到正则匹配。 其中devel代表供开发使用，包括头文件链接库等， 如果安装基于pcre开发的程序，只需要安装pcre包就行了，但编译使用了PCRE库的源代码，则需要pcre-devel。
+
+   - pcre库是一组函数，它们使用与 Perl 5 相同的语法和语义实现正则表达式模式匹配，nginx的请求分发需要用到正则匹配。 其中devel代表供开发使用，包括头文件链接库等， 如果安装基于pcre开发的程序，只需要安装pcre包就行了，但编译使用了PCRE库的源代码，则需要pcre-devel。
+
    - zlib 是通用的压缩库，nginx的压缩模块需要用到，主要对网络传输的资源进行压缩以提高传输效率。
-- nginx涉及到很多加密、解密的功能。如https中需要用到加密解密，所以编译的时候需要使用openssl
+
+   - nginx涉及到很多加密、解密的功能。如https中需要用到加密解密，所以编译的时候需要使用openssl
 
 > ```shell
-> yum install -y gcc、pcre-devel、zlib-devel、openssl-devel  //解决依赖问题
+> yum install -y gcc pcre-devel zlib-devel openssl-devel  //解决依赖问题
 > ```
 
 2. 下载并解压nginx程序包
 
 > ```shell
-> wget https://nginx.org/download/nginx-1.18.0.tar.gz
+> wget -P /usr/src https://nginx.org/download/nginx-1.18.0.tar.gz
 > tar zxvf nginx-1.18.0.tar.gz
 > ```
 
@@ -137,7 +140,7 @@ keywords: nginx
 
 > ```shell
 > cd nginx-1.18.0
-> ./configure ./configure --prefix=/usr/local/nginx    
+> ./configure  --prefix=/usr/local/nginx    
 > ```
 
 4. 编译与安装
@@ -228,3 +231,38 @@ keywords: nginx
 > iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可以显示规则和相对应的编号
 > ```
 
+### 五、赋予用户权限
+
+大多情况下并不建议使用root用户去操作数据，因此在使用普通用户时可能会遇到一些权限问题，以下步骤帮助用户获取nginx相关的操作权限。
+
+1. 创建用户组
+
+   ```shell
+   sudo groupadd nginx
+   ```
+
+2. 将当前用户假如nginx用户组
+
+   ```shell
+   sudo usermod -g nginx username
+   ```
+
+3. 将nginx的权限给nginx用户组的用户
+
+   ```shell
+   sudo chown -R username:nginx /usr/local/nginx
+   ```
+
+4. 如有必要，给nginx用户组写权限
+
+   ```shell
+   sudo chmod g+w -R /usr/local/nginx
+   ```
+
+5. 如有必要，授予nginx目录segid权限，做用户组控制
+
+   ```shell
+   sudo chmod g+s -R /usr/local/nginx
+   ```
+
+   
