@@ -148,8 +148,8 @@ socialLink:
 # table of content
 toc:
   enable: true
-  heading: h2, h3, h4
-  collapseDepth: 1 # 目录默认展开层级
+  heading: h2, h3, h4, h5
+  collapseDepth: 4 # 目录默认展开层级
   showToggleBtn: true # 是否显示切换TOC目录展开收缩的按钮
 
 # 代码块相关
