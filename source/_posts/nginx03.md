@@ -2,7 +2,7 @@
 title: nginx的web服务
 date: 2020-11-27 20:18:22
 author: noslime
-categories: nginx
+categories: 后端
 tags: nginx
 keywords: nginx
 ---

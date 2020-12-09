@@ -2,7 +2,7 @@
 title: nginx限流
 date: 2020-12-06 14:06:22
 author: noslime
-categories: nginx
+categories: 后端
 tags: nginx
 keywords: nginx
 ---

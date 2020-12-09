@@ -4,7 +4,7 @@ date: 2020-11-23 14:42:22
 author: noslime
 top: true
 cover: true
-categories: nginx
+categories: 后端
 tags: nginx
 keywords: nginx
 ---

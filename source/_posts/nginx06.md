@@ -2,11 +2,11 @@
 title: nginx cluster
 date: 2020-12-08 14:01:35
 author: noslime
-categories: nginx
+categories: 后端
 tags: 
     - nginx
     - cluster
-keywords: nginx
+keywords: cluster
 ---
 
 nginx虽然实现了应用服务器的负载均衡，但其本身也有down掉的风险，所以为了避免nginx作为分发器时发生单点故障，搭建nginx的集群是有必要的。目前，搭建nginx集群主流方案，是由高可用监控软件Keepalived实现的，本文记录一次搭建过程。
@@ -55,6 +55,8 @@ global_defs {
    smtp_server 127.0.0.1
    smtp_connect_timeout 30
    router_id vrrp020
+   script_user root
+   enable_script_security 
 }
 
 vrrp_script check_nginx {
@@ -98,6 +100,8 @@ global_defs {
    smtp_server 127.0.0.1
    smtp_connect_timeout 30
    router_id vrrp022
+   script_user root
+   enable_script_security
 }
 
 vrrp_script check_nginx {

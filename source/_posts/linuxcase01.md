@@ -2,7 +2,7 @@
 title: linux创建用户并赋予root权限
 date: 2020-11-28 14:09:22
 author: noslime
-categories: linux
+categories: 后端
 tags: 
 	- linux
 	- case

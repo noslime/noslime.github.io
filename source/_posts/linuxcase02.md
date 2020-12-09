@@ -2,7 +2,7 @@
 title: linux设置静态IP
 date: 2020-11-28 14:19:22
 author: noslime
-categories: linux
+categories: 后端
 tags: 
 	- linux
 	- case

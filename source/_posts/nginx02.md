@@ -2,7 +2,7 @@
 title: nginx配置文件
 date: 2020-11-24 21:23:22
 author: noslime
-categories: nginx
+categories: 后端
 tags: nginx
 keywords: nginx
 ---

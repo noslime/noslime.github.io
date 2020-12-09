@@ -2,7 +2,7 @@
 title: nginx反向代理与负载均衡
 date: 2020-11-27 23:17:22
 author: noslime
-categories: nginx
+categories: 后端
 tags: nginx
 keywords: nginxn
 ---

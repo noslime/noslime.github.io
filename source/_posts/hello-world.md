@@ -4,7 +4,7 @@ date: 2020-11-13 22:22:22
 author: hexo offitial
 top: true
 cover: true
-categories: blog
+categories: 前端
 tags: hexo
 keywords: hexo
 ---

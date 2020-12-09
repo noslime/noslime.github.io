@@ -5,7 +5,7 @@ author: noslime
 tags: 
 	- SQL
 	- MySQL
-categories: SQL
+categories: 数据库
 ---
 
 ## SQL优化小结

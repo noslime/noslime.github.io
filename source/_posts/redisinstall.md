@@ -2,7 +2,7 @@
 title: redis安装
 date: 2020-12-3 09:14:22
 author: noslime
-categories: redis
+categories: 数据库
 tags: redis
 keywords: redis
 ---
