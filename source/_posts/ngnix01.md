@@ -1,12 +1,13 @@
 ---
-title: nginx简介及安装
+title: NGINX简介及安装
 date: 2020-11-23 14:42:22
 author: noslime
-top: true
-cover: true
+top: false
+cover: false
 categories: 后端
-tags: nginx
-keywords: nginx
+tags: NGINX
+keywords: nginx简介及安装
+summary: nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装
 ---
 
 nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装。

@@ -1,10 +1,13 @@
 ---
-title: nginx限流
+title: NGINX限流
 date: 2020-12-06 14:06:22
 author: noslime
+top: false
+cover: false
 categories: 后端
-tags: nginx
-keywords: nginx
+tags: NGINX
+keywords: nginx限流
+summary: 限流（rate limiting）是NGINX众多特性中的重要特性之一。该特性可以限制某个用户在一个给定时间段内能够产生的HTTP请求数以及请求的处理速率
 ---
 
 #  限流

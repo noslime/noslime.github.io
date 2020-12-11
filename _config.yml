@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: '遗失的一页'
+title: '曾打发时光'
 subtitle: 'noslime'
 description: '一个无聊的人的无聊的站点'
 keywords: ''
@@ -15,7 +15,7 @@ timezone: 'Asia/Shanghai'
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: http://noslime.github.io
 root: /
-permalink: :second:minute:hour:day:month:year:.html	
+permalink: articles/:year/:second:minute:hour:day:month.html	
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -108,7 +108,10 @@ theme: hexo-theme-matery
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+   type: git
+   repo: https://github.com/noslime/noslime.github.io
+  # example, https://github.com/hexojs/hexojs.github.io
+   branch: gh-pages
   
 #搜索
 search:

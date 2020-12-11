@@ -1,10 +1,13 @@
 ---
-title: nginx反向代理与负载均衡
+title: NGINX反向代理与负载均衡
 date: 2020-11-27 23:17:22
 author: noslime
+top: false
+cover: false
 categories: 后端
-tags: nginx
-keywords: nginxn
+tags: NGINX
+keywords: nginx反向代理与负载均衡
+summary: nginx的反向代理与负载均衡是我们日常工作中经常用到的功能，并且给我们带来了较大的便利。
 ---
 
 nginx的反向代理与负载均衡是我们日常工作中经常用到的功能，并且给我们带来了较大的便利。

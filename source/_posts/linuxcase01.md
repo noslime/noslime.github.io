@@ -1,12 +1,15 @@
 ---
-title: linux创建用户并赋予root权限
+title: Linux创建用户并赋予root权限
 date: 2020-11-28 14:09:22
 author: noslime
+top: false
+cover: false
 categories: 后端
 tags: 
-	- linux
-	- case
-keywords: linux
+	- LINUX
+	- CASE
+keywords:  linux创建用户并赋予root权限
+summary: linux创建一个普通用户并赋予root的执行权限
 ---
 
 ###  一、创建用户

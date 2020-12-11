@@ -1,12 +1,15 @@
 ---
-title: linux设置静态IP
+title: Linux设置静态IP
 date: 2020-11-28 14:19:22
 author: noslime
+top: false
+cover: false
 categories: 后端
 tags: 
-	- linux
-	- case
-keywords: linux
+	- LINUX
+	- CASE
+keywords:  linux创建用户并赋予root权限
+summary: Linux设置静态IP,以CentOS 7与 Ubuntu 20.04为例
 ---
 
 ### CentOS  7  设置静态IP

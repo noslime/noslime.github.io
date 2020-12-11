@@ -1,15 +1,18 @@
 ---
-title: redis安装
+title: REDIS安装
 date: 2020-12-3 09:14:22
 author: noslime
+top: false
+cover: false
 categories: 数据库
-tags: redis
-keywords: redis
+tags: REDIS
+keywords:  redis安装
+summary: 简要介绍redis数据库在linux下的安装
 ---
 
 # Redis的安装
 
-### 官方安装命令
+### 安装命令
 
 ```shell
 $ wget https://download.redis.io/releases/redis-6.0.9.tar.gz

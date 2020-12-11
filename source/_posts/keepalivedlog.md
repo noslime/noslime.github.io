@@ -1,18 +1,22 @@
 ---
 title: keepalived's log
 date: 2020-12-09 17:01:36
+author: noslime
+top: false
+cover: false
 categories: 后端
 tags: 
-	- keepalived
-	- log
+	- KEEPALIVED
+	- LOG
 keywords: keepalived
+summary: 上次搭建nginx集群，并没有处理keepalived的日志，比较混乱。今天实现日志文件自定义输出位置，以便查看。
 ---
 
 上次搭建nginx集群，并没有处理keepalived的日志，而keepalived的配置文件默认输出到系统日志`/var/log/message`中，比较混乱。今天实现日志文件自定义输出位置，以便查看。
 
 ---
 
-
+s
 
 **1.修改/etc/sysconfig/keepalived**
 

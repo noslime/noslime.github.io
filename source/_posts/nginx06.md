@@ -2,11 +2,12 @@
 title: nginx cluster
 date: 2020-12-08 14:01:35
 author: noslime
+top: false
+cover: false
 categories: 后端
-tags: 
-    - nginx
-    - cluster
-keywords: cluster
+tags: NGINX
+keywords: nginx cluster
+summary: nginx虽然实现了应用服务器的负载均衡，但其本身也有down掉的风险，所以为了避免nginx发生单点故障，搭建nginx的集群是有必要的。
 ---
 
 nginx虽然实现了应用服务器的负载均衡，但其本身也有down掉的风险，所以为了避免nginx作为分发器时发生单点故障，搭建nginx的集群是有必要的。目前，搭建nginx集群主流方案，是由高可用监控软件Keepalived实现的，本文记录一次搭建过程。

@@ -6,9 +6,10 @@ top: true
 cover: true
 categories: 工具
 tags: 
-	- Markdown
-	- case
-keywords: Markdown
+	- MARKDOWN
+	- CASE
+keywords: Markdown表格中代码块竖线问题
+summary: 当我用typora编写markdown文件通过hexo生成网页时，由于在表格里写了代码块，恰好发生了格式显示错误，本文记录解决过程
 ---
 
 当我们编写markdown格式的文档，不可避免的会用到表格，有时候我们会在表格中用到 `|` 符号，由于这个符号属于markdown表格定义符号，所以不可避免会遇到一些显示问题。当我用typora编写markdown文件通过hexo生成网页时，由于在表格里写了代码块，恰好发生了格式显示错误，本文记录解决过程。

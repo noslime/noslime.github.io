@@ -1,13 +1,14 @@
 ---
-title: nginx配置文件
+title: NGINX配置文件
 date: 2020-11-24 21:23:22
 author: noslime
+top: true
+cover: true
 categories: 后端
-tags: nginx
-keywords: nginx
+tags: NGINX
+keywords: nginx配置文件
+summary: nginx的配置文件介绍，nginx的配置文件大致可以分为三个部分
 ---
-
-# 配置文件介绍
 
 nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下
 

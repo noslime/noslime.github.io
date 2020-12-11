@@ -2,10 +2,14 @@
 title: 正确使用SQL既是优化
 date: 2020-11-21 16:40:54
 author: noslime
-tags: 
-	- SQL
-	- MySQL
+top: false
+cover: false
 categories: 数据库
+tags: 
+	- 优化
+	- MYSQL
+keywords: 正确使用SQL既是优化
+summary: 很多时候能够正确使用SQL就是一种潜移默化的的优化
 ---
 
 ## SQL优化小结

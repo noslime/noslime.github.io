@@ -1,10 +1,13 @@
 ---
-title: nginx的web服务
+title: NGINX的web服务
 date: 2020-11-27 20:18:22
 author: noslime
+top: false
+cover: false
 categories: 后端
-tags: nginx
-keywords: nginx
+tags: NGINX
+keywords: nginx的web服务
+summary: nginx作为web服务器，提供的一些基础功能
 ---
 
 # nginx的web服务
