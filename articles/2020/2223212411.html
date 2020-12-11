@@ -1,0 +1,1369 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="nginx配置文件">
+    <meta name="description" content="一个无聊的人的无聊的站点">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="google-site-verification" content="frymZh9zcb7Hj9m4FFczw8yKVDxbdYbPllXjAvXG-_c" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>nginx配置文件 | 曾打发时光</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="曾打发时光" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">曾打发时光</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fab fa-angellist" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">曾打发时光</div>
+        <div class="logo-desc">
+            
+            一个无聊的人的无聊的站点
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-angellist"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">nginx配置文件</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NGINX/">
+                                <span class="chip bg-color">NGINX</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                后端
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-11-24
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-12-11
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    16 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="配置文件介绍"><a href="#配置文件介绍" class="headerlink" title="配置文件介绍"></a>配置文件介绍</h1><p>nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下</p>
+<img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/nginx.conf.png" alt="nginx.conf.png" style="zoom:80%;" />
+
+<h3 id="全局块"><a href="#全局块" class="headerlink" title="全局块"></a>全局块</h3><p>从配置文件开始到events块之间的内容，主要会设置一些影响nginx服务器整体运行的配置指令，一般有运行nginx服务器的用户组，nginx进程pid存放路径，错误日志存放路径，允许生成worker process数等。</p>
+<pre class=" language-config"><code class="language-config">#配置worker子进程用户或者组，默认nobody，安全问题，建议用nobody
+#user  nobody;
+
+#worker数和服务器的cpu数相等是最为适宜
+worker_processes  2;
+
+#配置Nginx worker进程最大打开文件数
+worker_rlimit_nofile 65535;
+
+#work绑定cpu(4 work绑定4cpu)
+worker_cpu_affinity 0001 0010 0100 1000
+
+#work绑定cpu (4 work绑定8cpu中的4个) 。
+worker_cpu_affinity 0000001 00000010 00000100 00001000  
+
+#error_log path(存放路径) level(日志等级)path表示日志路径，level表示日志等级，
+#具体如下：[ debug | info | notice | warn | error | crit ]
+# 从左至右，日志详细程度逐级递减，即debug最详细，crit最少，默认为crit。 
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+#进程运行文件所在位置
+#pid        logs/nginx.pid;</code></pre>
+<h3 id="EVENTS块"><a href="#EVENTS块" class="headerlink" title="EVENTS块"></a>EVENTS块</h3><p>此部分涉及的主要是nginx工作模式，包括每个进程的最大连接数，选取哪种事件驱动模型处理连接请求，是否允许同时接受多个网路连接，开启网络连接序列化等。</p>
+<pre class=" language-config"><code class="language-config">events &#123;
+    #这个值是表示每个worker进程所能建立连接的最大值，所以，一个nginx能建立的最大连接数，应该是                     #Max_client=worker_connections * worker_processes。
+    #当然，这里说的是最大连接数，对于HTTP请求本地资源来说，能够支持的最大并发数量是worker_connections *         #worker_processes，
+    #如果是支持http1.1的浏览器每次访问要占两个连接，
+    #所以普通的静态访问最大并发数是： worker_connections * worker_processes /2，
+    #而如果是HTTP作为反向代理来说，最大并发数量应该是worker_connections * worker_processes/4。
+    #因为作为反向代理服务器，每个并发会建立与客户端的连接和与后端服务的连接，会占用两个连接。
+
+    worker_connections  1024;  
+
+    #Nginx支持的工作模式有select、poll、kqueue、epoll、rtsig和/dev/poll。     
+    #其中select和poll都是标准的工作模式，kqueue和epoll是高效的工作模式
+    #这个值是表示nginx要支持哪种多路io复用。
+    #一般的Linux选择epoll, 如果是(*BSD)系列的Linux使用kquene。
+    #windows版本的nginx不支持多路IO复用，这个值不用配。
+    use epoll;
+
+    #当一个worker抢占到一个链接时，是否尽可能的让其获得更多的连接,默认是off 。
+    multi_accept on;
+
+    #设置网路连接序列化，防止惊群现象发生，默认为on，这是一种保守的设置
+    #但是如果你的网站访问量比较大，为了系统的吞吐量，我还是建议大家关闭它。
+    accept_mutex  on;
+&#125;</code></pre>
+<h3 id="HTTP-块"><a href="#HTTP-块" class="headerlink" title="HTTP 块"></a>HTTP 块</h3><p>这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。 需要注意的是：http 块也可以包括 http全局块、[upstream] 、server 块。</p>
+<h4 id="HTTP全局块"><a href="#HTTP全局块" class="headerlink" title="HTTP全局块"></a>HTTP全局块</h4><p>http全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。</p>
+<p>以下给出一些参数设置，为了方便描述，全写在了一起。其中很多参数可以设置在http、server、location处，实际应根据具体业务设置位置。 一般来说，设置的位置越在内层，优先级越高。 详见nginx <a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/ngx_http_core_module.html">官方文档</a></p>
+<pre class=" language-config"><code class="language-config">http &#123;
+    #当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中
+    #找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器
+    #根据Content-Type的值处理文件。
+    include       mime.types;
+    #如果 不能从mime.types找到映射的话，用以下作为默认值
+    default_type  application/octet-stream;
+
+    #保存服务器名字的hash表是由指令server_names_hash_max_size 和server_names_hash_bucket_size所控制的。参数hash bucket size总是等于hash表的大小，并且是一路处理器缓存大小的倍数。在减少了在内存中的存取次数后，使在处理器中加速查找hash表键值成为可能。如果hash bucket size等于一路处理器缓存的大小，那么在查找键的时候，最坏的情况下在内存中查找的次数为2。第一次是确定存储单元的地址，第二次是在存储单元中查找键 值。因此，如果Nginx给出需要增大hash max size 或 hash bucket size的提示，那么首要的是增大前一个参数的大小.
+    server_names_hash_bucket_size 128;
+
+    ###################################HTTP请求####################################
+    #一个请求完成之后还要保持连接多久
+    keepalive_timeout  5;
+
+    #设定通过nginx上传文件的大小
+    client_max_body_size 300m;
+    #请求体缓存大小
+    client_body_buffer_size 64k;
+    #临时文件位置
+    #小于client_body_buffer_size直接在内存中高效存储。如果大于client_body_buffer_size小于client_max_body_size会存储临时文件，临时文件位于client_body_temp下，一定要有权限。
+    client_body_temp_path  /spool/nginx/client_body_temp 3 2;
+
+    #客户端请求头部的缓冲区大小。这个可以根据你的系统分页大小来设置，一般一个请求的头部大小不会超过1k，不过由于一般系统分页都要大于1k，所以这里设置为分页大小。分页大小可以用命令getconf PAGESIZE取得。
+    client_header_buffer_size 4k;
+    #读取大型客户端请求头的缓冲区的最大数量和大小。nginx默认会用client_header_buffer_size这个buffer来读取header值，如果header过大，它会使用large_client_header_buffers来读取
+    large_client_header_buffers 8 128k;
+    #########################################################################
+
+     ###################################日志####################################
+     #访问日志位置  server、location中若有日志配置，优先级更高
+     access_log  logs/host.access.log  main;
+     access_log  logs/host.access.404.log  log404;
+     #日志格式化
+     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+     '$status $body_bytes_sent "$http_referer" '
+     '"$http_user_agent" "$http_x_forwarded_for"';
+     #########################################################################
+
+    #################################高效文件传输######################################
+    #此配置项用来在两个文件描述符之间直接传递数据(完全在内核中操作)，从而避免了数据在内核     
+    #缓冲区和用户缓冲区之间的拷贝，操作效率很高，被称之为零拷贝，适用于有大文件上传下载的情况     
+    #如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络IO处理速度，降低系统负载
+    #可以在http块，server块，location块。
+    sendfile  on;
+
+    #此选项允许或禁止使用sock的TCP_CORK的选项，此选项仅在使用sendfile的时候使用
+    #用户层可通过setsockopt系统调用设置TCP套接口的TCP_CORK选项。开启时，内核将阻塞不完整的报文，当关闭此选项时，发送阻塞的报文。此处的不完整指的是应用层发送的数据长度不足一个MSS长度。使用场景是在调用sendfile发送文件内容之前，提前发送一个描述文件信息的头部数据段，并且阻塞住此头部数据，与之后的sendfile数据一同发送。或者用于优化吞吐性能。但是，TCP_CORK最多只能将数据阻塞200毫秒，如果超过此时间值，内核将自动发送阻塞的数据
+       tcp_nopush on;
+
+       #tcp_nodelay off 会增加通信的延时，但是会提高带宽利用率。适用于在高延时、数据量大的通信场景
+    #tcp_nodelay on 会增加小包的数量，但是可以提高响应速度。适用于及时性高的通信场景
+    #tcp_nodelay与tcp_nopush是互斥的
+    tcp_nodelay off;
+    #########################################################################
+
+    #################################gzip###################################
+    #开启或者关闭gzip模块
+    #gzip  on ;
+    #设置允许压缩的页面最小字节数，页面字节数从header头中的Content-Length中进行获取。
+    #gzip_min_lenth 1k;
+    # gzip压缩比，1 压缩比最小处理速度最快，9 压缩比最大但处理最慢（传输快但比较消耗cpu）
+    #gzip_comp_level 4;
+
+    #匹配MIME类型进行压缩，（无论是否指定）"text/html"类型总是会被压缩的。
+    #gzip_types types text/plain text/css application/json  application/x-javascript text/xml  
+    #########################################################################
+
+    ##############################文件缓存###########################################
+    #动静分离  指定缓存启用
+    #服务器端静态资源缓存，最大缓存到内存中的文件数，非活动的（没要求到的文件）会在20秒后从缓存中释放
+    open_file_cache max=102400 inactive=20s;   
+    #活跃期限内最少使用的次数，否则视为不活跃。
+    open_file_cache_min_uses 2;
+    #验证缓存是否活跃的时间间隔
+    open_file_cache_valid 30s;
+    #文件错误是否缓存
+    open_file_cache_errors on
+    #########################################################################
+
+    #################################代理服务器###################################
+    #后端服务器连接的超时时间_发起握手等候响应超时时间
+    proxy_connect_timeout 90;
+    #连接成功后_等候后端服务器响应时间_其实已经进入后端的排队之中等候处理（也可以说是后端服务器处理请求的时间）
+    proxy_read_timeout 180;
+    #后端服务器数据回传时间_就是在规定时间之内后端服务器必须传完所有的数据
+    proxy_send_timeout 180;
+
+    #设置从被代理服务器读取的第一部分应答的缓冲区大小，通常情况下这部分应答中包含一个小的应答头，默认情况下这个值的大小为指令proxy_buffers中指定的一个缓冲区的大小，不过可以将其设置为更小
+    proxy_buffer_size 256k;
+
+    #设置用于读取应答（来自被代理服务器）的缓冲区数目和大小，默认情况也为分页大小，
+根据操作系统的不同可能是4k或者8k
+    proxy_buffers 4 256k;
+
+    #proxy_busy_buffers_size不是独立的空间，他是proxy_buffers和proxy_buffer_size的一部分。
+nginx会在没有完全读完后端响应就开始向客户端传送数据，所以它会划出一部分busy状态的buffer来专门向客户端传送数据(建议为proxy_buffers中单个缓冲区的2倍)，然后它继续从后端取数据。proxy_busy_buffer_size参数用来设置处于busy状态的buffer有多大。
+1）如果完整数据大小小于busy_buffer大小，当数据传输完成后，马上传给客户端；
+2）如果完整数据大小不小于busy_buffer大小，则装满busy_buffer后，马上传给客户端；
+    proxy_busy_buffers_size 256k;
+
+    #设置在写入proxy_temp_path时数据的大小，预防一个工作进程在传递文件时阻塞太长
+    proxy_temp_file_write_size 256k;
+
+    #设置内存缓存空间大小为200MB，1天没有被访问的内容自动清除，硬盘缓存空间大小为30GB。
+    proxy_cache_path /data/proxy_cache_dir levels=1:2 keys_zone=cache_one:200m inactive=1d max_size=30g;
+    #表示使nginx阻止HTTP应答代码为300或者更高的应答
+    proxy_intercept_errors on;
+
+    #######################################################################################    
+    upstream streamname&#123;...&#125;
+    server &#123;...&#125;
+&#125;</code></pre>
+<ol>
+<li><p>访问日志格式化参数说明</p>
+<p>注：log_format可设为json格式以方便后续分析处理</p>
+</li>
+</ol>
+<blockquote>
+<p>​    #$http_x_forwarded_for 用以记录客户端的ip地址；</p>
+<p>​    #$remote_addr  上一级代理的IP地址；</p>
+<p>​    #$remote_user：用来记录客户端用户名称；<br>​    #$time_local： 用来记录访问时间与时区；<br>​    #$request： 用来记录请求的url与http协议；<br>​    #$status： 用来记录请求状态；成功是200，<br>​    #$body_bytes_sent ：记录发送给客户端文件主体内容大小；<br>​    #$http_referer：用来记录从那个页面链接访问过来的；<br>​    #$http_user_agent：记录客户浏览器的相关信息；</p>
+<p>如下生成一种json格式的日志</p>
+<pre><code>log_format main_json &#39;&#123;&quot;@timestamp&quot;:&quot;$time_local&quot;,&#39;
+&#39;&quot;client_ip&quot;: &quot;$remote_addr&quot;,&#39;
+&#39;&quot;request&quot;: &quot;$request&quot;,&#39;
+&#39;&quot;status&quot;: &quot;$status&quot;,&#39;
+&#39;&quot;bytes&quot;: &quot;$body_bytes_sent&quot;,&#39;
+&#39;&quot;x_forwarded&quot;: &quot;$http_x_forwarded_for&quot;,&#39;
+&#39;&quot;referer&quot;: &quot;$http_referer&quot;&#39;
+&#39;&#125;&#39;;
+access_log logs/access_json.log main_json;
+</code></pre>
+</blockquote>
+<ol start="2">
+<li>临时文件存储位置     </li>
+</ol>
+<blockquote>
+<p>Syntax: client_body_temp_path path [level1 [level2 [level3]]]; </p>
+<p>Default:    client_body_temp_path client_body_temp; </p>
+<p>Context:    http, server, location</p>
+<p>client_body_temp_path  /spool/nginx/client_body_temp 3 2 1;     //3 2 1代表目录名称长度</p>
+<p>以上设置可能产生缓存文件格式：/spool/nginx/client_temp/456/78/9/20201127</p>
+<p>chown -R username:usergroup /spool/nginx/client_body_temp  //为防止权限问题，可为文件设置所有者</p>
+</blockquote>
+<ol start="3">
+<li>文件引入</li>
+</ol>
+<blockquote>
+<p>​    若server较多，为保持配置文件结构清晰，可以每个虚拟主机另起一个配置文件，如：<br>​    include /etc/nginx/conf.d/*.conf;  //配置在http全局块</p>
+</blockquote>
+<h4 id="Upstream"><a href="#Upstream" class="headerlink" title="Upstream"></a>Upstream</h4><p>upstream是nginx的HTTP Upstream模块，此模块不是必须的，这个模块通过一个指定的调度算法来实现客户端IP到后端服务器的负载均衡。</p>
+<p>upstream中服务器的常见参数</p>
+<blockquote>
+<p>weight<code>=</code><em>number</em>   设置服务器的权重，默认为1</p>
+<p>max_conns=number  限制到代理服务器的最大同时连接数，默认为0</p>
+<p>fail_timeout=time     服务器不可用的时间 默认为10秒</p>
+<p>max_fails=number   设置在fail_timeout参数设置的持续时间内与服务器通信的失败尝试次数</p>
+<p>backup    备用服务器，主服务器不可用时启用，不能和hash和random负载平衡方法一起使用</p>
+<p>down  标记服务器永久不可用</p>
+</blockquote>
+<pre class=" language-config"><code class="language-config">http &#123;
+    ...
+    # 1、轮询（默认）
+    # 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
+     upstream myapp1 &#123;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    &#125;
+    # 2、最小连接负载均衡
+    # nginx将尝试不使用存在过多的请求的应用服务器，而是将新请求分发到不太繁忙的服务器
+    upstream myapp1 &#123;
+        least_conn;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    &#125;
+    # 3、指定权重
+    # 指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+    upstream myapp1 &#123;
+        server srv1.example.com weight=3;
+        server srv2.example.com weight=2;
+        server srv3.example.com weight=2;
+    &#125;
+    #4、IP绑定 ip_hash
+    # 每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+    upstream myapp1 &#123;
+        ip_hash;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    &#125;
+    #5、备机方式 backup
+    # 正常情况不访问设定为backup的备机，只有当所有非备机全都宕机的情况下，服务才会进备机。
+    # backup 不能和ip_hash一起使用
+    upstream myapp1 &#123;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com backup;
+    &#125;
+    #6、fair（第三方）
+    #按后端服务器的响应时间来分配请求，响应时间短的优先分配。 需要安装fair模块
+    upstream myapp1 &#123;
+        fair;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    &#125;
+    #7、url_hash（第三方） 需要安装url_hash模块
+    #按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
+    upstream myapp1 &#123;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+        hash $request_uri
+    &#125;
+      server &#123;
+        listen 80;
+        location / &#123;
+            proxy_pass http://myapp1;
+      &#125;
+&#125;</code></pre>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p>server块：配置虚拟主机的相关参数，一个http中可以有多个server。而server块又包含多个<strong>location块</strong></p>
+<p>location块：配置请求的路由，以及各种页面的处理情况。</p>
+<pre class=" language-config"><code class="language-config">http &#123;
+    ...
+    upstream myserver&#123;&#125;
+    server &#123;
+        #监听端口号
+        listen       80;
+        #服务名
+        server_name  192.168.161.130;
+        #字符集
+        #charset utf-8;
+    #location [=|~|~*|^~] /uri/ &#123; … &#125;   
+    # = 精确匹配
+    # ~ 正则匹配，区分大小写
+    # ~* 正则匹配，不区分大小写
+    # ^~  关闭正则匹配
+
+    #匹配原则：
+    # 1、所有匹配分两个阶段，第一个叫普通匹配，第二个叫正则匹配。
+    # 2、普通匹配，首先通过“=”来匹配完全精确的location
+        # 2.1、 如果没有精确匹配到， 那么按照最大前缀匹配的原则，来匹配location
+        # 2.2、 如果匹配到的location有^~,则以此location为匹配最终结果，如果没有那么会把匹配的结果暂存，继续进行正则匹配。
+        # 3、正则匹配，依次从上到下匹配前缀是~或~*的location, 一旦匹配成功一次，则立刻以此location为准，不再向下继续进行正则匹配。
+        # 4、如果正则匹配都不成功，则继续使用之前暂存的普通匹配成功的location.
+
+        # 匹配任何查询，因为所有请求都以 / 开头。但是正则表达式规则和长的块规则将被优先和查询匹配。
+        location / &#123;   
+        #定义服务器的默认网站根目录位置
+        root   html;
+
+        #默认访问首页索引文件的名称
+        index  index.html index.htm;
+
+        #反向代理路径
+         proxy_pass http://myapp1;
+
+        #反向代理的超时时间
+         proxy_connect_timeout 10;
+         proxy_redirect default;
+         &#125;
+
+         location  /images/ &#123;    
+            root images ;
+            deny 127.0.0.1;  #拒绝的ip
+              allow 172.18.5.54; #允许的ip
+         &#125;
+         # 匹配任何以/images/jpg/ 开头的任何查询并且停止搜索。任何正则表达式将不会被测试。 
+         location ^~ /images/jpg/ &#123;  
+            root images/jpg/ ;
+         &#125;
+         location ~*.(gif|jpg|jpeg)$ &#123; 
+          #所有静态文件直接读取硬盘
+              root pic ;
+          #expires定义用户浏览器缓存的时间为3天，如果静态页面不常更新，可以设置更长，
+          #这样可以节省带宽和缓解服务器的压力
+              expires 3d; #缓存3天
+         &#125;
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html &#123;
+            root   html;
+        &#125;
+&#125;</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">noslime</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://noslime.github.io/articles/2020/2223212411.html">http://noslime.github.io/articles/2020/2223212411.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">noslime</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NGINX/">
+                                    <span class="chip bg-color">NGINX</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">心情好,投食博主~~</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/articles/2020/2218202711.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/2.jpg" class="responsive-img" alt="nginx的web服务">
+                        
+                        <span class="card-title">nginx的web服务</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            nginx作为web服务器，提供的一些基础功能
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NGINX/">
+                        <span class="chip bg-color">NGINX</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/articles/2020/2242142311.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/17.jpg" class="responsive-img" alt="nginx简介及安装">
+                        
+                        <span class="card-title">nginx简介及安装</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NGINX/">
+                        <span class="chip bg-color">NGINX</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('4'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020</span>
+            
+            <a href="/about" target="_blank">noslime</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/noslime" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:silenceleafl@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2550113620" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2550113620" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/canvas-nest.js"></script>
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.8'
+        zIndex="-1" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

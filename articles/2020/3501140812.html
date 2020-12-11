@@ -1,0 +1,1238 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="nginx cluster">
+    <meta name="description" content="一个无聊的人的无聊的站点">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="google-site-verification" content="frymZh9zcb7Hj9m4FFczw8yKVDxbdYbPllXjAvXG-_c" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>nginx cluster | 曾打发时光</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="曾打发时光" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">曾打发时光</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fab fa-angellist" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">曾打发时光</div>
+        <div class="logo-desc">
+            
+            一个无聊的人的无聊的站点
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-angellist"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">nginx cluster</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NGINX/">
+                                <span class="chip bg-color">NGINX</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                后端
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-12-08
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-12-11
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    6 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>nginx虽然实现了应用服务器的负载均衡，但其本身也有down掉的风险，所以为了避免nginx作为分发器时发生单点故障，搭建nginx的集群是有必要的。目前，搭建nginx集群主流方案，是由高可用监控软件Keepalived实现的，本文记录一次搭建过程。</p>
+<h1 id="Nginx-Cluster"><a href="#Nginx-Cluster" class="headerlink" title="Nginx Cluster"></a>Nginx Cluster</h1><h2 id="一、主备模式"><a href="#一、主备模式" class="headerlink" title="一、主备模式"></a>一、主备模式</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>使用两台服务器，一台主服务器和一台热备服务器，当主服务器发生故障时，热备服务器接管主服务器的公网虚拟IP，提供负载均衡服务。主备模式对外提供一个VIP。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="安装keepalived软件"><a href="#安装keepalived软件" class="headerlink" title="安装keepalived软件"></a>安装keepalived软件</h4><h5 id="安装指令"><a href="#安装指令" class="headerlink" title="安装指令"></a>安装指令</h5><pre class=" language-shell"><code class="language-shell">yum install keepalived -y</code></pre>
+<h5 id="操作指令"><a href="#操作指令" class="headerlink" title="操作指令"></a>操作指令</h5><pre class=" language-shell"><code class="language-shell">systemctl start keepalived
+systemctl stop keepalived
+systemctl restart keepalived
+systemctl status keepalived</code></pre>
+<h4 id="修改keepalived配置文件"><a href="#修改keepalived配置文件" class="headerlink" title="修改keepalived配置文件"></a>修改keepalived配置文件</h4><h5 id="master机器"><a href="#master机器" class="headerlink" title="master机器"></a>master机器</h5><pre class=" language-text"><code class="language-text">! Configuration File for keepalived
+
+global_defs &#123;
+   notification_email &#123;
+     nickname@qq.com
+   &#125;
+   notification_email_from nickname@qq.com
+   smtp_server 127.0.0.1
+   smtp_connect_timeout 30
+   router_id vrrp020
+   script_user root
+   enable_script_security 
+&#125;
+
+vrrp_script check_nginx &#123;
+    script "/etc/keepalived/nginx_check.sh"
+    interval 3
+    weight -20
+    fall 2
+    rise 1
+&#125;
+
+vrrp_instance nginx &#123;
+    state MASTER
+    interface ens33
+    mcast_src_ip 192.168.0.20
+    virtual_router_id 66
+    priority 100
+    advert_int 1
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    virtual_ipaddress &#123;
+        192.168.0.251
+    &#125;
+    track_script &#123;
+        check_nginx
+    &#125;
+&#125;</code></pre>
+<h5 id="backup机器"><a href="#backup机器" class="headerlink" title="backup机器"></a>backup机器</h5><pre class=" language-text"><code class="language-text">! Configuration File for keepalived
+
+global_defs &#123;
+   notification_email &#123;
+     nickname@qq.com
+   &#125;
+   notification_email_from nickname@qq.com
+   smtp_server 127.0.0.1
+   smtp_connect_timeout 30
+   router_id vrrp022
+   script_user root
+   enable_script_security
+&#125;
+
+vrrp_script check_nginx &#123;
+    script "/etc/keepalived/nginx_check.sh"
+    interval 3
+    weight -20
+    fall 2
+    rise 1
+&#125;
+
+vrrp_instance nginx &#123;
+    state BACKUP
+    interface ens33
+    mcast_src_ip 192.168.0.22
+    virtual_router_id 66
+    priority 80
+    advert_int 1
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    virtual_ipaddress &#123;
+        192.168.0.251
+    &#125;
+    track_script &#123;
+        check_nginx
+    &#125;
+&#125;</code></pre>
+<h4 id="编写检查脚本"><a href="#编写检查脚本" class="headerlink" title="编写检查脚本"></a>编写检查脚本</h4><p>此脚本的作用是配合keepalived监控nginx的状态，提供唤醒功能，并在nginx无法唤醒的情况下，结束故障服务器的keepalived进程，以实现VIP漂移。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+counter<span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">ps</span> -C nginx --no-heading<span class="token operator">|</span><span class="token function">wc</span> -l<span class="token variable">)</span></span>
+<span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$counter</span>"</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"$&amp;#123;counter&amp;#125;"</span> <span class="token operator">=</span> <span class="token string">"0"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    nginx -c /usr/local/nginx/conf/nginx.conf
+    <span class="token function">sleep</span> 2
+    counter<span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">ps</span> -C nginx --no-heading<span class="token operator">|</span><span class="token function">wc</span> -l<span class="token variable">)</span></span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"$&amp;#123;counter&amp;#125;"</span> <span class="token operator">=</span> <span class="token string">"0"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        systemctl stop keepalived
+    <span class="token keyword">fi</span>
+<span class="token keyword">fi</span></code></pre>
+<h4 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h4><p>分别在主机和从机上启动nginx与keepalived。</p>
+<pre class=" language-shell"><code class="language-shell">nginx -c /usr/local/nginx/conf/nginx.conf
+systemctl start keepalived</code></pre>
+<h4 id="测试服务"><a href="#测试服务" class="headerlink" title="测试服务"></a>测试服务</h4><p>若顺利启动主备模式后则可以通过访问虚拟IP的地址得到想要的结果</p>
+<pre class=" language-shell"><code class="language-shell">curl -i 192.168.0.251   #返回为nginx代理的服务即可</code></pre>
+<p>手动关闭主机nginx后，可以很快重新恢复服务</p>
+<pre class=" language-shell"><code class="language-shell">nginx -s stop
+ps aux | grep nginx  #一两秒后nginx进程自动恢复则正常</code></pre>
+<p>手动关闭主机keepalived后，短暂延时后可以正常访问nginx代理的服务</p>
+<pre class=" language-shell"><code class="language-shell">systemctl stop keepalived
+curl -i 192.168.0.251    #短暂延时后，可以正常根据VIP访问</code></pre>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p><strong>第一次启动失败</strong></p>
+<p>通过<code>sytemctl status keepalived</code>查看状态发现状态为<strong>dead</strong>，核心提示如下</p>
+<pre class=" language-text"><code class="language-text">Keepalived_vrrp exited with permanent error CONFIG. Terminating</code></pre>
+<p>提示出现永久的配置出错，一时也发现不了错误，配置文件也没动过，所以第一时间去看日志。keepalived的日志文件默认在<code>/var/log/message</code>中，通过日志文件，得到线索如下</p>
+<pre><code>keepalived.service: Can&#39;t open PID file /var/run/keepalived.pid (yet?) after start: No such file or directory</code></pre>
+<p>上述日志提示进程ID文件不存在，手动创建即可。</p>
+<pre class=" language-text"><code class="language-text">WARNING - interface eth0 for vrrp_instance VI_1 doesn't exist
+Non-existent interface specified in configuration</code></pre>
+<p>上述日志提示配置文件中网卡 <strong>eht0</strong> 不存在，通过<code>ip addr</code>命令发现，虚拟机中的网卡名为<strong>ens33</strong>。修改keepalived配置文件，将网卡名称替换为实际存在的即可。其中keepalived的配置文件的默认位置为<code>/etc/keepalived/keepalived.conf</code></p>
+<hr>
+<p><strong>第二次启动失败</strong></p>
+<p>将日志提示的错误修改完成后重新启动keepalived发现，还是启不来，并提示使用<code>journalctl -Ex</code>命令查看系统日志</p>
+<p>系统日志如下</p>
+<pre class=" language-text"><code class="language-text">SELinux is preventing keepalived from read access on the file keepalived.pid. For complete SELinux messages run: seal>
+SELinux is preventing keepalived from read access on the file keepalived.pid.</code></pre>
+<p>提示安全系统<strong>SELinux</strong> 阻止读取进程ID文件，此时可以根据提示生成本地策略以允许此访问</p>
+<pre class=" language-shell"><code class="language-shell"># ausearch -c 'keepalived' --raw | audit2allow -M my-keepalived
+# semodule -X 300 -i my-keepalived.pp</code></pre>
+<p>或者也可以关闭SELinux的Enforcing模式，开启宽容模式</p>
+<pre class=" language-shell"><code class="language-shell"># setenforce 0</code></pre>
+<hr>
+<p><strong>主机与从机均绑定了VIP</strong></p>
+<ol>
+<li><p>首先执行命令<code> tcpdump -i ens33 vrrp -n</code>查看下网卡<code>ens33</code>上的组播报文</p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/tcpdumvrrp.png"></p>
+<p>可见，主机20和备机22都在发送组播报文</p>
+</li>
+<li><p>主从模式中，备机收到报文后是不会再发的，可见备机没有收到组播消息。初步判断防火墙问题。</p>
+</li>
+<li><p>首先直接关闭防火墙，以<em>centos7</em>为例，</p>
+<pre class=" language-shell"><code class="language-shell"># systemctl stop firewalld </code></pre>
+<p>可见关闭后只有主机在发报文</p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/tcpdumpvrrp2.png"></p>
+</li>
+<li><p>通过<code>ip add</code> 发现只有主机绑定了 <em>192.168.0.251</em>这个虚拟IP，符合了我们的预期</p>
+<p>主机部分</p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/keepalivevip2.png"></p>
+<p>备机部分</p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/keepalivevip1.png"></p>
+</li>
+<li><p>更优雅一点，通过防火墙开启vrrp组播通信的权限，而不是直接关闭防火墙，命令如下</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># firewall-cmd --direct --permanent --add-rule ipv4 filter INPUT 0 --in-interface ens33 --destination 224.0.0.18 --protocol vrrp -j ACCEPT</span>
+<span class="token comment" spellcheck="true"># firewall-cmd --reload</span></code></pre>
+<p>其中<strong>224.0.0.18</strong> 是vrrp组播通信的默认广播地址。</p>
+<hr>
+</li>
+</ol>
+<h2 id="二、双主模式"><a href="#二、双主模式" class="headerlink" title="二、双主模式"></a>二、双主模式</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>主从模式中，一台做主，一台做备。虽然一定程度上实现了高可用，但备机大多数情况下处于浪费状态。为了解决备机的浪费问题，可以让两台机器互为主备，即每一台机器既担当主机的角色，又拥有备机的身份，这就是双主模式。双主模式对外提供两个VIP。</p>
+<h3 id="实现过程-1"><a href="#实现过程-1" class="headerlink" title="实现过程"></a>实现过程</h3><p>双主模式只要在<em>keepalived</em>的配置文件中配置两个实例即可，在主备模式的基础上，只需要以下两步：</p>
+<p>1、在主机配置文件中增加备机实例</p>
+<pre class=" language-text"><code class="language-text">vrrp_instance nginx02 &#123;
+    state BACKUP
+    interface ens33
+    mcast_src_ip 192.168.0.20
+    virtual_router_id 68
+    priority 80
+    advert_int 1
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    virtual_ipaddress &#123;
+        192.168.0.252
+    &#125;
+    track_script &#123;
+        check_nginx
+    &#125;
+&#125;</code></pre>
+<p>2、在备机配置文件中增加主机实例</p>
+<pre class=" language-text"><code class="language-text">vrrp_instance nginx02 &#123;
+    state MASTER
+    interface ens33
+    mcast_src_ip 192.168.0.22
+    virtual_router_id 68
+    priority 100
+    advert_int 1
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    virtual_ipaddress &#123;
+        192.168.0.252
+    &#125;
+    track_script &#123;
+        check_nginx
+    &#125;
+&#125;</code></pre>
+<blockquote>
+<p>其中，同原实例相比，需要修改的部分有：</p>
+<p>实例名称：vrrp_instance</p>
+<p>实例初始状态：state</p>
+<p>节点优先级：priority</p>
+<p>虚拟IP地址：virtual_ipaddress</p>
+<p>虚拟路由ID：virtual_router_id  相同vrid的为一组</p>
+</blockquote>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">noslime</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://noslime.github.io/articles/2020/3501140812.html">http://noslime.github.io/articles/2020/3501140812.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">noslime</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NGINX/">
+                                    <span class="chip bg-color">NGINX</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">心情好,投食博主~~</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/articles/2020/3601170912.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/2.jpg" class="responsive-img" alt="keepalived&#39;s log">
+                        
+                        <span class="card-title">keepalived&#39;s log</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            上次搭建nginx集群，并没有处理keepalived的日志，而keepalived的配置文件默认输出到系统日志`/var/log/message`中，比较混乱。今天实现日志文件自定义输出位置，以便查看。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/KEEPALIVED/">
+                        <span class="chip bg-color">KEEPALIVED</span>
+                    </a>
+                    
+                    <a href="/tags/LOG/">
+                        <span class="chip bg-color">LOG</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/articles/2020/0220160712.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/8.jpg" class="responsive-img" alt="Markdown表格中代码块竖线问题">
+                        
+                        <span class="card-title">Markdown表格中代码块竖线问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            当我用typora编写markdown文件通过hexo生成网页时，由于在表格里写了代码块，恰好发生了格式显示错误，本文记录解决过程
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    工具
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MARKDOWN/">
+                        <span class="chip bg-color">MARKDOWN</span>
+                    </a>
+                    
+                    <a href="/tags/CASE/">
+                        <span class="chip bg-color">CASE</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('4'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020</span>
+            
+            <a href="/about" target="_blank">noslime</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/noslime" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:silenceleafl@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2550113620" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2550113620" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/canvas-nest.js"></script>
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.8'
+        zIndex="-1" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

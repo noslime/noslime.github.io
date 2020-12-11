@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>曾打发时光</title>
+  
+  <subtitle>noslime</subtitle>
+  <link href="http://noslime.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://noslime.github.io/"/>
+  <updated>2020-12-11T14:25:03.836Z</updated>
+  <id>http://noslime.github.io/</id>
+  
+  <author>
+    <name>noslime</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>keepalived&#39;s log</title>
+    <link href="http://noslime.github.io/articles/2020/3601170912.html"/>
+    <id>http://noslime.github.io/articles/2020/3601170912.html</id>
+    <published>2020-12-09T09:01:36.000Z</published>
+    <updated>2020-12-11T14:25:03.836Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;上次搭建nginx集群，并没有处理keepalived的日志，而keepalived的配置文件默认输出到系统日志&lt;code&gt;/var/log/message&lt;/code&gt;中，比较混乱。今天实现日志文件自定义输出位置，以便查看。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;s&lt;/p&gt;
+&lt;p&gt;&lt;s</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="KEEPALIVED" scheme="http://noslime.github.io/tags/KEEPALIVED/"/>
+    
+    <category term="LOG" scheme="http://noslime.github.io/tags/LOG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx cluster</title>
+    <link href="http://noslime.github.io/articles/2020/3501140812.html"/>
+    <id>http://noslime.github.io/articles/2020/3501140812.html</id>
+    <published>2020-12-08T06:01:35.000Z</published>
+    <updated>2020-12-11T14:26:12.051Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;nginx虽然实现了应用服务器的负载均衡，但其本身也有down掉的风险，所以为了避免nginx作为分发器时发生单点故障，搭建nginx的集群是有必要的。目前，搭建nginx集群主流方案，是由高可用监控软件Keepalived实现的，本文记录一次搭建过程。&lt;/p&gt;
+&lt;h1</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown表格中代码块竖线问题</title>
+    <link href="http://noslime.github.io/articles/2020/0220160712.html"/>
+    <id>http://noslime.github.io/articles/2020/0220160712.html</id>
+    <published>2020-12-07T08:20:02.000Z</published>
+    <updated>2020-12-11T14:25:29.334Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;当我们编写markdown格式的文档，不可避免的会用到表格，有时候我们会在表格中用到 &lt;code&gt;|&lt;/code&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="工具" scheme="http://noslime.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="MARKDOWN" scheme="http://noslime.github.io/tags/MARKDOWN/"/>
+    
+    <category term="CASE" scheme="http://noslime.github.io/tags/CASE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx限流</title>
+    <link href="http://noslime.github.io/articles/2020/2206140612.html"/>
+    <id>http://noslime.github.io/articles/2020/2206140612.html</id>
+    <published>2020-12-06T06:06:22.000Z</published>
+    <updated>2020-12-11T14:26:22.100Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;限流&quot;&gt;&lt;a href=&quot;#限流&quot; class=&quot;headerlink&quot; title=&quot;限流&quot;&gt;&lt;/a&gt;限流&lt;/h1&gt;&lt;hr&gt;
+&lt;h2 id=&quot;一、限流介绍&quot;&gt;&lt;a href=&quot;#一、限流介绍&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>redis安装</title>
+    <link href="http://noslime.github.io/articles/2020/2214090312.html"/>
+    <id>http://noslime.github.io/articles/2020/2214090312.html</id>
+    <published>2020-12-03T01:14:22.000Z</published>
+    <updated>2020-12-11T14:25:13.642Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Redis的安装&quot;&gt;&lt;a href=&quot;#Redis的安装&quot; class=&quot;headerlink&quot; title=&quot;Redis的安装&quot;&gt;&lt;/a&gt;Redis的安装&lt;/h1&gt;&lt;h3 id=&quot;安装命令&quot;&gt;&lt;a href=&quot;#安装命令&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="数据库" scheme="http://noslime.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="REDIS" scheme="http://noslime.github.io/tags/REDIS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux设置静态IP</title>
+    <link href="http://noslime.github.io/articles/2020/2219142811.html"/>
+    <id>http://noslime.github.io/articles/2020/2219142811.html</id>
+    <published>2020-11-28T06:19:22.000Z</published>
+    <updated>2020-12-11T14:25:52.298Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;CentOS-7-设置静态IP&quot;&gt;&lt;a href=&quot;#CentOS-7-设置静态IP&quot; class=&quot;headerlink&quot; title=&quot;CentOS  7  设置静态IP&quot;&gt;&lt;/a&gt;CentOS  7 </summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="CASE" scheme="http://noslime.github.io/tags/CASE/"/>
+    
+    <category term="LINUX" scheme="http://noslime.github.io/tags/LINUX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux创建用户并赋予root权限</title>
+    <link href="http://noslime.github.io/articles/2020/2209142811.html"/>
+    <id>http://noslime.github.io/articles/2020/2209142811.html</id>
+    <published>2020-11-28T06:09:22.000Z</published>
+    <updated>2020-12-11T14:24:51.388Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;一、创建用户&quot;&gt;&lt;a href=&quot;#一、创建用户&quot; class=&quot;headerlink&quot; title=&quot;一、创建用户&quot;&gt;&lt;/a&gt;一、创建用户&lt;/h3&gt;&lt;p&gt;创建一个带有家目录，并且可以登录bash的用户&lt;/p&gt;
+&lt;pre class=&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="CASE" scheme="http://noslime.github.io/tags/CASE/"/>
+    
+    <category term="LINUX" scheme="http://noslime.github.io/tags/LINUX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx反向代理与负载均衡</title>
+    <link href="http://noslime.github.io/articles/2020/2217232711.html"/>
+    <id>http://noslime.github.io/articles/2020/2217232711.html</id>
+    <published>2020-11-27T15:17:22.000Z</published>
+    <updated>2020-12-11T14:23:48.993Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;nginx的反向代理与负载均衡是我们日常工作中经常用到的功能，并且给我们带来了较大的便利。&lt;/p&gt;
+&lt;h2 id=&quot;反向代理&quot;&gt;&lt;a href=&quot;#反向代理&quot; class=&quot;headerlink&quot; title=&quot;反向代理&quot;&gt;&lt;/a&gt;反向代理&lt;/h2&gt;&lt;h3</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx的web服务</title>
+    <link href="http://noslime.github.io/articles/2020/2218202711.html"/>
+    <id>http://noslime.github.io/articles/2020/2218202711.html</id>
+    <published>2020-11-27T12:18:22.000Z</published>
+    <updated>2020-12-11T14:24:03.829Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;nginx的web服务&quot;&gt;&lt;a href=&quot;#nginx的web服务&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx配置文件</title>
+    <link href="http://noslime.github.io/articles/2020/2223212411.html"/>
+    <id>http://noslime.github.io/articles/2020/2223212411.html</id>
+    <published>2020-11-24T13:23:22.000Z</published>
+    <updated>2020-12-11T14:25:44.805Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;配置文件介绍&quot;&gt;&lt;a href=&quot;#配置文件介绍&quot; class=&quot;headerlink&quot; title=&quot;配置文件介绍&quot;&gt;&lt;/a&gt;配置文件介绍&lt;/h1&gt;&lt;p&gt;nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下&lt;/p&gt;
+&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx简介及安装</title>
+    <link href="http://noslime.github.io/articles/2020/2242142311.html"/>
+    <id>http://noslime.github.io/articles/2020/2242142311.html</id>
+    <published>2020-11-23T06:42:22.000Z</published>
+    <updated>2020-12-11T14:26:03.076Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装。&lt;/p&gt;
+&lt;h3 id=&quot;一、nginx概述&quot;&gt;&lt;a href=&quot;#一、nginx概述&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://noslime.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="NGINX" scheme="http://noslime.github.io/tags/NGINX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正确使用SQL既是优化</title>
+    <link href="http://noslime.github.io/articles/2020/5440162111.html"/>
+    <id>http://noslime.github.io/articles/2020/5440162111.html</id>
+    <published>2020-11-21T08:40:54.000Z</published>
+    <updated>2020-12-11T14:27:01.350Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;SQL优化小结&quot;&gt;&lt;a href=&quot;#SQL优化小结&quot; class=&quot;headerlink&quot; title=&quot;SQL优化小结&quot;&gt;&lt;/a&gt;SQL优化小结&lt;/h2&gt;&lt;h3 id=&quot;一、正确使用索引&quot;&gt;&lt;a href=&quot;#一、正确使用索引&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="数据库" scheme="http://noslime.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="优化" scheme="http://noslime.github.io/tags/%E4%BC%98%E5%8C%96/"/>
+    
+    <category term="MYSQL" scheme="http://noslime.github.io/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://noslime.github.io/articles/2020/2222221311.html"/>
+    <id>http://noslime.github.io/articles/2020/2222221311.html</id>
+    <published>2020-11-13T14:22:22.000Z</published>
+    <updated>2020-12-11T14:23:38.767Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="前端" scheme="http://noslime.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="HEXO" scheme="http://noslime.github.io/tags/HEXO/"/>
+    
+  </entry>
+  
+</feed>
