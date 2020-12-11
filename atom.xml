@@ -6,7 +6,7 @@
   <link href="http://noslime.github.io/atom.xml" rel="self"/>
   
   <link href="http://noslime.github.io/"/>
-  <updated>2020-12-11T14:25:03.836Z</updated>
+  <updated>2020-12-11T15:06:10.752Z</updated>
   <id>http://noslime.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>keepalived&#39;s log</title>
-    <link href="http://noslime.github.io/articles/2020/3601170912.html"/>
-    <id>http://noslime.github.io/articles/2020/3601170912.html</id>
+    <link href="http://noslime.github.io/articles/2020/3601090912.html"/>
+    <id>http://noslime.github.io/articles/2020/3601090912.html</id>
     <published>2020-12-09T09:01:36.000Z</published>
-    <updated>2020-12-11T14:25:03.836Z</updated>
+    <updated>2020-12-11T15:06:10.752Z</updated>
     
     
       
@@ -48,10 +48,10 @@
   
   <entry>
     <title>nginx cluster</title>
-    <link href="http://noslime.github.io/articles/2020/3501140812.html"/>
-    <id>http://noslime.github.io/articles/2020/3501140812.html</id>
+    <link href="http://noslime.github.io/articles/2020/3501060812.html"/>
+    <id>http://noslime.github.io/articles/2020/3501060812.html</id>
     <published>2020-12-08T06:01:35.000Z</published>
-    <updated>2020-12-11T14:26:12.051Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -74,10 +74,10 @@
   
   <entry>
     <title>Markdown表格中代码块竖线问题</title>
-    <link href="http://noslime.github.io/articles/2020/0220160712.html"/>
-    <id>http://noslime.github.io/articles/2020/0220160712.html</id>
+    <link href="http://noslime.github.io/articles/2020/0220080712.html"/>
+    <id>http://noslime.github.io/articles/2020/0220080712.html</id>
     <published>2020-12-07T08:20:02.000Z</published>
-    <updated>2020-12-11T14:25:29.334Z</updated>
+    <updated>2020-12-11T15:06:10.752Z</updated>
     
     
       
@@ -100,11 +100,11 @@
   </entry>
   
   <entry>
-    <title>nginx限流</title>
-    <link href="http://noslime.github.io/articles/2020/2206140612.html"/>
-    <id>http://noslime.github.io/articles/2020/2206140612.html</id>
+    <title>NGINX限流</title>
+    <link href="http://noslime.github.io/articles/2020/2206060612.html"/>
+    <id>http://noslime.github.io/articles/2020/2206060612.html</id>
     <published>2020-12-06T06:06:22.000Z</published>
-    <updated>2020-12-11T14:26:22.100Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -126,11 +126,11 @@
   </entry>
   
   <entry>
-    <title>redis安装</title>
-    <link href="http://noslime.github.io/articles/2020/2214090312.html"/>
-    <id>http://noslime.github.io/articles/2020/2214090312.html</id>
+    <title>REDIS安装</title>
+    <link href="http://noslime.github.io/articles/2020/2214010312.html"/>
+    <id>http://noslime.github.io/articles/2020/2214010312.html</id>
     <published>2020-12-03T01:14:22.000Z</published>
-    <updated>2020-12-11T14:25:13.642Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -151,11 +151,11 @@
   </entry>
   
   <entry>
-    <title>linux设置静态IP</title>
-    <link href="http://noslime.github.io/articles/2020/2219142811.html"/>
-    <id>http://noslime.github.io/articles/2020/2219142811.html</id>
+    <title>Linux设置静态IP</title>
+    <link href="http://noslime.github.io/articles/2020/2219062811.html"/>
+    <id>http://noslime.github.io/articles/2020/2219062811.html</id>
     <published>2020-11-28T06:19:22.000Z</published>
-    <updated>2020-12-11T14:25:52.298Z</updated>
+    <updated>2020-12-11T15:06:10.752Z</updated>
     
     
       
@@ -178,11 +178,11 @@
   </entry>
   
   <entry>
-    <title>linux创建用户并赋予root权限</title>
-    <link href="http://noslime.github.io/articles/2020/2209142811.html"/>
-    <id>http://noslime.github.io/articles/2020/2209142811.html</id>
+    <title>Linux创建用户并赋予root权限</title>
+    <link href="http://noslime.github.io/articles/2020/2209062811.html"/>
+    <id>http://noslime.github.io/articles/2020/2209062811.html</id>
     <published>2020-11-28T06:09:22.000Z</published>
-    <updated>2020-12-11T14:24:51.388Z</updated>
+    <updated>2020-12-11T15:06:10.752Z</updated>
     
     
       
@@ -206,11 +206,11 @@
   </entry>
   
   <entry>
-    <title>nginx反向代理与负载均衡</title>
-    <link href="http://noslime.github.io/articles/2020/2217232711.html"/>
-    <id>http://noslime.github.io/articles/2020/2217232711.html</id>
+    <title>NGINX反向代理与负载均衡</title>
+    <link href="http://noslime.github.io/articles/2020/2217152711.html"/>
+    <id>http://noslime.github.io/articles/2020/2217152711.html</id>
     <published>2020-11-27T15:17:22.000Z</published>
-    <updated>2020-12-11T14:23:48.993Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -232,11 +232,11 @@
   </entry>
   
   <entry>
-    <title>nginx的web服务</title>
-    <link href="http://noslime.github.io/articles/2020/2218202711.html"/>
-    <id>http://noslime.github.io/articles/2020/2218202711.html</id>
+    <title>NGINX的web服务</title>
+    <link href="http://noslime.github.io/articles/2020/2218122711.html"/>
+    <id>http://noslime.github.io/articles/2020/2218122711.html</id>
     <published>2020-11-27T12:18:22.000Z</published>
-    <updated>2020-12-11T14:24:03.829Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -257,18 +257,18 @@
   </entry>
   
   <entry>
-    <title>nginx配置文件</title>
-    <link href="http://noslime.github.io/articles/2020/2223212411.html"/>
-    <id>http://noslime.github.io/articles/2020/2223212411.html</id>
+    <title>NGINX配置文件</title>
+    <link href="http://noslime.github.io/articles/2020/2223132411.html"/>
+    <id>http://noslime.github.io/articles/2020/2223132411.html</id>
     <published>2020-11-24T13:23:22.000Z</published>
-    <updated>2020-12-11T14:25:44.805Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;配置文件介绍&quot;&gt;&lt;a href=&quot;#配置文件介绍&quot; class=&quot;headerlink&quot; title=&quot;配置文件介绍&quot;&gt;&lt;/a&gt;配置文件介绍&lt;/h1&gt;&lt;p&gt;nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下&lt;/p&gt;
+    <summary type="html">&lt;p&gt;nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下&lt;/p&gt;
 &lt;img</summary>
         
       
@@ -283,11 +283,11 @@
   </entry>
   
   <entry>
-    <title>nginx简介及安装</title>
-    <link href="http://noslime.github.io/articles/2020/2242142311.html"/>
-    <id>http://noslime.github.io/articles/2020/2242142311.html</id>
+    <title>NGINX简介及安装</title>
+    <link href="http://noslime.github.io/articles/2020/2242062311.html"/>
+    <id>http://noslime.github.io/articles/2020/2242062311.html</id>
     <published>2020-11-23T06:42:22.000Z</published>
-    <updated>2020-12-11T14:26:03.076Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -310,10 +310,10 @@
   
   <entry>
     <title>正确使用SQL既是优化</title>
-    <link href="http://noslime.github.io/articles/2020/5440162111.html"/>
-    <id>http://noslime.github.io/articles/2020/5440162111.html</id>
+    <link href="http://noslime.github.io/articles/2020/5440082111.html"/>
+    <id>http://noslime.github.io/articles/2020/5440082111.html</id>
     <published>2020-11-21T08:40:54.000Z</published>
-    <updated>2020-12-11T14:27:01.350Z</updated>
+    <updated>2020-12-11T15:06:10.756Z</updated>
     
     
       
@@ -337,10 +337,10 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://noslime.github.io/articles/2020/2222221311.html"/>
-    <id>http://noslime.github.io/articles/2020/2222221311.html</id>
+    <link href="http://noslime.github.io/articles/2020/2222141311.html"/>
+    <id>http://noslime.github.io/articles/2020/2222141311.html</id>
     <published>2020-11-13T14:22:22.000Z</published>
-    <updated>2020-12-11T14:23:38.767Z</updated>
+    <updated>2020-12-11T15:06:10.752Z</updated>
     
     
       

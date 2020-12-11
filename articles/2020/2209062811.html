@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="nginx简介及安装">
+    <meta name="keywords" content="linux创建用户并赋予root权限">
     <meta name="description" content="一个无聊的人的无聊的站点">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>nginx简介及安装 | 曾打发时光</title>
+    <title>Linux创建用户并赋予root权限 | 曾打发时光</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/awesome/css/all.css">
@@ -227,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">nginx简介及安装</h1>
+                    <h1 class="description center-align post-title">Linux创建用户并赋予root权限</h1>
                 </div>
             </div>
         </div>
@@ -349,8 +349,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/NGINX/">
-                                <span class="chip bg-color">NGINX</span>
+                            <a href="/tags/CASE/">
+                                <span class="chip bg-color">CASE</span>
+                            </a>
+                        
+                            <a href="/tags/LINUX/">
+                                <span class="chip bg-color">LINUX</span>
                             </a>
                         
                     </div>
@@ -374,7 +378,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-11-23
+                    2020-11-28
                 </div>
                 
 
@@ -388,14 +392,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    293
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    1 分
                 </div>
                 
 
@@ -405,219 +409,25 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>nginx这款优秀的反向代理服务器，在网站的运行中占的比例越来越高，不管工作中是否用到，都值得去学习一下，一个好的开头必不可少，本文记录一下nginx的安装。</p>
-<h3 id="一、nginx概述"><a href="#一、nginx概述" class="headerlink" title="一、nginx概述"></a>一、nginx概述</h3><p><em>Nginx</em> (engine x) 是一个高性能的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP">HTTP</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/7793488">反向代理</a>web服务器，同时也提供了IMAP/POP3/SMTP服务，nginx能够达到50000次并发，性能优异，且占用内存较小。国内大型的站点，例如百度、京东、新浪、网易、腾讯、淘宝等，都使用了<a target="_blank" rel="noopener" href="http://nginx.org/">nginx</a> .</p>
-<h3 id="二、常用功能"><a href="#二、常用功能" class="headerlink" title="二、常用功能"></a>二、常用功能</h3><ol>
-<li><p>反向代理</p>
-<ul>
-<li> 正向代理：局域网中的客户端(如浏览器)访问Internet，通过配置代理访问，这种代理用户访问网站代理就是正向代理。</li>
-<li> 反向代理：向代理服务器发送请求，反向代理转发到实际服务器，客户端不需要做任何配置。目标服务器对客户端是透明的。</li>
-</ul>
-</li>
-<li><p>负载均衡</p>
-<p>nginx服务器收到请求后，分发到不同的服务器上去处理，提高系统负载的过程，也就是我们所说的负载均衡。</p>
-</li>
-<li><p>Web缓存</p>
-<p>Nginx可以对不同的文件做不同的缓存处理，配置灵活，并且支持FastCGI_Cache，主要用于对FastCGI的动态程序进行缓存。配合着第三方的ngx_cache_purge，对制定的URL缓存内容可以的进行增删管理</p>
-</li>
-</ol>
-<h3 id="三、nginx安装"><a href="#三、nginx安装" class="headerlink" title="三、nginx安装"></a>三、nginx安装</h3><h4 id="YUM安装"><a href="#YUM安装" class="headerlink" title="YUM安装"></a>YUM安装</h4><ol>
-<li>安装先决条件：</li>
-</ol>
-<blockquote>
-<pre><code>sudo yum install yum-utils</code></pre>
-</blockquote>
-<ol start="2">
-<li>若要设置 yum 存储库，请创建具有以下内容命名的文件：<code>/etc/yum.repos.d/nginx.repo</code></li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">[nginx-stable]
-name=nginx stable repo
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
-gpgcheck=1
-enabled=1
-gpgkey=https://nginx.org/keys/nginx_signing.key
-module_hotfixes=true
+                <h3 id="一、创建用户"><a href="#一、创建用户" class="headerlink" title="一、创建用户"></a>一、创建用户</h3><p>创建一个带有家目录，并且可以登录bash的用户</p>
+<pre class=" language-shell"><code class="language-shell">su        //切换root用户创建用户
+useradd -m -s /bin/bash noslime    </code></pre>
+<p>给创建的用户分配密码，并切换到noslime用户</p>
+<pre class=" language-shell"><code class="language-shell">passwd noslime
+su - noslime</code></pre>
+<h3 id="二、赋予root权限"><a href="#二、赋予root权限" class="headerlink" title="二、赋予root权限"></a>二、赋予root权限</h3><p>方案一</p>
+<p>修改/etc/sudoers文件，使得用户noslime免密使用sudo命令</p>
+<pre class=" language-shell"><code class="language-shell">echo "nolime ALL=(ALL:ALL)  NOPASSWD:ALL" >> /etc/sudoers</code></pre>
+<p>方案二</p>
+<p>将用户添加到管理员用户组wheel中去，有的linux发行版，需要将<code>/etc/sudoers</code>文件中以下一行的注释打开：</p>
+<pre class=" language-shell"><code class="language-shell">%wheel  ALL=(ALL)       ALL  //centos 7 8 ubuntu20版本默认打开,看一下不费事</code></pre>
+<p>将用户添加到wheel管理员用户组中</p>
+<pre class=" language-shell"><code class="language-shell">usermod -g wheel noslime   //给用户指定主用户组
+usermod -G wheel noslime   //给用户指定用户组，添加操作，但会去除原有附加组
 
-[nginx-mainline]
-name=nginx mainline repo
-baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=https://nginx.org/keys/nginx_signing.key
-module_hotfixes=true</code></pre>
-</blockquote>
-<ol start="3">
-<li>默认情况下，使用稳定 nginx 包的存储库。如果要使用主线 nginx 包，请运行以下命令：</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">sudo yum-config-manager --enable nginx-mainline</code></pre>
-</blockquote>
-<ol start="4">
-<li>要安装 nginx，请运行以下命令：</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">sudo yum install nginx</code></pre>
-</blockquote>
-<ol start="5">
-<li><p>当提示接受 GPG 密钥时，请验证指纹是否匹配，如果匹配，请接受它。</p>
-<p><code>573B FD6B 3D8F BC64 1079 A6AB ABF5 BD82 7BD9 BF62</code></p>
-</li>
-<li><p>命令手册 例：/usr/bin/nginx -v 查看版本情况</p>
-</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">-?,-h         : this help
--v            : show version and exit
--V            : show version and configure options then exit
--t            : test configuration and exit
--T            : test configuration, dump it and exit
--q            : suppress non-error messages during configuration testing
--s signal     : send signal to a master process: stop, quit, reopen, reload
--p prefix     : set prefix path (default: NONE)
--c filename   : set configuration file (default: conf/nginx.conf)
--g directives : set global directives out of configuration file</code></pre>
-</blockquote>
-<ol start="7">
-<li>YUM安装默认位置：</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">/usr/sbin/nginx   //执行程序位置
-/etc/nginx/  // nginx.conf所在
-/usr/share/nginx  //静态文件
-/var/log/nginx/  //访问记录日志 错误日志
-/var/run/nginx.pid   //进程ID文件</code></pre>
-</blockquote>
-<h4 id="从源包手动编译安装"><a href="#从源包手动编译安装" class="headerlink" title="从源包手动编译安装"></a>从源包手动编译安装</h4><ol>
-<li><p>安装所需依赖</p>
-<ul>
-<li><p>gcc是编程语言编译器，支持c、c++等，而nginx是由C语言编写而成，所以手动安装的编译过程要依赖gcc编译器。</p>
-</li>
-<li><p>pcre库是一组函数，它们使用与 Perl 5 相同的语法和语义实现正则表达式模式匹配，nginx的请求分发需要用到正则匹配。 其中devel代表供开发使用，包括头文件链接库等， 如果安装基于pcre开发的程序，只需要安装pcre包就行了，但编译使用了PCRE库的源代码，则需要pcre-devel。</p>
-</li>
-<li><p>zlib 是通用的压缩库，nginx的压缩模块需要用到，主要对网络传输的资源进行压缩以提高传输效率。</p>
-</li>
-<li><p>nginx涉及到很多加密、解密的功能。如https中需要用到加密解密，所以编译的时候需要使用openssl</p>
-</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">yum install -y gcc pcre-devel zlib-devel openssl-devel  //解决依赖问题</code></pre>
-</blockquote>
-<ol start="2">
-<li>下载并解压nginx程序包</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">wget -P /usr/src https://nginx.org/download/nginx-1.18.0.tar.gz
-tar zxvf nginx-1.18.0.tar.gz</code></pre>
-</blockquote>
-<ol start="3">
-<li><p>进入解压文件夹构建程序</p>
-<p>configure命令作用是分析程序建立环境，检查是否安装了必要的外部工具和组件，</p>
-<p>并创建配置文件makefile，此文件描述了包括最终完成的程序各组件之间的关系和依赖性<br>configure命令有多个可选项，如下所用的–prefix是告诉程序的安装位置<br>如不指定 则./configure –help里面有个path，就是默认安装路径<br>关于nginx的configure更多选项设置 详见 <a target="_blank" rel="noopener" href="http://nginx.org/en/docs/configure.html">Configure</a></p>
-</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">cd nginx-1.18.0
-./configure  --prefix=/usr/local/nginx    </code></pre>
-</blockquote>
-<ol start="4">
-<li>编译与安装</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">$ make && make install </code></pre>
-</blockquote>
-<ol start="5">
-<li>常用命令</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">/usr/local/nginx/sbin/nginx    //启动
-/usr/local/nginx/sbin/nginx -c 具体nginx.conf配置文件路径   //根据指定配置文件启动
-/usr/local/nginx/sbin/nginx -v //查看版本
-/usr/local/nginx/sbin/nginx -s stop //停止
-/usr/local/nginx/sbin/nginx -s reload  //热启动，重新加载配置文件</code></pre>
-</blockquote>
-<ol start="6">
-<li><p>使用systemctl管理nginx</p>
-<p>创建一个nginx.service文件</p>
-</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">touch /usr/lib/systemd/system/nginx.service</code></pre>
-</blockquote>
-<p>​    编辑文件内容为：</p>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">[Unit]
-Description=nginx - high performance web server
-Documentation=http://nginx.org/en/docs/
-After=network-online.target remote-fs.target nss-lookup.target
-Wants=network-online.target
-
-[Service]
-Type=forking
-PIDFile=/var/run/nginx.pid
-ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-ExecReload=/bin/sh -c "/bin/kill -s HUP $(/bin/cat /var/run/nginx.pid)"
-ExecStop=/bin/sh -c "/bin/kill -s TERM $(/bin/cat /var/run/nginx.pid)
-PrivateTmp=true    //设置是否使用私有的tmp目录
-
-[Install]
-WantedBy=multi-user.target</code></pre>
-</blockquote>
-<p>​    常用命令</p>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">systemctl start nginx
-systemctl stop nginx
-systemctl reload nginx
-systemctl status nginx
-
-systemctl enable nginx  //设置开机自启
-systemctl disable nginx  //关闭开机自启</code></pre>
-</blockquote>
-<h3 id="四、开放必要的端口"><a href="#四、开放必要的端口" class="headerlink" title="四、开放必要的端口"></a>四、开放必要的端口</h3><ol>
-<li><p>为nginx开放80端口</p>
-<p> 由于linux默认开启了防火墙，nginx是访问不成功的，如果是个人学习，可以直接关闭防火墙</p>
-</li>
-</ol>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">systemctl stop firewalld</code></pre>
-</blockquote>
-<p>​        否则只开启指定的端口供外部访问，以下为一些端口操作命令</p>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">firewall-cmd --zone=public --add-port=80/tcp --permanent   //永久开放80端口
-firewall-cmd --reload   //重载使之生效
-firewall-cmd --zone= public --query-port=80/tcp   //查看是否开放
-firewall-cmd --zone= public --remove-port=80/tcp --permanent   //删除80端口
-
-firewall-cmd --zone=public --add-port=40000-45000/tcp --permanent  开放一段端口
-firewall-cmd --zone=public --list-ports  //查看开放的端口列表</code></pre>
-</blockquote>
-<p>​        若服务器使用的iptables，则：</p>
-<blockquote>
-<pre class=" language-shell"><code class="language-shell">iptables -I INPUT -p tcp --dport 80 -j ACCEPT   //开放80
-service iptables save  //保存策略
-service iptables restart  //重启防火墙
-iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可以显示规则和相对应的编号</code></pre>
-</blockquote>
-<h3 id="五、赋予用户权限"><a href="#五、赋予用户权限" class="headerlink" title="五、赋予用户权限"></a>五、赋予用户权限</h3><p>大多情况下并不建议使用root用户去操作数据，因此在使用普通用户时可能会遇到一些权限问题，以下步骤帮助用户获取nginx相关的操作权限。</p>
-<ol>
-<li><p>创建用户组</p>
-<pre class=" language-shell"><code class="language-shell">sudo groupadd nginx</code></pre>
-</li>
-<li><p>将当前用户假如nginx用户组</p>
-<pre class=" language-shell"><code class="language-shell">sudo usermod -g nginx username</code></pre>
-</li>
-<li><p>将nginx的权限给nginx用户组的用户</p>
-<pre class=" language-shell"><code class="language-shell">sudo chown -R username:nginx /usr/local/nginx</code></pre>
-</li>
-<li><p>如有必要，给nginx用户组写权限</p>
-<pre class=" language-shell"><code class="language-shell">sudo chmod g+w -R /usr/local/nginx</code></pre>
-</li>
-<li><p>如有必要，授予nginx目录segid权限，做用户组控制</p>
-<pre class=" language-shell"><code class="language-shell">sudo chmod g+s -R /usr/local/nginx</code></pre>
-</li>
-</ol>
+gpasswd -a user_name group_name   //添加用户到组 建议操作
+gpasswd -d user_name group_name   //将用户从指定组中删除</code></pre>
+<p>修改成功后通过<code>groups username</code> 或 <code>id username</code>查看用户的组是否添加成功，添加成功后如无作用，可<strong>重启系统</strong>使之生效，即可使用sudo命令获得管理员权限。</p>
 
             </div>
             <hr/>
@@ -643,7 +453,7 @@ iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://noslime.github.io/articles/2020/2242142311.html">http://noslime.github.io/articles/2020/2242142311.html</a>
+                    <a href="http://noslime.github.io/articles/2020/2209062811.html">http://noslime.github.io/articles/2020/2209062811.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -681,8 +491,12 @@ iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可�
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/NGINX/">
-                                    <span class="chip bg-color">NGINX</span>
+                                <a href="/tags/CASE/">
+                                    <span class="chip bg-color">CASE</span>
+                                </a>
+                            
+                                <a href="/tags/LINUX/">
+                                    <span class="chip bg-color">LINUX</span>
                                 </a>
                             
                         </div>
@@ -856,25 +670,78 @@ iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可�
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/articles/2020/2223212411.html">
+                <a href="/articles/2020/2219062811.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/8.jpg" class="responsive-img" alt="nginx配置文件">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/10.jpg" class="responsive-img" alt="Linux设置静态IP">
                         
-                        <span class="card-title">nginx配置文件</span>
+                        <span class="card-title">Linux设置静态IP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            nginx的配置文件大致可以分为三个部分：全局块、EVENTS块、HTTP块，示意图如下
+                            Linux设置静态IP,以CentOS 7与 Ubuntu 20.04为例
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-24
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-28
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CASE/">
+                        <span class="chip bg-color">CASE</span>
+                    </a>
+                    
+                    <a href="/tags/LINUX/">
+                        <span class="chip bg-color">LINUX</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/articles/2020/2217152711.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/14.jpg" class="responsive-img" alt="NGINX反向代理与负载均衡">
+                        
+                        <span class="card-title">NGINX反向代理与负载均衡</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            nginx的反向代理与负载均衡是我们日常工作中经常用到的功能，并且给我们带来了较大的便利。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -892,59 +759,6 @@ iptables -D INPUT 2  // 删除规则，通过 iptables -L -n --line-number 可�
                     
                     <a href="/tags/NGINX/">
                         <span class="chip bg-color">NGINX</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/articles/2020/5440162111.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/20.jpg" class="responsive-img" alt="正确使用SQL既是优化">
-                        
-                        <span class="card-title">正确使用SQL既是优化</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            很多时候能够正确使用SQL就是一种潜移默化的的优化，本文主要讲一下，索引使用需要注意的地方，常用SQL语句以及设计表时需要注意的一些细节。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-21
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E4%BC%98%E5%8C%96/">
-                        <span class="chip bg-color">优化</span>
-                    </a>
-                    
-                    <a href="/tags/MYSQL/">
-                        <span class="chip bg-color">MYSQL</span>
                     </a>
                     
                 </div>
