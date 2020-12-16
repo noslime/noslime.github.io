@@ -16,7 +16,7 @@ summary: 上次搭建nginx集群，并没有处理keepalived的日志，比较�
 
 ---
 
-s
+
 
 **1.修改/etc/sysconfig/keepalived**
 

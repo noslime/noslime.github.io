@@ -36,8 +36,6 @@ redis> ping
 PONG
 ```
 
-
-
 ### 问题
 
 1. 安装过程中可能出现因为gcc版本过低导致编译失败，需要升级gcc为较新的版本
@@ -76,11 +74,9 @@ make distclean
 
    2.3. 修改权限信息
 
-   ​		
-
    ```shell
-   sudo chmod 777 dump.rdb
+sudo chmod 777 dump.rdb
    sudo chmod 777 /usr/local/redisdir
    ```
-
+   
    
