@@ -385,14 +385,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-11
+                    2020-12-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    219
+                    218
                 </div>
                 
 
@@ -411,7 +411,6 @@
             <div id="articleContent">
                 <p>上次搭建nginx集群，并没有处理keepalived的日志，而keepalived的配置文件默认输出到系统日志<code>/var/log/message</code>中，比较混乱。今天实现日志文件自定义输出位置，以便查看。</p>
 <hr>
-<p>s</p>
 <p><strong>1.修改/etc/sysconfig/keepalived</strong></p>
 <p>将<code>KEEPALIVED_OPTIONS=&quot;-D&quot; </code>修改为<code>KEEPALIVED_OPTIONS=&quot;-D -S 0&quot;</code></p>
 <pre class=" language-text"><code class="language-text"># Options for keepalived. See `keepalived --help' output and keepalived(8) and

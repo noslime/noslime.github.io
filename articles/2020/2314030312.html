@@ -1,0 +1,1929 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="redis命令">
+    <meta name="description" content="一个无聊的人的无聊的站点">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="google-site-verification" content="frymZh9zcb7Hj9m4FFczw8yKVDxbdYbPllXjAvXG-_c" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>redis datatype and command | 曾打发时光</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="曾打发时光" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">曾打发时光</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fab fa-angellist" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">曾打发时光</div>
+        <div class="logo-desc">
+            
+            一个无聊的人的无聊的站点
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-angellist"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">redis datatype and command</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/REDIS/">
+                                <span class="chip bg-color">REDIS</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-12-03
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-12-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    21 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>因为redis的数据类型大都比较简明易懂，也拥有着极其丰富中英文社区文档，所以仅以此文总结下<strong>常用的数据类型</strong>及其操作命令==简介== ，主要目的为学习一遍数据类型及其相关命令，方便今后自己查阅。若要查阅命令详情，请访问<a target="_blank" rel="noopener" href="https://redis.io/commands">redis Commands</a>  或 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands.html">redis 中文</a>。</p>
+<blockquote>
+<p>当前redis版本 ==6.2.0==</p>
+</blockquote>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>redis的数据类型常见的有字符串（String）、哈希表（Hash）、列表（List）、集合（Set）、有序集合（zset）五种，另外还有位图（bitmaps）、HyperLogLogs、Streams。本文主要记录下前五种数据类型及命令简介。</p>
+<hr>
+<h2 id="Redis-keys"><a href="#Redis-keys" class="headerlink" title="Redis keys"></a>Redis keys</h2><p>redis键是二进制安全的，这意味着可以使用任何二进制序列作为键，比如ipg图片或者序列化的对象， 空字符串也是有效的键。</p>
+<p>键允许的最大值为512M。</p>
+<h3 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">TYPE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>TYPE  key</td>
+<td align="left">用于返回 key 所储存的值的类型。</td>
+</tr>
+<tr>
+<td align="left">PEXPIREAT</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>PEXPIREAT key milliseconds-timestamp</td>
+<td align="left">设置 key 到什么时候过期，以毫秒计。</td>
+</tr>
+<tr>
+<td align="left">RENAME</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>RENAME key newkey</td>
+<td align="left">修改 key 的名称</td>
+</tr>
+<tr>
+<td align="left">PERSIST</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>PERSIST  key</td>
+<td align="left">移除 key 的过期时间，key 将持久保持。</td>
+</tr>
+<tr>
+<td align="left">MOVE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>MOVE key db</td>
+<td align="left">将当前数据库的 key 移动到给定的数据库 db 当中。</td>
+</tr>
+<tr>
+<td align="left">RANDOMKEY</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>RANDOMKEY</td>
+<td align="left">从当前数据库中随机返回一个 key 。</td>
+</tr>
+<tr>
+<td align="left">DUMP</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>DUMP  key</td>
+<td align="left">序列化给定 key ，并返回被序列化的值。</td>
+</tr>
+<tr>
+<td align="left">TTL</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>TTL  key</td>
+<td align="left">以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)。</td>
+</tr>
+<tr>
+<td align="left">EXPIRE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>EXPIRE key seconds</td>
+<td align="left">为给定 key 设置过期时间。</td>
+</tr>
+<tr>
+<td align="left">DEL</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>DEL key [key …]</td>
+<td align="left">该命令用于在 key 存在时删除 key。</td>
+</tr>
+<tr>
+<td align="left">PTTL</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>PTTL key</td>
+<td align="left">以毫秒为单位返回 key 的剩余的过期时间。</td>
+</tr>
+<tr>
+<td align="left">RENAMENX</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>RENAMENX key newkey</td>
+<td align="left">仅当 newkey 不存在时，将 key 改名为 newkey 。</td>
+</tr>
+<tr>
+<td align="left">EXISTS</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>EXISTS key [key …]</td>
+<td align="left">判断当前key是否存在</td>
+</tr>
+<tr>
+<td align="left">EXPIREAT</td>
+<td><strong>1.2.0</strong></td>
+<td>O(1)</td>
+<td>EXPIREAT key timestamp</td>
+<td align="left">EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。</td>
+</tr>
+<tr>
+<td align="left">KEYS</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>KEYS pattern</td>
+<td align="left">查找所有符合给定模式( pattern)的 key 。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-Strings"><a href="#Redis-Strings" class="headerlink" title="Redis Strings"></a>Redis Strings</h2><p>字符串是最基本的Redis值。 Redis Strings是二进制安全的，这意味着Redis字符串可以包含任何类型的数据，例如JPEG图像或序列化的JAVA对象。字符串值的长度可以达到最大512兆字节。</p>
+<h3 id="相关命令-1"><a href="#相关命令-1" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SETNX</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SETNX key value</td>
+<td align="left">只有在 key 不存在时设置 key 的值。</td>
+</tr>
+<tr>
+<td align="left">GETRANGE</td>
+<td><strong>2.4.0</strong></td>
+<td>O(N)</td>
+<td>GETRANGE key start end</td>
+<td align="left">返回 key 中字符串值的子字符 起始0，结束-1</td>
+</tr>
+<tr>
+<td align="left">MSET</td>
+<td><strong>1.0.1</strong></td>
+<td>O(N)</td>
+<td>MSET key value [key value …]</td>
+<td align="left">同时设置一个或多个 key-value 对，是原子操作。</td>
+</tr>
+<tr>
+<td align="left">MSETNX</td>
+<td><strong>1.0.1</strong></td>
+<td>O(N)</td>
+<td>MSETNX key value [key value …]</td>
+<td align="left">同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。</td>
+</tr>
+<tr>
+<td align="left">SETEX</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>SETEX key seconds value</td>
+<td align="left">将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。</td>
+</tr>
+<tr>
+<td align="left">PSETEX</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>PSETEX key milliseconds value</td>
+<td align="left">这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间</td>
+</tr>
+<tr>
+<td align="left">SET</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SET key value [EX seconds|PX milliseconds|KEEPTTL] [NX|XX] [GET]</td>
+<td align="left">设置指定 key 的值<br />&gt;= 2.6.12: Added the EX, PX, NX and XX options.<br/>&gt;= 6.0: Added the KEEPTTL option.<br/>&gt;= 6.2: Added the GET option.</td>
+</tr>
+<tr>
+<td align="left">GET</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>GET key</td>
+<td align="left">获取指定 key 的值。</td>
+</tr>
+<tr>
+<td align="left">GETBIT</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>GETBIT key offset</td>
+<td align="left">对 key 所储存的字符串值，获取指定偏移量上的位(bit)。是二进制位的偏移量。</td>
+</tr>
+<tr>
+<td align="left">SETBIT</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>SETBIT key offset value</td>
+<td align="left">对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。是二进制位的偏移量。</td>
+</tr>
+<tr>
+<td align="left">DECR</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>DECR key</td>
+<td align="left">将 key 中储存的数字值减一。</td>
+</tr>
+<tr>
+<td align="left">DECRBY</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>DECRBY key decrement</td>
+<td align="left">key 所储存的值减去给定的减量值（decrement） 。</td>
+</tr>
+<tr>
+<td align="left">STRLEN</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>STRLEN key</td>
+<td align="left">返回 key 所储存的字符串值的长度。</td>
+</tr>
+<tr>
+<td align="left">INCR</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>INCR key</td>
+<td align="left">将 key 中储存的数字值增一。</td>
+</tr>
+<tr>
+<td align="left">Incrby</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>INCRBY key increment</td>
+<td align="left">将 key 所储存的值加上给定的增量值（increment） 。</td>
+</tr>
+<tr>
+<td align="left">INCRBYFLOAT</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>INCRBYFLOAT key increment</td>
+<td align="left">将 key 所储存的值加上给定的浮点增量值（increment） 。</td>
+</tr>
+<tr>
+<td align="left">SETRANGE</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>SETRANGE key offset value</td>
+<td align="left">用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。</td>
+</tr>
+<tr>
+<td align="left">APPEND</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>APPEND key value</td>
+<td align="left">如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。</td>
+</tr>
+<tr>
+<td align="left">GETSET</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>GETSET key value</td>
+<td align="left">将给定 key 的值设为 value ，并返回 key 的旧值(old value)。</td>
+</tr>
+<tr>
+<td align="left">MGET</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>MGET key [key …]</td>
+<td align="left">获取所有(一个或多个)给定 key 的值。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-List"><a href="#Redis-List" class="headerlink" title="Redis List"></a>Redis List</h2><p>Redis lists允许重复值，并且基于Linked Lists实现，。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。LPUSH 命令插入一个新元素到列表头部，而RPUSH命令 插入一个新元素到列表的尾部。当对一个空key执行其中某个命令时，将会创建一个新表。</p>
+<h3 id="相关命令-2"><a href="#相关命令-2" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">LPUSH</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>LPUSH key element [element …]</td>
+<td align="left">将一个或多个值插入到列表头部</td>
+</tr>
+<tr>
+<td align="left">LPUSHX</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>LPUSHX key element [element …]</td>
+<td align="left">将一个或多个值插入到列表头部，当且仅当列表存在时插入</td>
+</tr>
+<tr>
+<td align="left">RPUSH</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>RPUSH key element [element …]</td>
+<td align="left">在列表尾部插入所有指定的值。</td>
+</tr>
+<tr>
+<td align="left">RPUSHX</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>RPUSHX key element [element …]</td>
+<td align="left">只有当键已经存在并持有列表时，才在存储在键的列表尾部插入指定值</td>
+</tr>
+<tr>
+<td align="left">LPOP</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>LPOP key</td>
+<td align="left">移除并返回存储在列表的第一个元素。</td>
+</tr>
+<tr>
+<td align="left">RPOP</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>RPOP key</td>
+<td align="left">移除并返回存储在列表的最后一个元素</td>
+</tr>
+<tr>
+<td align="left">RPOPLPUSH</td>
+<td><strong>1.2.0</strong></td>
+<td>O(1)</td>
+<td>RPOPLPUSH source destination</td>
+<td align="left">移除列表的最后一个元素，并将该元素添加到另一个列表头部并返回</td>
+</tr>
+<tr>
+<td align="left">LREM</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N+M)</td>
+<td>LREM key count element</td>
+<td align="left">移除列表中指定count数量的与element相同的元素<br /> count=0 移除所有相等元素<br /> count&gt;0 从队首开始移除指定个数<br /> count&lt;0 从队尾开始移除指定个数</td>
+</tr>
+<tr>
+<td align="left">LLEN</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>LLEN key</td>
+<td align="left">返回列表长度</td>
+</tr>
+<tr>
+<td align="left">LINDEX</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>LINDEX key index</td>
+<td align="left">返回指定索引的元素</td>
+</tr>
+<tr>
+<td align="left">LINSERT</td>
+<td><strong>2.2.0</strong></td>
+<td>O(N)</td>
+<td>LINSERT key BEFORE|AFTER pivot element</td>
+<td align="left">在指定元素前后插入元素</td>
+</tr>
+<tr>
+<td align="left">LSET</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>LSET key index element</td>
+<td align="left">设置指定索引处的元素</td>
+</tr>
+<tr>
+<td align="left">LRANGE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(S+N)</td>
+<td>LRANGE key start stop</td>
+<td align="left">获取列表指定范围内的元素</td>
+</tr>
+<tr>
+<td align="left">LTRIM</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>LTRIM key start stop</td>
+<td align="left">截取列表，只保留指定范围内的元素</td>
+</tr>
+<tr>
+<td align="left">LPOS</td>
+<td><strong>6.0.6</strong></td>
+<td>O(N)</td>
+<td>LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]</td>
+<td align="left">返回列表中匹配列表的索引，rank指定返回第几个匹配元素的索引，count指定返回几个匹配元素的索引， maxlen指定比较的次数。</td>
+</tr>
+<tr>
+<td align="left">BLPOP</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>BLPOP key [key …] timeout</td>
+<td align="left">该命令返回Redis列表中匹配元素的索引该命令返回Redis列表中匹配元素的索引移除并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td align="left">BRPOP</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>BRPOP key [key …] timeout</td>
+<td align="left">移除并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td align="left">BRPOPLPUSH</td>
+<td><strong>2.2.0</strong></td>
+<td>O(1)</td>
+<td>BRPOPLPUSH source destination timeout</td>
+<td align="left">移除列表的最后一个元素，并将该元素添加到另一个列表头部并返回，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td align="left">LMOVE</td>
+<td><strong>6.2.0</strong></td>
+<td>O(1)</td>
+<td>LMOVE source destination LEFT|RIGHT LEFT|RIGHT</td>
+<td align="left">原子性地返回并移除存储在源中的列表的第一个/最后一个元素，并将元素推送到存储在目标位置的列表的第一个/最后一个元素。<br /> 此命令可以用来代替不太推荐的<code>RPOPLPUSH</code>命令</td>
+</tr>
+<tr>
+<td align="left">BLMOVE</td>
+<td><strong>6.2.0</strong></td>
+<td>O(1)</td>
+<td>BLMOVE source destination LEFT|RIGHT LEFT|RIGHT timeout</td>
+<td align="left">此命令是<code>LMOVE</code>的阻塞变体</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-Hash"><a href="#Redis-Hash" class="headerlink" title="Redis Hash"></a>Redis Hash</h2><p>Redis Hashes是字符串字段和字符串值之间的映射，hash特别适合用于存储对象。类似java里面的Map&lt;String,Object&gt;，每个散列最多可存储(2^32)-1个字段值对（超过40亿）。</p>
+<h3 id="相关命令-3"><a href="#相关命令-3" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">HSET</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>HSET key field value [field value …]</td>
+<td align="left">设置存储在哈希表中一个或多个字段的值</td>
+</tr>
+<tr>
+<td align="left">HSETNX</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>HSETNX key field value</td>
+<td align="left">设置哈希表中一个字段的值，当且仅当字段不存在时起作用。</td>
+</tr>
+<tr>
+<td align="left"><del>HMSET</del></td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HMSET key field value [field value …]</td>
+<td align="left">4.0.0以后已弃用，作用同<code>HSET</code></td>
+</tr>
+<tr>
+<td align="left">HGET</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>HGET key field</td>
+<td align="left">返回存储在键处的哈希中与字段关联的值</td>
+</tr>
+<tr>
+<td align="left">HGETALL</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HGETALL key</td>
+<td align="left">返回存储在键处的哈希的所有字段和值。</td>
+</tr>
+<tr>
+<td align="left">HMGET</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HMGET key field [field …]</td>
+<td align="left">返回存储在哈希中与指定字段关联的一个或多个值。</td>
+</tr>
+<tr>
+<td align="left">HEXISTS</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>HEXISTS key field</td>
+<td align="left">返回字段在哈希中是否存在。1存在 0不存在</td>
+</tr>
+<tr>
+<td align="left">HDEL</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HDEL key field [field …]</td>
+<td align="left">删除哈希表中指定的字段</td>
+</tr>
+<tr>
+<td align="left">HLEN</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>HLEN key</td>
+<td align="left">返回哈希表中字段的数量</td>
+</tr>
+<tr>
+<td align="left">HSTRLEN</td>
+<td><strong>3.2.0</strong></td>
+<td>O(1)</td>
+<td>HSTRLEN key field</td>
+<td align="left">返回存储在键处的哈希中与字段关联的值的字符串长度。如果键或字段不存在，则返回0。</td>
+</tr>
+<tr>
+<td align="left">HINCRBY</td>
+<td><strong>2.0.0</strong></td>
+<td>O(1)</td>
+<td>HINCRBY key field increment</td>
+<td align="left">为哈希表 key 中的指定字段的整数值加上增量 increment 。返回增长后的值</td>
+</tr>
+<tr>
+<td align="left">HINCRBYFLOAT</td>
+<td><strong>2.6.0</strong></td>
+<td>O(1)</td>
+<td>HINCRBYFLOAT key field increment</td>
+<td align="left">为哈希表 key 中的指定字段的浮点数值加上增量 increment 。</td>
+</tr>
+<tr>
+<td align="left">HKEYS</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HKEYS key</td>
+<td align="left">返回存储在哈希表中所有的字段名称</td>
+</tr>
+<tr>
+<td align="left">HVALS</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)</td>
+<td>HVALS key</td>
+<td align="left">返回存储在哈希表中所有的字段的值</td>
+</tr>
+<tr>
+<td align="left">HSCAN</td>
+<td><strong>2.8.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>HSCAN key cursor [MATCH pattern] [COUNT count]</td>
+<td align="left">用于迭代哈希中的键值对。数据量较小时count不工作。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-Set"><a href="#Redis-Set" class="headerlink" title="Redis Set"></a>Redis Set</h2><p>Redis集合是一个无序的字符串合集。它是通过HashTable实现的，你可以以<strong>O(1)</strong> 的时间复杂度完成 添加、删除以及测试元素是否存在的操作。</p>
+<h3 id="相关命令-4"><a href="#相关命令-4" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SADD</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>SADD key member [member …]</td>
+<td align="left">向集合中添加一个或多个元素</td>
+</tr>
+<tr>
+<td align="left">SISMEMBER</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SISMEMBER key member</td>
+<td align="left">判断元素是否是集合的成员</td>
+</tr>
+<tr>
+<td align="left">SPOP</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SPOP key [count]</td>
+<td align="left">移除并返回集合中的一个或指定数量随机元素</td>
+</tr>
+<tr>
+<td align="left">SRANDMEMBER</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>SRANDMEMBER key [count]</td>
+<td align="left">随机访问集合中的一个或指定数量随机元素并返回</td>
+</tr>
+<tr>
+<td align="left">SREM</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SREM key member [member …]</td>
+<td align="left">移除列出的元素</td>
+</tr>
+<tr>
+<td align="left">SMOVE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SMOVE source destination member</td>
+<td align="left">将一个集合中的指定元素移动到另一个集合中去</td>
+</tr>
+<tr>
+<td align="left">SCARD</td>
+<td><strong>1.0.0</strong></td>
+<td>O(1)</td>
+<td>SCARD key</td>
+<td align="left">获取集合的成员数</td>
+</tr>
+<tr>
+<td align="left">SMEMBERS</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SMEMBERS key</td>
+<td align="left">返回集合中的所有成员</td>
+</tr>
+<tr>
+<td align="left">SSCAN</td>
+<td><strong>2.8.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>SSCAN key cursor [MATCH pattern] [COUNT count]</td>
+<td align="left">迭代集合中的元素</td>
+</tr>
+<tr>
+<td align="left">SINTER</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N*M)</td>
+<td>SINTER key [key …]</td>
+<td align="left">返回给定所有集合的交集</td>
+</tr>
+<tr>
+<td align="left">SINTERSTORE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N*M)</td>
+<td>SINTERSTORE destination key [key …]</td>
+<td align="left">返回给定所有集合的交集并存储在 destination 中</td>
+</tr>
+<tr>
+<td align="left">SUNION</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SUNION key [key …]</td>
+<td align="left">返回给定所有集合的并集</td>
+</tr>
+<tr>
+<td align="left">SUNIONSTORE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SUNIONSTORE destination key [key …]</td>
+<td align="left">返回给定所有集合的并集并存储在 destination 中</td>
+</tr>
+<tr>
+<td align="left">SDIFF</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SDIFF key [key …]</td>
+<td align="left">返回给定所有集合的差集，只返回第一个集合的差集</td>
+</tr>
+<tr>
+<td align="left">SDIFFSTORE</td>
+<td><strong>1.0.0</strong></td>
+<td>O(N)</td>
+<td>SDIFFSTORE destination key [key …]</td>
+<td align="left">返回给定所有集合的差集并存储在 destination 中</td>
+</tr>
+<tr>
+<td align="left">SMISMEMBER</td>
+<td><strong>6.2.0</strong></td>
+<td>O(N)</td>
+<td>SMISMEMBER key member [member …]</td>
+<td align="left">返回每个成员是否是存储在集合的成员。 对于每个成员，如果值是集合的成员，则返回1，如果元素不是集合的成员，或者如果键不存在，则返回0。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-Sorted-sets"><a href="#Redis-Sorted-sets" class="headerlink" title="Redis Sorted sets"></a>Redis Sorted sets</h2><p>类似Sets,但是每个字符串元素都关联到一个叫<em>score</em>浮动数值（floating number value）。里面的元素总是通过score进行着排序，其中zset的成员是唯一的，但分数（score）却可以重复。</p>
+<h3 id="相关命令-5"><a href="#相关命令-5" class="headerlink" title="相关命令"></a>相关命令</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>起始版本</th>
+<th>时间复杂度</th>
+<th>基本语法</th>
+<th align="left">简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ZADD</td>
+<td><strong>1.2.0</strong></td>
+<td>O(log(N))</td>
+<td>ZADD key [NX|XX] [GT|LT] [CH] [INCR] score member [score member …]</td>
+<td align="left">将具有指定分数的所有指定成员添加到存储在键处的有序集中。<br />&gt;=2.4：接受多个元素。在2.4版之前的Redis版本中，每次调用都只能添加或更新一个成员。<br/>&gt;=3.0.2：增加了XX、NX、CH和INCR选项。<br/>&gt;=6.2:添加了GT和LT选项。</td>
+</tr>
+<tr>
+<td align="left">ZSCORE</td>
+<td><strong>1.2.0</strong></td>
+<td>O(1)</td>
+<td>ZSCORE key member</td>
+<td align="left">返回有序集合中单个成员的分数</td>
+</tr>
+<tr>
+<td align="left">ZMSCORE</td>
+<td><strong>6.2.0</strong></td>
+<td>O(N)</td>
+<td>ZMSCORE key member [member …]</td>
+<td align="left">返回有序集合中一个或多个成员的分数</td>
+</tr>
+<tr>
+<td align="left">ZRANK</td>
+<td><strong>2.0.0</strong></td>
+<td>O(log(N))</td>
+<td>ZRANK key member</td>
+<td align="left">返回有序集合中指定成员的索引</td>
+</tr>
+<tr>
+<td align="left">ZINCRBY</td>
+<td><strong>1.2.0</strong></td>
+<td>O(log(N))</td>
+<td>ZINCRBY key increment member</td>
+<td align="left">有序集合中对指定成员的分数加上增量 increment</td>
+</tr>
+<tr>
+<td align="left">ZCARD</td>
+<td><strong>1.2.0</strong></td>
+<td>O(1)</td>
+<td>ZCARD key</td>
+<td align="left">获取有序集合的成员数</td>
+</tr>
+<tr>
+<td align="left">ZCOUNT</td>
+<td><strong>2.0.0</strong></td>
+<td>O(log(N))</td>
+<td>ZCOUNT key min max</td>
+<td align="left">计算在有序集合中指定区间分数的成员数</td>
+</tr>
+<tr>
+<td align="left">ZLEXCOUNT</td>
+<td><strong>2.8.9</strong></td>
+<td>O(log(N))</td>
+<td>ZLEXCOUNT key min max</td>
+<td align="left">在有序集合中计算指定字典区间内成员数量</td>
+</tr>
+<tr>
+<td align="left">ZRANGE</td>
+<td><strong>1.2.0</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZRANGE key start stop [WITHSCORES]</td>
+<td align="left">返回存储在键处的排序集中的指定元素范围。</td>
+</tr>
+<tr>
+<td align="left">ZRANGEBYLEX</td>
+<td><strong>2.8.9</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZRANGEBYLEX key min max [LIMIT offset count]</td>
+<td align="left">ZRANGEBYLEX 返回指定成员区间内的成员，按成员字典正序排序, 分数必须相同。</td>
+</tr>
+<tr>
+<td align="left">ZRANGEBYSCORE</td>
+<td><strong>1.0.5</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</td>
+<td align="left">通过分数返回有序集合指定区间内的成员</td>
+</tr>
+<tr>
+<td align="left">ZREVRANGE</td>
+<td><strong>1.2.0</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREVRANGE key start stop [WITHSCORES]</td>
+<td align="left">返回有序集中指定区间内的成员，通过索引，分数从高到底</td>
+</tr>
+<tr>
+<td align="left">ZREVRANGEBYLEX</td>
+<td><strong>2.8.9</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREVRANGEBYLEX key max min [LIMIT offset count]</td>
+<td align="left">ZREVRANGEBYLEX 返回指定成员区间内的成员，按成员字典倒序排序, 分数必须相同。</td>
+</tr>
+<tr>
+<td align="left">ZREVRANGEBYSCORE</td>
+<td><strong>2.2.0</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</td>
+<td align="left">返回有序集合中指定分数区间内的成员，分数由高到低排序。</td>
+</tr>
+<tr>
+<td align="left">ZREVRANK</td>
+<td><strong>2.0.0</strong></td>
+<td>O(log(N))</td>
+<td>ZREVRANK key member</td>
+<td align="left">返回有序集合中指定成员的索引，有序集成员按分数值递减(从大到小)排序</td>
+</tr>
+<tr>
+<td align="left">ZREM</td>
+<td><strong>1.2.0</strong></td>
+<td>O(M*log(N))</td>
+<td>ZREM key member [member …]</td>
+<td align="left">从存储在键处的有序集中移除指定的成员。</td>
+</tr>
+<tr>
+<td align="left">ZREMRANGEBYSCORE</td>
+<td><strong>1.2.0</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREMRANGEBYSCORE key min max</td>
+<td align="left">移除有序集合中给定的分数区间的所有成员</td>
+</tr>
+<tr>
+<td align="left">ZREMRANGEBYLEX</td>
+<td><strong>2.8.9</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREMRANGEBYLEX key min max</td>
+<td align="left">移除有序集合中给定的字典区间的所有成员</td>
+</tr>
+<tr>
+<td align="left">ZREMRANGEBYRANK</td>
+<td><strong>2.0.0</strong></td>
+<td>O(log(N)+M)</td>
+<td>ZREMRANGEBYRANK key start stop</td>
+<td align="left">移除有序集合中给定的索引区间的所有成员</td>
+</tr>
+<tr>
+<td align="left">ZPOPMAX</td>
+<td><strong>5.0.0</strong></td>
+<td>O(log(N)*M)</td>
+<td>ZPOPMAX key [count]</td>
+<td align="left">删除并返回最多count个排序集中得分最高的成员。</td>
+</tr>
+<tr>
+<td align="left">ZPOPMIN</td>
+<td><strong>5.0.0</strong></td>
+<td>O(log(N)*M)</td>
+<td>ZPOPMIN key [count]</td>
+<td align="left">删除并返回最多count个排序集中得分最低的成员。</td>
+</tr>
+<tr>
+<td align="left">BZPOPMAX</td>
+<td><strong>5.0.0</strong></td>
+<td>O(log(N))</td>
+<td>BZPOPMAX key [key …] timeout</td>
+<td align="left"><code>BZPOPMAX</code>是有序集合<code>ZPOPMAX</code>原语的阻塞版本。</td>
+</tr>
+<tr>
+<td align="left">BZPOPMIN</td>
+<td><strong>5.0.0</strong></td>
+<td>O(log(N))</td>
+<td>BZPOPMIN key [key …] timeout</td>
+<td align="left"><code>BZPOPMIN</code>是有序集合<code>ZPOPMIN</code>原语的阻塞版本。</td>
+</tr>
+<tr>
+<td align="left">ZUNION</td>
+<td><strong>6.2.0</strong></td>
+<td>O(N)+O(M*log(M))</td>
+<td>ZUNION numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX] [WITHSCORES]</td>
+<td align="left">计算给定的一个或多个有序集的并集</td>
+</tr>
+<tr>
+<td align="left">ZUNIONSTORE</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N)+O(M log(M))</td>
+<td>ZUNIONSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</td>
+<td align="left">计算给定的一个或多个有序集的并集，并存储在新的有序集合中</td>
+</tr>
+<tr>
+<td align="left">ZINTER</td>
+<td><strong>6.2.0</strong></td>
+<td>O(N<em>K)+O(M</em>log(M))</td>
+<td>ZINTER numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX] [WITHSCORES]</td>
+<td align="left">计算给定的一个或多个有序集的交集</td>
+</tr>
+<tr>
+<td align="left">ZINTERSTORE</td>
+<td><strong>2.0.0</strong></td>
+<td>O(N<em>K)+O(M</em>log(M))</td>
+<td>ZINTERSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</td>
+<td align="left">计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合中</td>
+</tr>
+<tr>
+<td align="left">ZDIFF</td>
+<td><strong>6.2.0</strong></td>
+<td>O(L + (N-K)log(N))</td>
+<td>ZDIFF numkeys key [key …] [WITHSCORES]</td>
+<td align="left">计算给定的一个或多个有序集的差集</td>
+</tr>
+<tr>
+<td align="left">ZDIFFSTORE</td>
+<td><strong>6.2.0</strong></td>
+<td>O(L + (N-K)log(N))</td>
+<td>ZDIFFSTORE destination numkeys key [key …]</td>
+<td align="left">计算给定的一个或多个有序集的差集并将结果集存储在新的有序集合中</td>
+</tr>
+<tr>
+<td align="left">ZSCAN</td>
+<td><strong>2.8.0</strong></td>
+<td>O(1) or O(N)</td>
+<td>ZSCAN key cursor [MATCH pattern] [COUNT count]</td>
+<td align="left">迭代有序集合中的元素（包括元素成员和元素分值）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-Bitmaps"><a href="#Redis-Bitmaps" class="headerlink" title="Redis Bitmaps"></a>Redis Bitmaps</h2><p>位图不是实际的数据类型，而是在字符串类型上定义的一组面向位的操作。由于字符串是二进制安全blob，其最大长度为512MB，因此它们适合设置多达232个不同的位。<br>位操作分为两组：恒定时间的单位操作，如将位设置为1或0，或获取其值，以及对位组的操作，例如在给定的位范围内计算设定位的数量（例如，总体计数）。<br>位图的最大优点之一是，在存储信息时，它们通常可以极大地节省空间。例如，在一个用递增的用户id表示不同用户的系统中，仅使用512MB内存就可以记住40亿用户的一个比特信息（例如，知道用户是否希望接收新闻稿）。</p>
+<h2 id="Redis-HyperLogLogs"><a href="#Redis-HyperLogLogs" class="headerlink" title="Redis HyperLogLogs"></a>Redis HyperLogLogs</h2><p>Redis HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定 的、并且是很小的。</p>
+<p>在 Redis 里面，每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基 数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。</p>
+<p>但是，因为 HyperLogLog 只会根据输入元素来计算基数，而不会储存输入元素本身，所以 HyperLogLog 不能像集合那样，返回输入的各个元素。</p>
+<h2 id="Redis-Streams"><a href="#Redis-Streams" class="headerlink" title="Redis Streams"></a>Redis Streams</h2><p>Stream是Redis 5.0版本引入的一个新的数据类型，它以更抽象的方式模拟<em>日志数据结构</em>，但日志仍然是完整的：就像一个日志文件，通常实现为以只附加模式打开的文件，Redis流主要是一个仅附加数据结构。至少从概念上来讲，因为Redis流是一种在内存表示的抽象数据类型，他们实现了更加强大的操作，以此来克服日志文件本身的限制。</p>
+<p>Stream是Redis的数据类型中最复杂的，尽管数据类型本身非常简单，它实现了额外的非强制性的特性：提供了一组允许消费者以阻塞的方式等待生产者向Stream中发送的新消息，此外还有一个名为<strong>消费者组</strong>的概念。</p>
+<p>消费者组最早是由名为Kafka（TM）的流行消息系统引入的。Redis用完全不同的术语重新实现了一个相似的概念，但目标是相同的：允许一组客户端相互配合来消费同一个Stream的不同部分的消息。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">noslime</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://noslime.github.io/articles/2020/2314030312.html">http://noslime.github.io/articles/2020/2314030312.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">noslime</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/REDIS/">
+                                    <span class="chip bg-color">REDIS</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">心情好,投食博主~~</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/articles/2020/2206060612.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/8.jpg" class="responsive-img" alt="NGINX限流">
+                        
+                        <span class="card-title">NGINX限流</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            限流（rate limiting）是NGINX众多特性中的重要特性之一。该特性可以限制某个用户在一个给定时间段内能够产生的HTTP请求数以及请求的处理速率
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NGINX/">
+                        <span class="chip bg-color">NGINX</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/articles/2020/2214010312.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/7.jpg" class="responsive-img" alt="REDIS安装">
+                        
+                        <span class="card-title">REDIS安装</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            简要介绍redis数据库在linux下的安装
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/REDIS/">
+                        <span class="chip bg-color">REDIS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('4'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020</span>
+            
+            <a href="/about" target="_blank">noslime</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/noslime" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:silenceleafl@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2550113620" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2550113620" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/canvas-nest.js"></script>
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.8'
+        zIndex="-1" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
