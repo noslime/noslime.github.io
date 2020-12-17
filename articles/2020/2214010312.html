@@ -381,14 +381,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-16
+                    2020-12-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    291
+                    229
                 </div>
                 
 
@@ -416,35 +416,33 @@ $ make install </code></pre>
 <pre class=" language-shell"><code class="language-shell">$ redis-cli
 redis> ping
 PONG</code></pre>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
-<li>安装过程中可能出现因为gcc版本过低导致编译失败，需要升级gcc为较新的版本</li>
-</ol>
-<pre class=" language-shell"><code class="language-shell">sudo yum install centos-release-scl
+<h3 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h3><h4 id="未安装GCC"><a href="#未安装GCC" class="headerlink" title="未安装GCC"></a>未安装GCC</h4><pre class=" language-shell"><code class="language-shell"># cc: command not found
+sudo yum install gcc</code></pre>
+<h4 id="默认内存分配器错误"><a href="#默认内存分配器错误" class="headerlink" title="默认内存分配器错误"></a>默认内存分配器错误</h4><pre class=" language-shell"><code class="language-shell"># fatal error: jemalloc/jemalloc.h: No such file or directory
+sudo make MALLOC=libc</code></pre>
+<h4 id="gcc版本过低"><a href="#gcc版本过低" class="headerlink" title="gcc版本过低"></a>gcc版本过低</h4><pre class=" language-shell"><code class="language-shell"># error: expected specifier-qualifier-list before ‘_Atomic’
+sudo yum install centos-release-scl
 sudo yum install devtoolset-8-gcc*
 scl enable devtoolset-8 bash
-//然后清理下错误编译
+# 然后清理下错误编译
 make distclean</code></pre>
-<ol start="2">
-<li><p>无法正常关闭redis服务</p>
-<p>错误信息</p>
+<h4 id="无法正常关闭redis服务"><a href="#无法正常关闭redis服务" class="headerlink" title="无法正常关闭redis服务"></a>无法正常关闭redis服务</h4><ul>
+<li>客户端报错</li>
+</ul>
 <blockquote>
 <p>127.0.0.1:6379&gt; SHUTDOWN<br>(error) ERR Errors trying to SHUTDOWN. Check logs.</p>
 </blockquote>
-<p>2.1. 由于默认日志是输入到标准输出的， 创建日志文件并修改配置文件</p>
-<blockquote>
-<p>mkdir /var/log/redis<br>touch /var/log/redis/redis.log</p>
-<p>在redis.conf中的配置日志路径<br>logfile “/var/log/redis/redis.log”</p>
-</blockquote>
-<p>2.2. 查看日志后，发现错误信息如下</p>
+<ul>
+<li>日志信息</li>
+</ul>
 <blockquote>
 <p>User requested shutdown…<br>Saving the final RDB snapshot before exiting.<br>Failed opening the RDB file dump.rdb (in server root dir /usr/local/redis-6.0.9) for saving: Permission denied<br>Error trying to save the DB, can’t exit.</p>
-<p>可见是由于dump.rdb文件没有写权限</p>
 </blockquote>
-<p>2.3. 修改权限信息</p>
+<ul>
+<li>修改权限信息</li>
+</ul>
 <pre class=" language-shell"><code class="language-shell">sudo chmod 777 dump.rdb
 sudo chmod 777 /usr/local/redisdir</code></pre>
-</li>
-</ol>
 
             </div>
             <hr/>
