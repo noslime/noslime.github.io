@@ -5,7 +5,9 @@ author: noslime
 top: true
 cover: true
 categories: 后端
-tags: NGINX
+tags: 
+	- NGINX
+	- CONFIG
 keywords: nginx配置文件
 summary: nginx的配置文件介绍，nginx的配置文件大致可以分为三个部分
 ---
