@@ -418,7 +418,7 @@
 <h2 id="配置简介"><a href="#配置简介" class="headerlink" title="配置简介"></a>配置简介</h2><p>Redis可以在没有配置文件的情况下通过内置的配置来启动，但是这种启动方式只适用于开发和测试。合理的配置Redis的方式是提供一个Redis配置文件，这个文件通常叫做 <code>redis.conf</code>，一般就在Redis安装目录下。 </p>
 <p>对于配置文件的修改配置，除手动修改配置文件外，从Redis 2.8开始，可以使用<a target="_blank" rel="noopener" href="https://redis.io/commands/config-rewrite">CONFIG REWRITE</a>，它会自动扫描redis.conf版归档并更新与当前配置值不匹配的字段。不添加不存在但设置为默认值的字段。配置文件中的注释将被保留。</p>
 <p>以下为<strong>6.0</strong>版本的配置文件概览（依据配置块在配置文件中出现先后排序）</p>
-<p><img src="C:\Users\silen\Desktop\REDIS-CONFIG.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/REDIS-CONFIG.png"></p>
 <h2 id="配置块介绍"><a href="#配置块介绍" class="headerlink" title="配置块介绍"></a>配置块介绍</h2><p>Redis完整的配置文件正如上图所示大致可以分为24部分，本文将根据复杂度，与本人理解详细介绍一部分，有些配置可能会一笔带过。开始之前，先介绍下redis的单位表示，其中符号对大小写不敏感</p>
 <pre class=" language-text"><code class="language-text">1k => 1000 bytes
 1kb => 1024 bytes
