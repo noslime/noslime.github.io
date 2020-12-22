@@ -25,7 +25,7 @@ Redis可以在没有配置文件的情况下通过内置的配置来启动，但
 
 以下为**6.0**版本的配置文件概览（依据配置块在配置文件中出现先后排序）
 
-![](C:\Users\silen\Desktop\REDIS-CONFIG.png)
+![](https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/REDIS-CONFIG.png)
 
 ## 配置块介绍
 
