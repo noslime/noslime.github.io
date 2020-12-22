@@ -1,0 +1,1695 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="redis配置文件">
+    <meta name="description" content="一个无聊的人的无聊的站点">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="google-site-verification" content="frymZh9zcb7Hj9m4FFczw8yKVDxbdYbPllXjAvXG-_c" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Redis 配置文件 | 曾打发时光</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="曾打发时光" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">曾打发时光</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fab fa-angellist" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">曾打发时光</div>
+        <div class="logo-desc">
+            
+            一个无聊的人的无聊的站点
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-angellist"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Redis 配置文件</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/REDIS/">
+                                <span class="chip bg-color">REDIS</span>
+                            </a>
+                        
+                            <a href="/tags/NOSQL/">
+                                <span class="chip bg-color">NOSQL</span>
+                            </a>
+                        
+                            <a href="/tags/CONFIG/">
+                                <span class="chip bg-color">CONFIG</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-12-17
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-12-22
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    16 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>本文总结下redis常用配置项, 现在软件开发中好多技术都是约定先于配置，而配置又大于编码。而想要掌握一门技术，掌握其配置文件是极其必要的。同时在实际生产环境中，正确的配置往往可以大大提高系统的可用性。</p>
+<hr>
+<h2 id="配置简介"><a href="#配置简介" class="headerlink" title="配置简介"></a>配置简介</h2><p>Redis可以在没有配置文件的情况下通过内置的配置来启动，但是这种启动方式只适用于开发和测试。合理的配置Redis的方式是提供一个Redis配置文件，这个文件通常叫做 <code>redis.conf</code>，一般就在Redis安装目录下。 </p>
+<p>对于配置文件的修改配置，除手动修改配置文件外，从Redis 2.8开始，可以使用<a target="_blank" rel="noopener" href="https://redis.io/commands/config-rewrite">CONFIG REWRITE</a>，它会自动扫描redis.conf版归档并更新与当前配置值不匹配的字段。不添加不存在但设置为默认值的字段。配置文件中的注释将被保留。</p>
+<p>以下为<strong>6.0</strong>版本的配置文件概览（依据配置块在配置文件中出现先后排序）</p>
+<p><img src="C:\Users\silen\Desktop\REDIS-CONFIG.png"></p>
+<h2 id="配置块介绍"><a href="#配置块介绍" class="headerlink" title="配置块介绍"></a>配置块介绍</h2><p>Redis完整的配置文件正如上图所示大致可以分为24部分，本文将根据复杂度，与本人理解详细介绍一部分，有些配置可能会一笔带过。开始之前，先介绍下redis的单位表示，其中符号对大小写不敏感</p>
+<pre class=" language-text"><code class="language-text">1k => 1000 bytes
+1kb => 1024 bytes
+1m => 1000000 bytes
+1mb => 1024*1024 bytes
+1g => 1000000000 bytes
+1gb => 1024*1024*1024 bytes</code></pre>
+<h3 id="Redis-include"><a href="#Redis-include" class="headerlink" title="Redis include"></a>Redis include</h3><p><strong>1、include</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：配置文件所在位置</p>
+</li>
+<li><p>说明：Redis可以包含进来其他的配置文件片段，其中Redis指令后出现的会覆盖先出现的指令，所以可以根据需要选择include块所在的位置。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">include /path/to/local.conf
+include /path/to/other.conf</code></pre>
+</li>
+</ul>
+<h3 id="Redis-modules"><a href="#Redis-modules" class="headerlink" title="Redis modules"></a>Redis modules</h3><p><strong>1、loadmodule</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：加载功能模块文件的具体位置</p>
+</li>
+<li><p>说明：Redis 模块功能通过使用外部模块来扩展 Redis 功能，Redis可以根据需要在启动时加载模块。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">loadmodule /path/to/my_module.so
+loadmodule /path/to/other_module.so</code></pre>
+</li>
+</ul>
+<h3 id="Redis-NETWORK"><a href="#Redis-NETWORK" class="headerlink" title="Redis NETWORK"></a>Redis NETWORK</h3><p><strong>1、bind</strong> </p>
+<ul>
+<li><p>默认：<code>127.0.0.1</code></p>
+</li>
+<li><p>取值：本机网卡所在的IP地址，其中两个特殊值<code>127.0.0.1</code>代表只能本机访问，<code>0.0.0.0</code>代表本机所有地址</p>
+</li>
+<li><p>说明：绑定指令设置redis接受请求来源于哪个网络接口（网卡），可以绑定多个。若不设置则来自任意网络接口的请求均可访问。默认设置为只能本机访问。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"># 本机访问
+bind 127.0.0.1
+# 全都能访问
+bind 0.0.0.0</code></pre>
+</li>
+<li><p>补充：由于redis侧重点在于性能响应速度，此配置并不能细粒度地控制外网指定IP访问，只能设置本机能访问或全部都能访问。若要设置指定IP，可通过添加防火墙规则进行控制</p>
+<pre class=" language-shell"><code class="language-shell">firewall-cmd  --add-rich-rule="rule family="ipv4" source address="192.168.1.25" port protocol="tcp" port="80" accept" --permanent
+systemctl restart firewalld.service</code></pre>
+</li>
+</ul>
+<p><strong>2、protected-mode</strong></p>
+<ul>
+<li><p>默认：yes 即开启</p>
+</li>
+<li><p>取值：yes 或 no</p>
+</li>
+<li><p>说明：保护模式默认是开启的，但只有没有绑定网络接口，而且没有设置访问密码的情况下，保护模式才发挥效用</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">protected-mode yes</code></pre>
+</li>
+</ul>
+<p><strong>3、port</strong></p>
+<ul>
+<li><p>默认：6379</p>
+</li>
+<li><p>取值：1024 - 65535之间的可用端口即可</p>
+</li>
+<li><p>顾名思义，即redis对外提供服务的端口号</p>
+<pre class=" language-text"><code class="language-text">port 6379</code></pre>
+</li>
+</ul>
+<p><strong>4、tcp-backlog</strong></p>
+<ul>
+<li><p>默认：511</p>
+</li>
+<li><p>取值：合适的队列长度即可</p>
+</li>
+<li><p>说明：此参数用来配置完成tcp三次握手队列的长度，用于应对高并发的环境，虽然默认设置为511，但会受到Linux内核参数somaxconn的限制。若不进行修改，redis启动会有以下警告，提示该参数未发挥作用</p>
+<pre class=" language-text"><code class="language-text">WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</code></pre>
+<p>可以手动修改somaxconn的值，以使配置生效</p>
+<p><em>临时设置</em>：</p>
+<p><code>echo 1024 &gt; /proc/sys/net/core/somaxconn </code></p>
+<p><em>永久设置</em>：</p>
+<p>在<code>/etc/sysctl.conf</code>中添加一行配置：<code>net.core.somaxconn = 1024</code></p>
+<p>然后执行命令<code>sysctl -p</code>，使之永久生效</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">tcp-backlog 511</code></pre>
+</li>
+</ul>
+<p><strong>5、unixsocket</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：redis sock文件的存储位置</p>
+</li>
+<li><p>说明：默认redis的连接方式是TCP，我们还可以让 Redis 以 Unix Socket 的方式运行，以避免 TCP/IP 的性能瓶颈，在高访问场景往往能够实现不错的性能提升。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">unixsocket /tmp/redis.sock</code></pre>
+</li>
+</ul>
+<p><strong>6、unixsocketperm</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：linux权限码</p>
+</li>
+<li><p>说明：Unix socket文件的权限</p>
+<pre class=" language-text"><code class="language-text">unixsocketperm 700</code></pre>
+</li>
+</ul>
+<p><strong>7、timeout</strong></p>
+<ul>
+<li><p>默认：0 </p>
+</li>
+<li><p>取值：一个合适的整数值</p>
+</li>
+<li><p>说明：客户端空闲时，是否设置超时时间，0表示不设置。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"># Close the connection after a client is idle for N seconds (0 to disable)
+timeout 0</code></pre>
+</li>
+</ul>
+<p><strong>8、tcp-keepalive</strong></p>
+<ul>
+<li><p>默认：300</p>
+</li>
+<li><p>取值：一个合适的整数值</p>
+</li>
+<li><p>设置redis客户端tcp的保活时间，在指定时间内会一直探测连接是否存活，官方建议300.</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">tcp-keepalive 300</code></pre>
+</li>
+</ul>
+<h3 id="Redis-TLS-SSL"><a href="#Redis-TLS-SSL" class="headerlink" title="Redis TLS/SSL"></a>Redis TLS/SSL</h3><p>配置redis加密传输，此部分需要掌握SSL协议，熟悉对称与非对称加解密算法等。详细可见<a target="_blank" rel="noopener" href="https://redis.io/topics/encryption">encryption</a>，文档描写的很详细。</p>
+<h3 id="Redis-GENERAL"><a href="#Redis-GENERAL" class="headerlink" title="Redis GENERAL"></a>Redis GENERAL</h3><p>redis的通用模块</p>
+<p><strong>1、daemonize</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes|no</p>
+</li>
+<li><p>说明：redis服务默认是运行在前台的，可以通过设置让他以守护进程运行在后台。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">daemonize yes</code></pre>
+</li>
+</ul>
+<p><strong>2、supervisor</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：no|upstart|systemd|auto</p>
+</li>
+<li><p>说明：设置redis进程管理程序，可选项有<code>upstart</code> 和<code>systemd</code>以及根据系统环境自动检测，默认关闭。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">supervised no</code></pre>
+</li>
+</ul>
+<p><strong>3、pidfile</strong></p>
+<ul>
+<li><p>默认：<code>/var/run/redis_6379.pid</code></p>
+</li>
+<li><p>取值：pid文件的具体位置</p>
+</li>
+<li><p>说明：进程id文件所在位置。如果指定，服务启动时创建，停止时销毁。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">pidfile /var/run/redis_6379.pid</code></pre>
+</li>
+</ul>
+<p><strong>4、loglevel</strong></p>
+<ul>
+<li><p>默认： notice</p>
+</li>
+<li><p>取值：debug|verbose|notice|warning</p>
+</li>
+<li><p>说明：redis服务日志的级别，以上四个取值日志详实度从左到右递减，一般生产环境，notice即可。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">loglevel notice</code></pre>
+</li>
+</ul>
+<p><strong>5、logfile</strong></p>
+<ul>
+<li><p>默认：””</p>
+</li>
+<li><p>取值：日志文件的位置</p>
+</li>
+<li><p>说明：日志文件的名称，可以带有绝对路径</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"> logfile "/var/log/redis/redis.log"</code></pre>
+</li>
+</ul>
+<p><strong>6、syslog-enabled</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：yes|no</p>
+</li>
+<li><p>说明：是否将日志记录进系统日志</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">syslog-enabled no</code></pre>
+</li>
+</ul>
+<p><strong>7、syslog-ident</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：系统日志标识ID，一般为应用程序名称</p>
+</li>
+<li><p>说明：指定系统日志标识。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">syslog-ident redis</code></pre>
+</li>
+</ul>
+<p><strong>8、syslog-facility</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：Must be USER or between LOCAL0-LOCAL7</p>
+</li>
+<li><p>说明：指定redis系统日志的设备</p>
+</li>
+<li><p>示例</p>
+<pre class=" language-text"><code class="language-text">syslog-facility local0</code></pre>
+</li>
+</ul>
+<p><strong>9、databases</strong></p>
+<ul>
+<li><p>默认：16</p>
+</li>
+<li><p>取值：合适的整数</p>
+</li>
+<li><p>说明：redis数据库的数量，默认16个，一般一个业务用一个库。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">databases 16</code></pre>
+</li>
+</ul>
+<p><strong>10、always-show-logo</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否在redis启动时显示logo艺术字，只有输出到标准输出时才显示。</p>
+</li>
+<li><p>示例：</p>
+<pre><code>always-show-logo yes</code></pre>
+</li>
+</ul>
+<h3 id="Redis-SNAPSHOTTING"><a href="#Redis-SNAPSHOTTING" class="headerlink" title="Redis SNAPSHOTTING"></a>Redis SNAPSHOTTING</h3><p>redis快照部分</p>
+<p><strong>1、save</strong></p>
+<ul>
+<li><p>默认：</p>
+<pre class=" language-text"><code class="language-text">save 900 1
+save 300 10
+save 60 10000</code></pre>
+</li>
+<li><p>取值：save seconds changes</p>
+</li>
+<li><p>说明：保存redis数据快照的策略，第一个参数为时间，单位为秒，第二个参数为key更新的次数，默认设置即为900秒内有一个键更新，则触发建立快照；300秒内有10个键值更新，触发建立快照；60秒内10000个键值更新，触发建立快照。若要禁用快照功能，save设空字符串即可。</p>
+</li>
+<li><p>示例即默认</p>
+</li>
+</ul>
+<p><strong>2、stop-writes-on-bgsave-error</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否停止写RDB文件，在后台发生错误后。若设置为yes则发生错误后，只有重新启动后，才会重新开启写操作。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">stop-writes-on-bgsave-error yes</code></pre>
+</li>
+</ul>
+<p><strong>3、rdbcompression</strong></p>
+<ul>
+<li><p>默认： yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否需要压缩RDB快照文件，默认使用<code>LAF</code>算法进行压缩。</p>
+</li>
+<li><p>示例：</p>
+<pre><code>rdbcompression yes</code></pre>
+</li>
+</ul>
+<p><strong>4、rdbchecksum</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：redis 5以后的版本允许在RDB快照文件尾部加入一个<code>CRC64</code>校验和, 用以防止文件损坏，提高可靠性。但会消耗10%左右的性能。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">rdbchecksum yes</code></pre>
+</li>
+</ul>
+<p><strong>5、dbfilename</strong> </p>
+<ul>
+<li><p>默认：dump.rdb</p>
+</li>
+<li><p>取值：自己定义的快照文件名称</p>
+</li>
+<li><p>说明：快照文件的名称</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">dbfilename dump.rdb</code></pre>
+</li>
+</ul>
+<p><strong>6、rdb-del-sync-files</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：在没有启用持久性的实例中删除复制使用的RDB文件。默认情况下，此选项处于禁用状态。请注意，此选项仅适用于同时禁用AOF与RDB持久性的情况，否则将完全忽略</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">rdb-del-sync-files no</code></pre>
+</li>
+</ul>
+<p><strong>7、dir</strong></p>
+<ul>
+<li><p>默认：./</p>
+</li>
+<li><p>取值：一个目录的路径</p>
+</li>
+<li><p>说明：快照文件RDB，与AOF文件都会存储在这里</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">dir ./</code></pre>
+</li>
+</ul>
+<h3 id="Redis-REPLICATION"><a href="#Redis-REPLICATION" class="headerlink" title="Redis REPLICATION"></a>Redis REPLICATION</h3><p>redis 主从复制部分</p>
+<p><strong>1、replicaof</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：masterip masterport</p>
+</li>
+<li><p>说明：配置该redis数据库主机IP与端口号</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">replicaof 127.0.0.1 6380</code></pre>
+</li>
+</ul>
+<p><strong>2、masterauth</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：主机需要的认证密码</p>
+</li>
+<li><p>说明：如果在主从复制的主机上设置了<code>requirepass</code>，从机在此处必须设置正确才能完成同步的请求获得数据。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">masterauth master-password</code></pre>
+</li>
+</ul>
+<p><strong>3、masteruser</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：用户名</p>
+</li>
+<li><p>说明：如果在redis 6以后的版本中使用了<a target="_blank" rel="noopener" href="https://redis.io/topics/acl">ACLs</a>，仅仅设置上个配置项中的访问密码不够，还需要设置访问的用户，即本设置项的作用。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">masteruser username</code></pre>
+</li>
+</ul>
+<p><strong>4、replica-serve-stale-data</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：如果设置为是的话，则从机会一直回复客户端的请求，哪怕数据过期，或者返回一个空串当第一次同步的时候；如果设置为否的话，绝大部分命令请求会直接返回客户端错误信息<strong>SYNC with master in progress</strong>，除了：<code>INFO, REPLICAOF, AUTH, PING, SHUTDOWN, REPLCONF, ROLE, CONFIG, SUBSCRIBE,UNSUBSCRIBE, PSUBSCRIBE, PUNSUBSCRIBE, PUBLISH, PUBSUB, COMMAND, POST, HOST and LATENCY</code>这些命令。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">replica-serve-stale-data yes</code></pre>
+</li>
+</ul>
+<p><strong>5、replica-read-only</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：设置从机是否只读</p>
+</li>
+<li><p>示例</p>
+<pre class=" language-text"><code class="language-text">replica-read-only yes</code></pre>
+</li>
+</ul>
+<p><strong>6、repl-diskless-sync</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：新增从机或从机恢复连接时，需要一次向主机完全同步的请求。而主机应对这种请求，有两种策略：一种是先写到硬盘上，然后传输到指定从机，适合多个从机同时请求；另一种则是无盘传输，这种适合慢硬盘，大带宽的情形，后来的请求需要进入队列。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-diskless-sync no</code></pre>
+</li>
+</ul>
+<p><strong>7、repl-diskless-sync-delay</strong></p>
+<ul>
+<li><p>默认：5</p>
+</li>
+<li><p>取值：整数，单位为秒</p>
+</li>
+<li><p>说明：主机部分设置，当无盘传输一旦开始的情况下，主服务器不能为新的从机提供服务，因此服务器会设置一个等待延时，以便让更多从机加入。</p>
+</li>
+<li><p>示例</p>
+<pre><code>repl-diskless-sync-delay 5</code></pre>
+</li>
+</ul>
+<p><strong>8、repl-diskless-load</strong></p>
+<ul>
+<li><p>默认：disabled</p>
+</li>
+<li><p>取值：disabled | on-empty-db |swapdb</p>
+</li>
+<li><p>说明：从机部分设置，当主机开始无盘传输时，我们可以选择，先保存到本地完整的RDB快照文件，然后再同步；或者只有当从机数据为空时，直接读取同步；或者先将完整的RDB快照保存到内存中，只有当主机传输完毕时，再从内存同步完整的快照。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-diskless-load disabled</code></pre>
+</li>
+</ul>
+<p><strong>9、repl-ping-replica-period</strong></p>
+<ul>
+<li><p>默认：10</p>
+</li>
+<li><p>取值： 合适的时间间隔，单位秒</p>
+</li>
+<li><p>说明：从机周期性PING主机的时间间隔，定期检查主机状态。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-ping-replica-period 3</code></pre>
+</li>
+</ul>
+<p><strong>10、repl-timeout</strong></p>
+<ul>
+<li><p>默认：60</p>
+</li>
+<li><p>取值：时间，单位为秒</p>
+</li>
+<li><p>说明：主备同步的超时时间</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-timeout 60</code></pre>
+</li>
+</ul>
+<p><strong>11、repl-disable-tcp-nodelay</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否开启主从机器简单tcp延时，默认不开启，适合主从机间通信良好，最好在同一机房。而当网络高负荷，主从机再不同机房时，可以开启。降低传输频率。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-disable-tcp-nodelay no</code></pre>
+</li>
+</ul>
+<p><strong>12、repl-backlog-size</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：累计缓存大小，单位mb</p>
+</li>
+<li><p>说明：复制缓冲区大小，这是一个环形复制缓冲区，用来保存最新复制的命令。当redis存在从机时，若从机断开连接，重新连接时不一定需要进行全量同步。设置了累计缓存大小后，从机首先获取累计缓存，进行部分同步。若部分同步不能解决问题，再进行全量同步。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-baklog-size 1mb</code></pre>
+</li>
+</ul>
+<p><strong>13、repl-backlog-ttl</strong> </p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：合适的正整数，单位秒</p>
+</li>
+<li><p>说明：复制缓冲区的过期时间，0表示永不释放这块的内存。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">repl-backlog-ttl 3600</code></pre>
+</li>
+</ul>
+<p><strong>14、replica-priority</strong> </p>
+<ul>
+<li><p>默认：100</p>
+</li>
+<li><p>取值：一个整数</p>
+</li>
+<li><p>说明：从机的优先级，数字越小，优先级越高。例如有三个从机优先级分别为10，25，100，则再主机不可用后，redis通过哨兵机制，选择优先为10的从机顶替主机。 其中特殊值 0 代表永不能成为主机。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">replica-priority 100</code></pre>
+</li>
+</ul>
+<p><strong>15、min-replicas-to-write  &amp; min-replicas-max-lag</strong></p>
+<ul>
+<li><p>默认： min-replicas-to-write 0   min-replicas-max-lag 10</p>
+</li>
+<li><p>取值：均为一个整数值，前者单位为个，后者为秒</p>
+</li>
+<li><p>说明：这两条配置限制主机是否继续接受写命令，前者表示最少的从机节点为几个，后者表示根据从副本接收的最后一次ping计算的延迟时间。只有存在符合延迟时间的指定个数的健康从机，主机才继续写命令。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">min-replicas-to-write 3
+min-replicas-max-lag 10</code></pre>
+</li>
+</ul>
+<p><strong>16、replica-announce-ip  &amp; replica-announce-port</strong></p>
+<ul>
+<li><p>默认： 未配置</p>
+</li>
+<li><p>取值： 前者为IP地址，后者为端口号</p>
+</li>
+<li><p>说明： 当从及IP及端口固定时，从机上报的IP与端口号，供哨兵发现各个从机。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">replica-announce-ip 192.168.0.20
+replica-announce-port 6379</code></pre>
+</li>
+</ul>
+<h3 id="Redis-KEYS-TRACKING"><a href="#Redis-KEYS-TRACKING" class="headerlink" title="Redis KEYS TRACKING"></a>Redis KEYS TRACKING</h3><p>Redis辅助支持的客户端缓存，详情可见<a target="_blank" rel="noopener" href="https://redis.io/topics/client-side-caching">Redis server-assisted client side caching</a></p>
+<p><strong>1、tracking-table-max-keys</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：缓存键的数量</p>
+</li>
+<li><p>说明：redis可以帮助实现客户端缓存，并维持一个无效表，用以跟踪键值，当键值改变时，通知客户端重新获取，而此参数定义无效表的大小。需要注意的是，若使用的是广播模式的键值追踪，则此参数无效。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">tracking-table-max-keys 1000000</code></pre>
+</li>
+</ul>
+<h3 id="Redis-SECURITY"><a href="#Redis-SECURITY" class="headerlink" title="Redis SECURITY"></a>Redis SECURITY</h3><p>Redis安全模块，由于Redis速度很快，外部用户可以尝试 每秒100万个密码。这意味着你应该使用很强的密码，否则很容易被破解。 请注意，因为密码实际上是客户端与服务器之间的共享机密，不应该被任何人记住密码可以是/dev/urandom中的一个长字符串，所以使用长而不可预测的密码避免暴力攻击将是可能的。</p>
+<p><strong>1、user</strong></p>
+<ul>
+<li><p>命令模式： <code>user &lt;username&gt; ... acl rules ...</code></p>
+</li>
+<li><p>默认：未配置</p>
+</li>
+<li><p>说明：指定用户名，是否启用规则，访问控制规则及认证密码，可在客户端通过<code>ACL LIST</code>指令获取当前的权限规则列表，具体的权限赋予规则详情可见<a target="_blank" rel="noopener" href="https://redis.io/topics/acl">Redis ACL</a>。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"># 允许默认用户所有频道所有命令的权限，且不需要密码认证
+user default on nopass ~* &* +@all</code></pre>
+</li>
+</ul>
+<p><strong>2、acllog-max-len</strong></p>
+<ul>
+<li><p>默认：128</p>
+</li>
+<li><p>取值：一个正整数</p>
+</li>
+<li><p>说明：ACL日志跟踪与ACL关联的失败命令和身份验证事件。此配置设置日志的长度，ACL日志存储在内存中。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">acllog-max-len 128</code></pre>
+</li>
+</ul>
+<p><strong>3、aclfile</strong> </p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：ACL文件所在位置</p>
+</li>
+<li><p>说明：ACL文件所在位置，可以在外部配置user规则，只需通过此配置引入即可，但需要注意的是，配置文件中配置与ACL文件是冲突的，只能在一处配置。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">aclfile /etc/redis/users.acl</code></pre>
+</li>
+</ul>
+<p><strong>4、requirepass</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：密码值</p>
+</li>
+<li><p>说明：此处的密码仅仅是设置默认用户<code>default</code>的密码</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">requirepass foobared</code></pre>
+</li>
+</ul>
+<p><del><strong>5、rename-command</strong></del> </p>
+<ul>
+<li><p>命令模式：rename-command commandname  newcommandname</p>
+</li>
+<li><p>默认：未配置</p>
+</li>
+<li><p>说明：重命名命令名称，已经弃用，新版本建议用ACL进行权限控制。需要注意的是，更改命令记录到AOF文件或传输给从机可能会导致错误。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">rename-command CONFIG "SecretConfig"</code></pre>
+</li>
+</ul>
+<h3 id="Redis-CLIENTS"><a href="#Redis-CLIENTS" class="headerlink" title="Redis CLIENTS"></a>Redis CLIENTS</h3><p>Redis客户端配置</p>
+<p><strong>1、maxclients</strong> </p>
+<ul>
+<li><p>默认：10000</p>
+</li>
+<li><p>取值：客户端连接数量</p>
+</li>
+<li><p>说明：允许连接的客户端数量，最小为32（作为内部文件描述符使用），而一旦超过连接数量后的连接返回错误<code>max number of clients reached</code>。重要提示：当使用Redis集群时，最大连接数也与集群总线共享：集群中的每个节点将使用两个连接，一个传入，另一个传出。在非常大的簇的情况下，相应地调整限制的大小是很重要的。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">maxclients 100000</code></pre>
+</li>
+</ul>
+<h3 id="Redis-MEMORY-MANAGEMENT"><a href="#Redis-MEMORY-MANAGEMENT" class="headerlink" title="Redis MEMORY MANAGEMENT"></a>Redis MEMORY MANAGEMENT</h3><p>Redis内存管理配置</p>
+<h2 id="官方完整配置"><a href="#官方完整配置" class="headerlink" title="官方完整配置"></a>官方完整配置</h2><p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/redis/redis/6.0/redis.conf">=========================传送门=========================</a> </p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">noslime</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://noslime.github.io/articles/2020/0302061712.html">http://noslime.github.io/articles/2020/0302061712.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">noslime</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/REDIS/">
+                                    <span class="chip bg-color">REDIS</span>
+                                </a>
+                            
+                                <a href="/tags/NOSQL/">
+                                    <span class="chip bg-color">NOSQL</span>
+                                </a>
+                            
+                                <a href="/tags/CONFIG/">
+                                    <span class="chip bg-color">CONFIG</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">心情好,投食博主~~</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/articles/2020/0302061712.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/11.jpg" class="responsive-img" alt="Redis 配置文件">
+                        
+                        <span class="card-title">Redis 配置文件</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文总结下redis常用配置项,现在软件开发中好多技术都是约定先于配置，而配置又大于编码。而想要掌握一门技术，掌握其配置文件是极其必要的。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/REDIS/">
+                        <span class="chip bg-color">REDIS</span>
+                    </a>
+                    
+                    <a href="/tags/NOSQL/">
+                        <span class="chip bg-color">NOSQL</span>
+                    </a>
+                    
+                    <a href="/tags/CONFIG/">
+                        <span class="chip bg-color">CONFIG</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/articles/2020/3601090912.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/medias/featureimages/2.jpg" class="responsive-img" alt="keepalived&#39;s log">
+                        
+                        <span class="card-title">keepalived&#39;s log</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            上次搭建nginx集群，并没有处理keepalived的日志，比较混乱。今天实现日志文件自定义输出位置，以便查看。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/KEEPALIVED/">
+                        <span class="chip bg-color">KEEPALIVED</span>
+                    </a>
+                    
+                    <a href="/tags/LOG/">
+                        <span class="chip bg-color">LOG</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('4'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020</span>
+            
+            <a href="/about" target="_blank">noslime</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/noslime" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:silenceleafl@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2550113620" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2550113620" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/canvas-nest.js"></script>
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.8'
+        zIndex="-1" src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@gh-pages/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

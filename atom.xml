@@ -6,7 +6,7 @@
   <link href="http://noslime.github.io/atom.xml" rel="self"/>
   
   <link href="http://noslime.github.io/"/>
-  <updated>2020-12-17T12:34:28.999Z</updated>
+  <updated>2020-12-22T14:06:37.088Z</updated>
   <id>http://noslime.github.io/</id>
   
   <author>
@@ -17,11 +17,42 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis 配置文件</title>
+    <link href="http://noslime.github.io/articles/2020/0302061712.html"/>
+    <id>http://noslime.github.io/articles/2020/0302061712.html</id>
+    <published>2020-12-17T06:02:03.000Z</published>
+    <updated>2020-12-22T14:06:37.088Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;本文总结下redis常用配置项, 现在软件开发中好多技术都是约定先于配置，而配置又大于编码。而想要掌握一门技术，掌握其配置文件是极其必要的。同时在实际生产环境中，正确的配置往往可以大大提高系统的可用性。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;配置简介&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="数据库" scheme="http://noslime.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="REDIS" scheme="http://noslime.github.io/tags/REDIS/"/>
+    
+    <category term="NOSQL" scheme="http://noslime.github.io/tags/NOSQL/"/>
+    
+    <category term="CONFIG" scheme="http://noslime.github.io/tags/CONFIG/"/>
+    
+  </entry>
+  
+  <entry>
     <title>keepalived&#39;s log</title>
     <link href="http://noslime.github.io/articles/2020/3601090912.html"/>
     <id>http://noslime.github.io/articles/2020/3601090912.html</id>
     <published>2020-12-09T09:01:36.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -50,7 +81,7 @@
     <link href="http://noslime.github.io/articles/2020/3501060812.html"/>
     <id>http://noslime.github.io/articles/2020/3501060812.html</id>
     <published>2020-12-08T06:01:35.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -76,7 +107,7 @@
     <link href="http://noslime.github.io/articles/2020/0220080712.html"/>
     <id>http://noslime.github.io/articles/2020/0220080712.html</id>
     <published>2020-12-07T08:20:02.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -103,7 +134,7 @@
     <link href="http://noslime.github.io/articles/2020/2206060612.html"/>
     <id>http://noslime.github.io/articles/2020/2206060612.html</id>
     <published>2020-12-06T06:06:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -129,7 +160,7 @@
     <link href="http://noslime.github.io/articles/2020/2314030312.html"/>
     <id>http://noslime.github.io/articles/2020/2314030312.html</id>
     <published>2020-12-03T03:14:23.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -154,7 +185,7 @@
     <link href="http://noslime.github.io/articles/2020/2214010312.html"/>
     <id>http://noslime.github.io/articles/2020/2214010312.html</id>
     <published>2020-12-03T01:14:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -179,7 +210,7 @@
     <link href="http://noslime.github.io/articles/2020/2219062811.html"/>
     <id>http://noslime.github.io/articles/2020/2219062811.html</id>
     <published>2020-11-28T06:19:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -206,7 +237,7 @@
     <link href="http://noslime.github.io/articles/2020/2209062811.html"/>
     <id>http://noslime.github.io/articles/2020/2209062811.html</id>
     <published>2020-11-28T06:09:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -234,7 +265,7 @@
     <link href="http://noslime.github.io/articles/2020/2217152711.html"/>
     <id>http://noslime.github.io/articles/2020/2217152711.html</id>
     <published>2020-11-27T15:17:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -260,7 +291,7 @@
     <link href="http://noslime.github.io/articles/2020/2218122711.html"/>
     <id>http://noslime.github.io/articles/2020/2218122711.html</id>
     <published>2020-11-27T12:18:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -285,7 +316,7 @@
     <link href="http://noslime.github.io/articles/2020/2223132411.html"/>
     <id>http://noslime.github.io/articles/2020/2223132411.html</id>
     <published>2020-11-24T13:23:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -313,7 +344,7 @@
     <link href="http://noslime.github.io/articles/2020/2242062311.html"/>
     <id>http://noslime.github.io/articles/2020/2242062311.html</id>
     <published>2020-11-23T06:42:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -339,7 +370,7 @@
     <link href="http://noslime.github.io/articles/2020/5440082111.html"/>
     <id>http://noslime.github.io/articles/2020/5440082111.html</id>
     <published>2020-11-21T08:40:54.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
@@ -366,7 +397,7 @@
     <link href="http://noslime.github.io/articles/2020/2222141311.html"/>
     <id>http://noslime.github.io/articles/2020/2222141311.html</id>
     <published>2020-11-13T14:22:22.000Z</published>
-    <updated>2020-12-17T12:34:28.999Z</updated>
+    <updated>2020-12-22T14:06:37.088Z</updated>
     
     
       
