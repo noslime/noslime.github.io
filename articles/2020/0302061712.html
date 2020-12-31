@@ -353,12 +353,12 @@
                                 <span class="chip bg-color">REDIS</span>
                             </a>
                         
-                            <a href="/tags/NOSQL/">
-                                <span class="chip bg-color">NOSQL</span>
-                            </a>
-                        
                             <a href="/tags/CONFIG/">
                                 <span class="chip bg-color">CONFIG</span>
+                            </a>
+                        
+                            <a href="/tags/NOSQL/">
+                                <span class="chip bg-color">NOSQL</span>
                             </a>
                         
                     </div>
@@ -389,21 +389,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-22
+                    2021-01-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.3k
+                    15.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    57 分
                 </div>
                 
 
@@ -418,15 +418,15 @@
 <h2 id="配置简介"><a href="#配置简介" class="headerlink" title="配置简介"></a>配置简介</h2><p>Redis可以在没有配置文件的情况下通过内置的配置来启动，但是这种启动方式只适用于开发和测试。合理的配置Redis的方式是提供一个Redis配置文件，这个文件通常叫做 <code>redis.conf</code>，一般就在Redis安装目录下。 </p>
 <p>对于配置文件的修改配置，除手动修改配置文件外，从Redis 2.8开始，可以使用<a target="_blank" rel="noopener" href="https://redis.io/commands/config-rewrite">CONFIG REWRITE</a>，它会自动扫描redis.conf版归档并更新与当前配置值不匹配的字段。不添加不存在但设置为默认值的字段。配置文件中的注释将被保留。</p>
 <p>以下为<strong>6.0</strong>版本的配置文件概览（依据配置块在配置文件中出现先后排序）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/REDIS-CONFIG.png"></p>
-<h2 id="配置块介绍"><a href="#配置块介绍" class="headerlink" title="配置块介绍"></a>配置块介绍</h2><p>Redis完整的配置文件正如上图所示大致可以分为24部分，本文将根据复杂度，与本人理解详细介绍一部分，有些配置可能会一笔带过。开始之前，先介绍下redis的单位表示，其中符号对大小写不敏感</p>
+<p><img src="https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/REDIS-CONFIG.png" alt="图一"></p>
+<h2 id="配置块介绍"><a href="#配置块介绍" class="headerlink" title="配置块介绍"></a>配置块介绍</h2><p>Redis完整的配置文件（6.0版本）正如图一所示大致可以分为24部分，本文将根据复杂度，与本人理解详细介绍一部分，有些配置可能会一笔带过。开始之前，先介绍下redis的单位表示，其中符号对大小写不敏感</p>
 <pre class=" language-text"><code class="language-text">1k => 1000 bytes
 1kb => 1024 bytes
 1m => 1000000 bytes
 1mb => 1024*1024 bytes
 1g => 1000000000 bytes
 1gb => 1024*1024*1024 bytes</code></pre>
-<h3 id="Redis-include"><a href="#Redis-include" class="headerlink" title="Redis include"></a>Redis include</h3><p><strong>1、include</strong></p>
+<h3 id="Redis-INCLUDES"><a href="#Redis-INCLUDES" class="headerlink" title="Redis INCLUDES"></a>Redis INCLUDES</h3><p><strong>1、INCLUDE</strong></p>
 <ul>
 <li><p>默认：未配置</p>
 </li>
@@ -439,7 +439,7 @@
 include /path/to/other.conf</code></pre>
 </li>
 </ul>
-<h3 id="Redis-modules"><a href="#Redis-modules" class="headerlink" title="Redis modules"></a>Redis modules</h3><p><strong>1、loadmodule</strong></p>
+<h3 id="Redis-MODULES"><a href="#Redis-MODULES" class="headerlink" title="Redis MODULES"></a>Redis MODULES</h3><p><strong>1、loadmodule</strong></p>
 <ul>
 <li><p>默认：未配置</p>
 </li>
@@ -1052,6 +1052,822 @@ user default on nopass ~* &* +@all</code></pre>
 </li>
 </ul>
 <h3 id="Redis-MEMORY-MANAGEMENT"><a href="#Redis-MEMORY-MANAGEMENT" class="headerlink" title="Redis MEMORY MANAGEMENT"></a>Redis MEMORY MANAGEMENT</h3><p>Redis内存管理配置</p>
+<p><strong>1、maxmemory</strong></p>
+<ul>
+<li><p>默认：未设置</p>
+</li>
+<li><p>取值：正整数 单位字节bytes</p>
+</li>
+<li><p>说明：redis使用内存的最大限制</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">maxmemory 1024*1024*1024*8</code></pre>
+</li>
+</ul>
+<p><strong>2、maxmemory-policy</strong></p>
+<ul>
+<li><p>默认：noeviction</p>
+</li>
+<li><p>取值：volatile-lru | allkeys-lru | volatile-lfu | allkeys-lfu | volatile-random | allkeys-random |volatile-ttl</p>
+<p>| noeviction</p>
+</li>
+<li><p>说明：当达到设置的最大内存后，redis选择的移除策略，其中lru为最近最久未使用算法，lfu为最近最少使用算法。以下为每个设置的简要介绍。</p>
+<ul>
+<li>volatile-lru：使用LRU算法清除设置了expire过期时间的数据。</li>
+<li>allkeys-lru：使用LRU算法清除任意数据。</li>
+<li>volatile-lfu：使用LFU算法清除设置了expire过期时间的数据。</li>
+<li>allkeys-lfu：使用LFU算法清除任意数据。</li>
+<li>volatile-random：随机清除设置了expire过期时间的数据。</li>
+<li>allkeys-random：随机清除任意数据。</li>
+<li>volatile-ttl：删除最接近过期时间的数据。</li>
+<li>noeviction：不删除任何内容，只在写操作时返回一个错误。</li>
+</ul>
+<p>注意：对于上述任何策略，当没有合适的数据删除时，Redis都会在写操作时返回一个错误。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">maxmemory-policy noeviction</code></pre>
+</li>
+</ul>
+<p><strong>3、maxmemory-samples</strong></p>
+<ul>
+<li><p>默认：5</p>
+</li>
+<li><p>取值：一个正整数</p>
+</li>
+<li><p>说明：上条配置指令中介绍的LRU、LFU和minimal-TTL算法不是精确算法，而是近似算法（为了节省内存），因此您可以调整它的速度或精度。默认情况下，Redis将检查五个键并选择最近使用过的一个，您可以使用以下配置指令更改样本大小。<br>默认值为5会产生足够好的结果。10非常接近真实的LRU，但需要更多的CPU。3更快，但不是很准确。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">maxmemory-samples 5</code></pre>
+</li>
+</ul>
+<p><strong>4、replica-ignore-maxmemory</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：从redis版本5开始，redis从机默认忽略maxmemory的设置，而内存清除策略也只工作在master主机上，从机清除依赖主机传递的删除命令，从而保持一致性。但是如果你的从机时可写入的，且能保证所有写操作都是幂等的，可以更改此选项。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">replica-ignore-maxmemory</code></pre>
+</li>
+</ul>
+<p><strong>5、active-expire-effort</strong></p>
+<ul>
+<li><p>默认：1</p>
+</li>
+<li><p>取值：[1-10]</p>
+</li>
+<li><p>说明：影响redis定期删除策略的一个参数，effort改变了取样基数、定期回收任务间隔，过期键可占内存的最大百分比，最大占用cpu的百分比等，effort越大，cpu负担越重，所以根据自己的需要设置effort的值。这是内存、CPU和延迟之间的权衡。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">active-expire-effort 1</code></pre>
+</li>
+</ul>
+<h3 id="Redis-LAZY-FREEING"><a href="#Redis-LAZY-FREEING" class="headerlink" title="Redis LAZY FREEING"></a>Redis LAZY FREEING</h3><p>Redis有两种方式来删除键。一种叫做DEL，是对对象的阻塞性删除。这意味着服务器停止处理新命令，以便以同步方式回收与对象关联的所有内存。如果删除的键与一个小对象关联，则执行DEL命令所需的时间非常小，与Redis中大多数其他O（1）或O（log_N）命令相比是非常小的。但是，如果键与一个包含数百万个元素的聚合值相关联，服务器可能会长时间（甚至几秒钟）阻塞以完成操作。</p>
+<p>基于上述原因，Redis还提供了UNLINK（non-blocking DEL）和FLUSHDB命令的ASYNC选项等非阻塞删除原语，以便在后台回收内存。这些命令在固定时间内执行。另一个线程将以最快的速度增量释放后台的对象。</p>
+<p>FLUSHALL和FLUSHDB的DEL、UNLINK和ASYNC选项由用户控制。这取决于应用程序的设计来理解何时使用其中一个。然而，由于其他操作的副作用，Redis服务器有时不得不删除密钥或刷新整个数据库。具体来说，在以下场景中，Redis独立于用户调用删除对象：</p>
+<p>1） 回收内存时，由于maxmemory和maxmemory策略配置，为了给新数据腾出空间，而不超过指定的内存限制。</p>
+<p>2） 因为expire：必须从内存中删除具有相关生存时间的密钥（请参阅expire命令）。</p>
+<p>3） 因为命令的副作用是将数据存储在可能已经存在的键上。例如，重命名命令可能会删除旧的键内容，当它被另一个替换时。类似地，SUNIONSTORE或SORT with STORE选项可能会删除现有的键值。SET命令本身删除指定键的任何旧内容，以便用指定的字符串替换它。</p>
+<p>4） 在复制过程中，当从机与其主机执行完全重新同步时，整个数据库的内容将被删除，以便加载刚刚传输的RDB文件。</p>
+<p>在上述所有情况下，默认情况是以阻塞方式删除对象，就像调用DEL一样。但是，您可以具体地配置每种情况，以便使用以下配置指令以非阻塞方式释放内存，就像调用UNLINK一样。</p>
+<pre class=" language-text"><code class="language-text"># 默认全为 no， 可取值：yes | no
+lazyfree-lazy-eviction yes
+lazyfree-lazy-expire yes
+lazyfree-lazy-server-del yes
+replica-lazy-flush yes</code></pre>
+<p>其中lazyfree可译为惰性删除或延迟释放；当删除键的时候，redis提供异步延时释放key内存的功能，把key释放操作放在bio(Background I/O)单独的子线程处理中，减少删除big key对redis主线程的阻塞。有效地避免删除big key等带来的性能和可用性问题。</p>
+<p>在用UNLINK调用替换用户代码DEL调用并不容易的情况下，还可以使用以下配置指令修改DEL命令的默认行为，使其与UNLINK完全相同：</p>
+<pre class=" language-text"><code class="language-text"># 默认为no，可取值：yes | no
+lazyfree-lazy-user-del yes</code></pre>
+<h3 id="Redis-THREADED-I-O"><a href="#Redis-THREADED-I-O" class="headerlink" title="Redis THREADED I/O"></a>Redis THREADED I/O</h3><p>输入输出线程，现在还可以在不同的I/O线程中处理Redis客户端的套接字读写。由于编写速度非常慢，通常Redis用户使用流水线来提高每个核心的Redis性能，并生成多个实例以扩展更多。使用I/O线程，可以轻松地将Redis的速度提高两倍，而无需使用流水线或实例切分。</p>
+<p>默认情况下，线程设置被禁用，redis建议只在至少有4个或更多内核的计算机中启用它，并至少保留一个备用内核。使用超过8个线程不大可能有多大帮助。redis还建议仅当您实际存在性能问题时才使用线程I/O，因为Redis实例会占用相当大比例的CPU时间，否则使用此功能没有任何意义。</p>
+<p>例如，如果你有一个4核的容器，尝试使用2或3个I/O线程，如果你有一个8核，尝试使用6个线程。要启用I/O线程，请使用以下配置指令：</p>
+<pre class=" language-text"><code class="language-text"> io-threads 4</code></pre>
+<p>将<code>io-threads</code>设置为1只会像往常一样使用主线程。当启用I/O多线程时，我们只使用线程进行写入，即线程写入（2）系统调用并将客户机缓冲区传输到套接字。但是，也可以使用以下配置指令启用读取线程和协议解析，方法是将其设置为“yes”：</p>
+<pre class=" language-text"><code class="language-text">io-threads-do-reads no</code></pre>
+<p>通常线程读取并没有多大帮助。</p>
+<p>注1：此配置指令不能在运行时通过<code>CONFIG SET</code>进行更改。启用SSL时，此功能当前不起作用。</p>
+<p>注2：如果你想用Redis benchmark来测试Redis的加速，请确保你也在线程模式下运行基准测试，使用–threads选项来匹配Redis线程的数量，否则你将无法测试出提升。</p>
+<h3 id="Redis-KERNEL-OOM-CONTROL"><a href="#Redis-KERNEL-OOM-CONTROL" class="headerlink" title="Redis KERNEL OOM CONTROL"></a>Redis KERNEL OOM CONTROL</h3><p>Linux 内核有个机制叫OOM killer（Out-Of-Memory killer），该机制会监控那些占用内存过大，尤其是瞬间很快消耗大量内存的进程，为了防止内存耗尽而内核会把该进程杀掉。</p>
+<p><strong>1、oom-score-adj</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：此功能启用，使得redis主动给自己所有的进程进行评分，提供OOM killer机制触发时，进程的灭杀顺序。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">oom-score-adj no</code></pre>
+</li>
+</ul>
+<p><strong>2、oom-score-adj-values</strong></p>
+<ul>
+<li>指令模式及默认值：<code>oom-score-adj-values 0 200 800</code></li>
+<li>说明：当<code>oom-score-adj</code>指令启用时，这条指令指定主机，从机和后台子进程的分数。分数值在区间[-1000, 1000]内，值越大越先被杀掉。</li>
+<li>示例同指令模式</li>
+</ul>
+<h3 id="Redis-APPEND-ONLY-MODE"><a href="#Redis-APPEND-ONLY-MODE" class="headerlink" title="Redis APPEND ONLY MODE"></a>Redis APPEND ONLY MODE</h3><p>默认情况下，Redis将数据集异步转储到磁盘上。这种模式在许多应用程序中已经足够好了，但是Redis进程出现问题或断电可能会导致几分钟的写丢失（取决于配置的保存点）。<br>AOF模式是一种可选的持久性模式，它提供了更好的持久性。例如，如果使用默认的数据fsync策略，Redis在服务器断电等戏剧性事件中可能只会丢失一秒钟的写入操作，或者如果Redis进程本身发生了问题，但操作系统仍在正常运行，则只会丢失一次写入操作。</p>
+<p><strong>1、appendonly</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否开启AOF持久化，AOF和RDB两种持久化可以并存，并且redis启动时，会优先加载AOF持久化文件。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">appendonly yes</code></pre>
+</li>
+</ul>
+<p><strong>2、appendfilename</strong></p>
+<ul>
+<li><p>默认：appendonly.aof</p>
+</li>
+<li><p>取值：文件名</p>
+</li>
+<li><p>说明：AOF持久化文件名称</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">appendfilename "appendonly.aof"</code></pre>
+</li>
+</ul>
+<p><strong>3、appendfsync</strong></p>
+<ul>
+<li><p>默认：everysec</p>
+</li>
+<li><p>取值：always | everysec | no</p>
+</li>
+<li><p>说明：追加同步的策略</p>
+<ul>
+<li><p>no：不会调用fsync， 由系统决定什么时候刷磁盘。 速度最快。</p>
+</li>
+<li><p>always：每次写操作都调用fsync同步AOF文件。速度最慢，但安全性高。</p>
+</li>
+<li><p>everysec：每秒调用一次fsync同步AOF文件。以上两种方式的折中方案。</p>
+</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre class=" language-text"><code class="language-text">appendfsync everysec</code></pre>
+</li>
+</ul>
+<p><strong>4、no-appendfsync-on-rewrite</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：当AOF fsync策略设置为always或everysec，并且后台保存进程（后台保存或AOF日志后台重写）正在对磁盘执行大量I/O时，在某些Linux配置中，Redis可能会在fsync（）调用上阻塞太长时间。请注意，目前还没有解决此问题的方法，因为即使在不同的线程中执行fsync，也会阻止我们的同步写入调用。<br>为了缓解这个问题，可以使用此选项来防止在进行BGSAVE或bwriteAOF时在主进程中调用fsync（）。<br>这意味着，当另一个子进程在存储时，Redis的持久性与“appendfsync none”相同。实际上，这意味着在最坏的情况下（使用默认的Linux设置），可能会丢失最多30秒的日志。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">no-appendfsync-on-rewrite no</code></pre>
+</li>
+</ul>
+<p><strong>5、auto-aof-rewrite-percentage &amp; auto-aof-rewrite-min-size</strong></p>
+<ul>
+<li><p>默认及示例：</p>
+<pre class=" language-text"><code class="language-text">auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb</code></pre>
+</li>
+<li><p>取值：第一条为百分比，100表示比原来大一倍；第二条表示触发重写规则的最小AOF文件大小</p>
+</li>
+<li><p>说明：AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制，当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩，调用指令<code>bgrewriteaof</code>进行重写，只保留可以恢复数据的最小指令集。</p>
+<p>Redis会记录上次重写时的AOF大小，默认配置是当AOF文件大小是上次rewrite后大小的一倍且文件大于64M时触发。其中AOF重写时会fork出一条新进程来将文件重写(也是先写临时文件最后再rename)，遍历新进程的内存中数据，每条记录有一条的Set语句。重写aof文件的操作，并没有读取旧的aof文件，而是将整个内存中的数据库内容用命令的方式重写了一个新的aof文件。</p>
+</li>
+</ul>
+<p><strong>6、aof-load-truncated</strong></p>
+<ul>
+<li><p>默认：yes    </p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：redis发现AOF文件尾部命令错误的时候是否继续启动服务。当运行Redis的系统崩溃时，尤其是在没有data=ordered选项的情况下挂载ext4文件系统时，可能会发生这种情况（但是，当Redis本身崩溃或中止，但操作系统仍然正常工作时，这种情况就不会发生）。如果选择的是yes，当截断的aof文件被导入的时候，会忽视有错误的尾部，并且自动发布一个log给客户端然后load。如果是no，用户必须手动redis-check-aof修复AOF文件才可以。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">aof-load-truncated yes</code></pre>
+</li>
+</ul>
+<p><strong>7、aof-use-rdb-preamble yes</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：4.0以后出现的混合持久化模式，在重写AOF文件时，Redis能够在AOF文件中使用RDB前导码以加快重写和恢复。启用此选项时，重写的AOF文件由两个不同的节组成：[RDB文件] [AOF tail]，新的AOF文件前半段是RDB格式的全量数据后半段是AOF格式的增量数据。</p>
+<p>加载时，Redis识别出AOF文件以“Redis”字符串开头并加载带前缀的RDB文件，然后继续加载AOF尾部。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">aof-use-rdb-preamble yes</code></pre>
+</li>
+</ul>
+<h3 id="Redis-LUA-SCRIPTING"><a href="#Redis-LUA-SCRIPTING" class="headerlink" title="Redis LUA SCRIPTING"></a>Redis LUA SCRIPTING</h3><p>Redis从2.6.0开始支持lua脚本，通过内置的 Lua 解释器，可以使用 EVAL和EVALSHA命令对一次在服务端执行大量操作。Redis 使用单个 Lua 解释器去运行所有脚本，并且， Redis 也保证脚本会以原子性(atomic)的方式执行： 当某个脚本正在运行的时候，不会有其他脚本或 Redis 命令被执行。</p>
+<p><code>EVAL</code> 命令要求你在每次执行脚本的时候都发送一次脚本主体(script body)。Redis 有一个内部的缓存机制，因此它不会每次都重新编译脚本，不过在很多场合，付出无谓的带宽来传送脚本主体并不是最佳选择。</p>
+<p>为了减少带宽的消耗， Redis 实现了 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/evalsha.html">EVALSHA</a> 命令，它的作用和 <code>EVAL</code> 一样，都用于对脚本求值，但它接受的第一个参数不是脚本，而是脚本的 SHA1 校验和(sum)。</p>
+<p>EVALSHA 命令的表现如下：</p>
+<p>如果服务器还记得给定的 SHA1 校验和所指定的脚本，那么执行这个脚本 如果服务器不记得给定的 SHA1 校验和所指定的脚本，那么它返回一个特殊的错误，提醒用户使用 EVAL 代替 EVALSHA</p>
+<p><strong>1、lua-time-limit</strong></p>
+<ul>
+<li><p>默认：5000</p>
+</li>
+<li><p>取值：毫秒</p>
+</li>
+<li><p>说明：lua 脚本的最大执行限制时间</p>
+<p>当一个脚本达到最大执行时间的时候，它并不会自动被 Redis 结束，因为 Redis 必须保证脚本执行的原子性，而中途停止脚本的运行意味着可能会留下未处理完的数据在数据集(data set)里面。</p>
+<p>因此，当脚本运行的时间超过最大执行时间后，以下动作会被执行：</p>
+<ul>
+<li>Redis 记录一个脚本正在超时运行</li>
+<li>Redis 开始重新接受其他客户端的命令请求，但是只有 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/script-kill.html">SCRIPT KILL</a> 和 <code>SHUTDOWN NOSAVE</code> 两个命令会被处理，对于其他命令请求， Redis 服务器只是简单地返回 BUSY 错误。</li>
+<li>可以使用 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/script-kill.html">SCRIPT KILL</a> 命令将一个仅执行只读命令的脚本杀死，因为只读命令并不修改数据，因此杀死这个脚本并不破坏数据的完整性</li>
+<li>如果脚本已经执行过写命令，那么唯一允许执行的操作就是 <code>SHUTDOWN NOSAVE</code> ，它通过停止服务器来阻止当前数据集写入磁盘</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">lua-time-limit 5000</code></pre>
+</li>
+</ul>
+<h3 id="Redis-REDIS-CLUSTER"><a href="#Redis-REDIS-CLUSTER" class="headerlink" title="Redis REDIS CLUSTER"></a>Redis REDIS CLUSTER</h3><p>Resid集群相关的设置</p>
+<p><strong>1、cluster-enabled</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：普通的redis实例并不能成为redis集群的一部分，只有节点以集群节点启动才能加入，此处的配置便是让redis以集群节点的形式启动。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-enabled yes</code></pre>
+</li>
+</ul>
+<p><strong>2、cluster-config-file</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：文件名称</p>
+</li>
+<li><p>说明：redis集群系统中，每个节点必须有自己独立的配置文件，此处为配置文件的名称。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-config-file nodes-6379.conf</code></pre>
+</li>
+</ul>
+<p><strong>3、cluster-node-timeout</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：毫秒</p>
+</li>
+<li><p>说明：redis集群节点无法访问多长时间才被是为故障节点。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-node-timeout 15000</code></pre>
+</li>
+</ul>
+<p><strong>4、cluster-replica-validity-factor</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：一个非负整数</p>
+</li>
+<li><p>说明：启动故障切换的时间系数。其中关于它应用场景的官方参考翻译如下：</p>
+<p>如果发生故障的主机的从机的数据看起来太旧，它将避免启动故障转移。</p>
+<p>对于从机来说，没有一种简单的方法来实际精确测量其“数据期限”，因此需要执行以下两种检查：</p>
+<p>1） 如果有多个从机能够进行故障转移，它们会交换消息，以便尝试以最佳复制偏移量（处理来自主服务器的更多数据）为从机提供优势。从机将尝试按偏移量获取其级别，并在故障转移开始时应用与其级别成比例的延迟。</p>
+<p>2） 每个副本都计算最后一次与主副本交互的时间。这可以是上一次接收到的ping或命令（如果主服务器仍处于“已连接”状态），也可以是自与主服务器断开连接后经过的时间（如果复制链接当前处于关闭状态）。如果最后一次交互太旧，从机根本不会尝试故障转移</p>
+<p>其中第二点可以有我们用户把控。指明一个从机是否能够进行故障迁移，看它上次和主机交互过去的时间有没有超过：<code>(node-timeout * cluster-replica-validity-factor) + repl-ping-replica-period</code></p>
+<p>例如：节点超时时间30秒，时间系数为10， 从机检查周期10秒，则从机如果超过310秒没有与主机进行交互，则不能进行故障转移。</p>
+<p>较大的时间系数可能允许数据太旧的从机故障转移到主服务器，而太小的值可能会阻止群集选择从机。<br>为了获得最大可用性，可以将时间系数设置为0，这意味着从机将始终尝试故障转移主服务器，而不管它们上次与主服务器交互的时间。（但是他们总是尝试应用与偏移量成比例的延迟）。<br>零是唯一能够保证当所有分区恢复时，集群始终能够继续运行的值。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-replica-validity-factor 10</code></pre>
+</li>
+</ul>
+<p><strong>5、cluster-migration-barrier</strong></p>
+<ul>
+<li><p>默认：1</p>
+</li>
+<li><p>取值：非负整数</p>
+</li>
+<li><p>说明：<code>cluster-migration-barrier</code>属性可以保证redis集群中不会出现孤立主机，当某个主节点的从节点挂掉裸奔后，会从其他富余的主节点分配一个从节点过来，确保每个主节点都有至少一个从节点，不至于因为主节点挂掉而没有相应从节点替换为主节点导致集群崩溃不可用。</p>
+<p>只有当旧主机的其他从机的数量至少为给定数量时，从机才会迁移到孤立主机。这个数字就是“移民壁垒”。迁移屏障为1意味着一个从机只有在其主副本至少有一个其他从机时才会迁移，以此类推。它通常反映了集群中每个主机所需的从机数量。</p>
+<p>默认值为1（仅当从机的主节点至少保留一个从机时，从机才会迁移）。要禁用迁移，只需将其设置为非常大的值。可以设置值0，但仅对调试有用，在生产中很危险。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-migration-barrier 1</code></pre>
+</li>
+</ul>
+<p><strong>6、cluster-require-full-coverage</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：默认情况下，如果Redis集群节点检测到至少有一个散列槽未覆盖（没有可用的节点为其提供服务），那么它们将停止接受查询。这样，如果集群部分关闭（例如，一系列哈希槽不再覆盖），那么所有集群最终都将不可用。一旦所有插槽再次被覆盖，它就会自动返回可用。<br>但是，有时您希望正在工作的集群的子集继续接受对仍然被覆盖的密钥空间部分的查询。为此，只需将cluster require full coverage选项设置为no。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-require-full-coverage yes</code></pre>
+</li>
+</ul>
+<p><strong>7、 cluster-replica-no-failover</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：此选项设置为“yes”时，可防止从机在主服务器出现故障时尝试故障转移其主服务器。但是，主服务器仍然可以执行手动故障转移。<br>这在不同的场景中非常有用，特别是在多个数据中心操作的情况下，如果不是在整个DC故障的情况下，我们希望永远不会单独升级一端。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"> cluster-replica-no-failover no</code></pre>
+</li>
+</ul>
+<p><strong>8、cluster-allow-reads-when-down</strong></p>
+<ul>
+<li><p>默认：no</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：</p>
+<p>默认为no, 表示当集群因主节点数量达不到最小值或有散列槽没有分配而被标记为失效时, 节点将停止所有的客户端通讯(stop serving all traffic). 这样可以避免潜在从一个不知道集群状态变化的节点读到不一致数据的危险. 设为yes则允许集群失效时仍可以由节点中读取数据. 这样既保证读操作的高可用性, 亦避免不一致写操作(inconsistent writes). 同时, 当Redis Cluster 仅包含1至2个节点, 而某个节点失效后无可用从节点替代, 且因节点数量不足, 无法自动重新分配散列槽, 则该参数设为yes可保证节点仍然可执行读操作.</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-allow-reads-when-down no</code></pre>
+</li>
+</ul>
+<h3 id="Redis-CLUSTER-DOCKER-NAT-support"><a href="#Redis-CLUSTER-DOCKER-NAT-support" class="headerlink" title="Redis CLUSTER DOCKER/NAT support"></a>Redis CLUSTER DOCKER/NAT support</h3><p>在某些部署中，Redis集群节点地址发现失败，原因是地址是NAT的，或者是端口被转发（典型的情况是Docker和其他容器）。<br>为了使Redis集群在这样的环境中工作，需要一个静态配置，其中每个节点都知道自己的公共地址。以下两个选项用于此范围，分别是：<br>cluster-announce-ip    集群通知ip<br>cluster-announce-port    集群通知端口<br>cluster-announce-bus-port    集群通知总线端口<br>每个都指示节点关于其地址、客户机端口和集群消息总线端口。然后在总线包的报头中发布信息，以便其他节点能够正确地映射发布信息的节点的地址。<br>如果不使用上述选项，将使用正常的Redis集群自动检测。<br>请注意，当重新映射时，总线端口可能不在客户端端口+10000的固定偏移量处，因此您可以根据重新映射的方式指定任何端口和总线端口。如果没有设置总线端口，将像往常一样使用固定偏移量10000。<br>示例：</p>
+<pre class=" language-text"><code class="language-text">cluster-announce-ip 10.1.1.5
+cluster-announce-port 6379
+cluster-announce-bus-port 6380</code></pre>
+<h3 id="Redis-SLOW-LOG"><a href="#Redis-SLOW-LOG" class="headerlink" title="Redis SLOW LOG"></a>Redis SLOW LOG</h3><p>Redis Slow Log是一个记录超过指定执行时间的查询的系统。执行时间不包括与客户机对话、发送应答等I/O操作，而只是实际执行命令所需的时间（这是命令执行的唯一一个阶段，线程被阻塞，不能同时处理其他请求）</p>
+<p>您可以使用两个参数来配置慢日志：一个参数告诉Redis为了记录命令要超过的执行时间（以微秒为单位），另一个参数是慢日志的长度。记录新命令时，最旧的命令将从记录的命令队列中删除。</p>
+<p><strong>1、slowlog-log-slower-than</strong></p>
+<ul>
+<li><p>默认：10000</p>
+</li>
+<li><p>取值：微秒</p>
+</li>
+<li><p>说明：此参数时间以微秒表示，因此1000000相当于1秒。请注意，负数将禁用慢速日志，而值为零将强制记录每个命令。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"> slowlog-log-slower-than 10000</code></pre>
+</li>
+</ul>
+<p><strong>2、slowlog-max-len</strong></p>
+<ul>
+<li><p>默认：128</p>
+</li>
+<li><p>取值：一个正整数</p>
+</li>
+<li><p>说明：慢日志的长度，没有限制，但会消耗内存。可以通过命令<code>SLOWLOG RESET</code>回收慢日志占用的内存。</p>
+</li>
+<li><p>示例：</p>
+<pre><code>slowlog-max-len 128</code></pre>
+</li>
+</ul>
+<h3 id="Redis-LATENCY-MONITOR"><a href="#Redis-LATENCY-MONITOR" class="headerlink" title="Redis LATENCY MONITOR"></a>Redis LATENCY MONITOR</h3><p>Redis 2.8.13引入<strong>延迟监控（Latency Monitoring）</strong>的新特性，帮助用户检查和排除可能的延迟问题。</p>
+<p>Redis延迟监控子系统在运行时对不同的操作进行采样，以便收集与Redis实例的可能延迟源相关的数据。<br>通过LATENCY命令，用户可以打印图形并获取报告。<br>系统只记录在大于或等于通过延迟监视器阈值配置指令指定的毫秒数的时间内执行的操作。当其值设置为零时，将关闭延迟监视器。<br>默认情况下，延迟监视是禁用的，因为如果没有延迟问题，则通常不需要延迟监视，并且收集数据会对性能产生影响，虽然影响很小，但可以在大负载下进行测量。如果需要，可以使用命令<code>CONFIG SET Latency monitor threshold&lt;millises&gt;</code>在运行时轻松启用延迟监视。</p>
+<p><strong>1、latency-monitor-threshold</strong></p>
+<ul>
+<li><p>默认：0</p>
+</li>
+<li><p>取值：毫秒数</p>
+</li>
+<li><p>说明：延迟监控的阈值，只有超过延迟阈值的操作才会被延迟监控系统记录。其中特殊值0表示关闭延迟监控。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">latency-monitor-threshold 0</code></pre>
+</li>
+</ul>
+<h3 id="Redis-EVENT-NOTIFICATION"><a href="#Redis-EVENT-NOTIFICATION" class="headerlink" title="Redis EVENT NOTIFICATION"></a>Redis EVENT NOTIFICATION</h3><p>键空间通知功能自2.8.0版本开始可用。</p>
+<p>键空间通知允许客户端订阅发布/订阅频道，以便以某种方式接收影响Redis数据集的事件。</p>
+<p>可能接收的事件示例如下：</p>
+<ul>
+<li>所有影响给定键的命令。</li>
+<li>所有接收LPUSH操作的键。</li>
+<li>所有在数据库0中到期的键。</li>
+</ul>
+<p>事件使用Redis的普通发布/订阅层传递，因此实现了发布/订阅的客户端无需修改即可使用此功能。</p>
+<p>由于Redis的发布/订阅是<em>fire and forget</em>，因此如果你的应用要求<strong>可靠的事件通知</strong>，目前还不能使用这个功能，也就是说，如果你的发布/订阅客户端断开连接，并在稍后重连，那么所有在客户端断开期间发送的事件将会丢失。</p>
+<p>默认情况下，键空间事件通知是不启用的，因为虽然不太明智，但该功能会消耗一些CPU。可以使用redis.conf中的<code>notify-keyspace-events</code>或者使用<strong>CONFIG SET</strong>命令来开启通知。</p>
+<p>将参数设置为空字符串会禁用通知。 为了开启通知功能，使用了一个非空字符串，由多个字符组成，每一个字符都有其特殊的含义，具体参见下表：</p>
+<pre class=" language-text"><code class="language-text">K     键空间事件，以__keyspace@<db>__前缀发布。
+E     键事件事件，以__keyevent@<db>__前缀发布。
+g     通用命令（非类型特定），如DEL，EXPIRE，RENAME等等
+$     字符串命令
+l     列表命令
+s     集合命令
+h     哈希命令
+z     有序集合命令
+x     过期事件（每次键到期时生成的事件）
+e     被驱逐的事件（当一个键由于达到最大内存而被驱逐时产生的事件）
+A     g$lshzxe的别名，因此字符串AKE表示所有的事件。</code></pre>
+<p>字符串中应当至少存在<code>K</code>或者<code>E</code>，否则将不会传递事件，不管字符串中其余部分是什么。</p>
+<p>例如，要为列表开启键空间事件，则配置参数必须设置为<code>Kl</code>，以此类推。</p>
+<p>字符串<code>KEA</code>可以用于开启所有可能的事件。</p>
+<p>配置指令示例：</p>
+<pre class=" language-text"><code class="language-text">notify-keyspace-events ""</code></pre>
+<h3 id="Redis-GOPHER-SERVER"><a href="#Redis-GOPHER-SERVER" class="headerlink" title="Redis GOPHER SERVER"></a>Redis GOPHER SERVER</h3><p>Redis包含了RFC1436中指定的Gopher协议的实现.</p>
+<p>Gopher是Internet上一个非常有名的信息查找系统，它将Internet上文件组织成某种索引，很方便地将用户从Internet的一处带到另一处。允许用户使用层叠结构的菜单与文件，以发现和检索信息，它拥有世界上最大、最神奇的编目。</p>
+<p>Redis Gopher支持使用Redis的内联协议，特别是两种无论如何都是非法的内联请求：空请求或任何以“/”开头的请求（没有以这样的斜杠开头的Redis命令）。正常的RESP2/RESP3请求完全脱离了Gopher协议实现的路径，也照常提供服务。</p>
+<p>请注意，当启用“io-threads-do-reads”时，Gopher不可用。</p>
+<p>启用命令示例：</p>
+<pre class=" language-text"><code class="language-text"> gopher-enabled yes</code></pre>
+<h3 id="Redis-ADVANCED-CONFIG"><a href="#Redis-ADVANCED-CONFIG" class="headerlink" title="Redis ADVANCED CONFIG"></a>Redis ADVANCED CONFIG</h3><p>Redis高级配置部分。</p>
+<p><strong>1、hash-max-ziplist-entries &amp; hash-max-ziplist-value</strong></p>
+<ul>
+<li><p>默认与示例：</p>
+<pre><code>hash-max-ziplist-entries 512
+hash-max-ziplist-value 64</code></pre>
+</li>
+<li><p>取值：哈希表内字段数量与单个字段值的大小</p>
+</li>
+<li><p>说明：当散列有少量的条目，并且最大的条目不超过给定的阈值时，使用内存高效的数据结构对散列进行编码，以节约空间提高效率。以上示例中配置表示，当hash内元素数量不超过512个且单个元素的值不大于64个字节时，Redis以其特有的数据结构<code>ziplist</code>存储数据以加快查询速度。</p>
+</li>
+</ul>
+<p><strong>2、list-max-ziplist-size</strong></p>
+<ul>
+<li><p>默认：-2</p>
+</li>
+<li><p>取值：-5 | -4 | -3 | -2 | -1 | 正数</p>
+</li>
+<li><p>说明：列表也以一种特殊的方式编码以节省大量空间。每个内部列表节点允许的条目数可以指定为固定的最大大小或最大元素数。</p>
+<p>对于固定的最大大小，请使用-5到-1，意思是：</p>
+<ul>
+<li> -5: max size: 64 Kb  &lt;– 不建议用于正常工作负载</li>
+<li>-4: max size: 32 Kb  &lt;– 不建议的</li>
+<li>-3: max size: 16 Kb  &lt;– 不太建议</li>
+<li>-2: max size: 8 Kb   &lt;– 建议</li>
+<li>-1: max size: 4 Kb   &lt;– 建议</li>
+</ul>
+<p>正数表示每个列表节点最多可存储的元素数。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">list-max-ziplist-size -2</code></pre>
+</li>
+</ul>
+<p><strong>3、list-compress-depth</strong></p>
+<ul>
+<li><p>默认：0</p>
+</li>
+<li><p>取值：非负整数</p>
+</li>
+<li><p>说明：列表也可以压缩。<br>Compress depth是从列表的每侧排除压缩的节点数。列表的头和尾总是未压缩的，以便进行快速推/弹出操作。其中数字的代表意义为：</p>
+<ul>
+<li>0： 特殊值，禁用所有列表压缩</li>
+<li>1： depth 1表示头部和尾部一个元素不压缩，如：[head]-&gt;node-&gt;node-&gt;…-&gt;node-&gt;[tail]，其中 [head], [tail] 将不会被压缩，压缩所有之间的节点。</li>
+<li>2：depth2 表示头部和尾部的两个元素不压缩。如：[head]-&gt;[next]-&gt;node-&gt;node-&gt;…-&gt;node-&gt;[prev]-&gt;[tail]，这里的意思是：不要压缩head或head-&gt;next或tail-&gt;prev或tail，而是压缩它们之间的所有节点。</li>
+<li>3 …依次类推</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">list-compress-depth 0</code></pre>
+</li>
+</ul>
+<p><strong>4、set-max-intset-entries</strong></p>
+<ul>
+<li><p>默认：512</p>
+</li>
+<li><p>取值：正整数 元素个数</p>
+</li>
+<li><p>说明：集合只有一种特殊的编码方式：当一个集合由恰好是基数为10的64位有符号整数范围内的整数组成时。为了使用这种特殊的内存节省编码，此处的配置设置设置了集合大小的限制。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">set-max-intset-entries 512</code></pre>
+</li>
+</ul>
+<p><strong>5、zset-max-ziplist-entries  &amp; zset-max-ziplist-value</strong> </p>
+<ul>
+<li><p>默认及示例：</p>
+<pre class=" language-text"><code class="language-text">zset-max-ziplist-entries 128
+zset-max-ziplist-value 64</code></pre>
+</li>
+<li><p>取值：有序集合中元素个数以及单个元素最大大小</p>
+</li>
+<li><p>说明：与散列和列表类似，排序集也经过特殊编码以节省大量空间。此编码仅在排序集的长度和元素低于指定限制时使用。示例表示有续集元素数量小于128且单个元素小于64字节时，使用特殊编码以节约空间。</p>
+</li>
+</ul>
+<p><strong>6、hll-sparse-max-byte</strong></p>
+<ul>
+<li><p>默认： 3000</p>
+</li>
+<li><p>取值：0-16000</p>
+</li>
+<li><p>说明：HyperLogLog稀疏表示字节数限制。该限制包括16字节头。当使用稀疏表示的HyperLogLog超过此限制时，它将转换为密集表示。<br>大于16000的值是完全无用的，因为在这一点上，密集表示更高效。<br>建议值为<del>3000，以便在不减慢过多PFADD（稀疏编码为O（N））的情况下利用空间高效编码的优点。当CPU不是问题，但空间是问题，并且数据集由基数在0-15000范围内的许多HyperLogLog组成时，该值可以提高到</del>10000。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">hll-sparse-max-bytes 3000</code></pre>
+</li>
+</ul>
+<p><strong>7、stream-node-max-bytes  &amp; stream-node-max-entries</strong> </p>
+<ul>
+<li><p>默认及示例：</p>
+<pre class=" language-text"><code class="language-text">stream-node-max-bytes 4096
+stream-node-max-entries 100</code></pre>
+</li>
+<li><p>取值：前者为流节点大小，后者为最大元素数量</p>
+</li>
+<li><p>说明：Streams宏节点最大大小/项。流数据结构是一个由大节点组成的基数树，其中对多个项进行编码。使用此配置，可以配置单个节点的大小（以字节为单位），以及在附加新的流条目时切换到新节点之前可能包含的最大项数。如果将以下任何设置设置为零，则会忽略该限制，因此，例如，可以通过将max bytes设置为0，将max entries设置为所需的值来设置max entires限制。</p>
+</li>
+</ul>
+<p><strong>8、activerehashing</strong></p>
+<ul>
+<li><p> 默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否重置Hash表,设置成yes后redis将每100毫秒使用1毫秒CPU时间来对redis的hash表重新hash，可降低内存的使用,当使用场景有较为严格的实时性需求,不能接受Redis时不时的对请求有2毫秒的延迟的话，把这项配置为no,如果没有这么严格的实时性要求,可以设置为 yes,以便能够尽可能快的释放内存</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">activerehashing yes</code></pre>
+</li>
+</ul>
+<p><strong>9、client-output-buffer-limit</strong></p>
+<ul>
+<li><p>默认及示例：</p>
+<pre class=" language-text"><code class="language-text">client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60</code></pre>
+</li>
+<li><p>配置语法：<code>client-output-buffer-limit &lt;class&gt; &lt;hard limit&gt; &lt;soft limit&gt; &lt;soft seconds&gt;</code></p>
+</li>
+<li><p>说明：客户机输出缓冲区限制可用于强制断开由于某种原因从服务器读取数据速度不够快的客户机的连接（一个常见的原因是Pub/Sub客户机不能像发布服务器生成消息那样快地使用消息）。<br>对于三种不同类型的客户端，可以设置不同的限制，对应配置的第一个字段：</p>
+<ul>
+<li><p>normal -&gt;普通客户端，包括监视客户端</p>
+</li>
+<li><p>replica -&gt;从机客户端</p>
+</li>
+<li><p>pubsub-&gt;订阅了至少一个pubsub频道或模式的客户端</p>
+</li>
+</ul>
+<p>后面的三个参数的含义时，硬限制，软限制以及软限制的持续时间。具体含义为：一旦达到硬限制，或者如果达到软限制并保持达到指定秒数（连续），对应客户端将立即断开连接。例如：<code>client-output-buffer-limit normal 32mb 16mb 60</code>的含义为，如果输出缓冲区的大小达到32mb，normal类型的客户端，会断开连接；或者输出缓冲区的大小达到16mb，而且持续时间超过60秒，则断开连接。</p>
+<p>默认情况下，普通客户机不受限制，因为它们不会在没有请求（以推送方式）的情况下接收数据，而是在请求之后接收数据，因此只有异步客户机可能会创建这样一种场景，即请求数据的速度比读取数据的速度快。<br>相反，pubsub和从机客户端有一个默认限制，因为订阅者和副本以推送方式接收数据。<br>硬限制或软限制都可以通过将其设置为零来禁用。</p>
+</li>
+</ul>
+<p><strong>10、client-query-buffer-limit</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：缓存大小</p>
+</li>
+<li><p>说明：客户端查询缓冲区累积新指令。默认情况下，它们被限制为固定数量，以避免协议去同步（例如，由于客户端中的错误）将查询缓冲区中未绑定的内存使用。但是，如果您有非常特殊的需求，比如我们的multi/exec请求或类似请求，您可以在这里配置它。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">client-query-buffer-limit 1gb</code></pre>
+</li>
+</ul>
+<p><strong>11、proto-max-bulk-len</strong></p>
+<ul>
+<li><p>默认：512mb</p>
+</li>
+<li><p>取值：请求大小</p>
+</li>
+<li><p>说明：在Redis协议中，批量请求（即表示单个字符串的元素）通常限制为512MB。不过，您可以在此处更改此限制，但必须为1mb或更大。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">proto-max-bulk-len 512mb</code></pre>
+</li>
+</ul>
+<p><strong>12、hz</strong></p>
+<ul>
+<li><p>默认：10</p>
+</li>
+<li><p>取值：1-500</p>
+</li>
+<li><p>说明：Redis执行内部任务的频率，值越大，单位时间执行的次数越多。Redis调用一个内部函数来执行许多后台任务，比如在超时时关闭客户端的连接，清除从未请求的过期密钥，等等。并非所有任务都以相同的频率执行，但是Redis会根据指定的“hz”值检查要执行的任务。<br>默认情况下，“hz”设置为10。当Redis空闲时，提高该值将使用更多的CPU，但同时当有许多键同时过期时，将使Redis更具响应性，并且可以更精确地处理超时。<br>范围在1到500之间，但是值超过100通常不是一个好主意。大多数用户应该使用默认值10，并且仅在需要非常低延迟的环境中才将其提高到100。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">hz 10</code></pre>
+</li>
+</ul>
+<p><strong>13、dynamic-hz</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：通常，HZ值与连接的客户机数量成比例是有用的。例如，为了避免每次后台任务调用都要处理太多的客户机以避免延迟峰值，这一点非常有用。由于默认HZ值被保守地设置为10，Redis提供并启用了使用自适应HZ值的功能，当有许多连接的客户端时，该功能将临时提高。启用动态HZ时，实际配置的HZ将用作基线，但一旦连接更多客户端，实际将根据需要使用配置的HZ值的倍数。这样，空闲的实例将使用很少的CPU时间，而繁忙的实例将更具响应性。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">dynamic-hz yes</code></pre>
+</li>
+</ul>
+<p><strong>14、aof-rewrite-incremental-fsync</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：当子进程进行重写AOF文件时，如果启用此选项，则该文件将每生成32mb的数据进行一次文件同步。这对于以渐进的方式将文件提交到磁盘和避免较大的延迟峰值非常有用。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">aof-rewrite-incremental-fsync yes</code></pre>
+</li>
+</ul>
+<p><strong>15、rdb-save-incremental-fsync</strong></p>
+<ul>
+<li><p> 默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：当redis保存RDB文件时，如果启用了此选项，则文件将每生成32mb的数据进行一次文件同步。这对于以渐进的方式将文件提交到磁盘和避免较大的延迟峰值非常有用。</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">rdb-save-incremental-fsync yes</code></pre>
+</li>
+</ul>
+<p><strong>16、 lfu-log-factor &amp; lfu-decay-time</strong></p>
+<ul>
+<li><p>默认及示例：</p>
+<pre class=" language-text"><code class="language-text">lfu-log-factor 10
+lfu-decay-time 1</code></pre>
+</li>
+<li><p>取值：都为一个整数，其中后者单位为分钟</p>
+</li>
+<li><p>说明：</p>
+<p>Redis LFU清理算法（参见maxmemory设置）可以进行调优。但是，最好以默认设置开始，在研究如何提高性能以及键的LFU算法如何随时间变化后才建议进行更改，这可以通过OBJECT FREQ命令进行检查。<br>Redis LFU实现中有两个可调参数：计数器对数因子(<code>lfu-log-factor</code>)和计数器衰减时间(<code>lfu-decay-time</code>)。在改变这两个参数之前，了解这两个参数的含义是很重要的。<br>LFU计数器每个键只有8位，它的最大值是255，所以Redis使用了基于概率的对数计数器。给定旧计数器的值，当访问键时，计数器按以下方式递增：</p>
+<ul>
+<li><p>提取0到1之间的随机数R。</p>
+</li>
+<li><p>概率P的计算公式为1/(old_value*<code>lfu_log_factor</code>+1)。</p>
+</li>
+<li><p>只有当R&lt;P时，计数器才递增。</p>
+</li>
+</ul>
+<p>默认<code>lfu log factor</code>为10，值越大，频率增长越慢。这是一个频率计数器如何随不同对数因子的不同访问次数而变化的表：</p>
+<table>
+<thead>
+<tr>
+<th>factor</th>
+<th>100 hits</th>
+<th>1000 hits</th>
+<th>100k hits</th>
+<th>1M hits</th>
+<th>10M hits</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>104</td>
+<td>255</td>
+<td>255</td>
+<td>255</td>
+<td>255</td>
+</tr>
+<tr>
+<td>1</td>
+<td>18</td>
+<td>49</td>
+<td>255</td>
+<td>255</td>
+<td>255</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>18</td>
+<td>142</td>
+<td>255</td>
+<td>255</td>
+</tr>
+<tr>
+<td>100</td>
+<td>8</td>
+<td>11</td>
+<td>49</td>
+<td>143</td>
+<td>255</td>
+</tr>
+</tbody></table>
+<p>注：上表是通过运行以下命令获得的：</p>
+<pre class=" language-text"><code class="language-text">redis-benchmark -n 1000000 incr foo
+redis-cli object freq foo</code></pre>
+<p>注2：计数器初始值为5，以便给新对象一个累积命中的机会。</p>
+<p>计数器衰减时间是键计数器除以2所必须经过的时间，单位为分钟（如果值小于等于10，则递减）衰减时间用于配置热点键访问频率衰减的速度，值越大，衰减越慢，热点数据保存的时间越长。<br><code>lfu-decay-time</code>的默认值为1。一个特殊的值0意味着每次扫描计数器时它都会衰减。</p>
+</li>
+</ul>
+<h3 id="Redis-ACTIVE-DEFRAGMENTATION"><a href="#Redis-ACTIVE-DEFRAGMENTATION" class="headerlink" title="Redis ACTIVE DEFRAGMENTATION"></a>Redis ACTIVE DEFRAGMENTATION</h3><p>什么是活动碎片整理？</p>
+<p>活动（在线）碎片整理允许Redis服务器压缩内存中数据碎片和释放之间的空间，从而允许回收内存。<br>碎片化是每个分配器（但幸运的是，Jemalloc的情况较好）和某些工作负载都会发生的自然过程。通常需要重新启动服务器以降低碎片，或者至少清除所有数据并重新创建。不过，由于Oran Agra for Redis4.0实现了这个特性，这个过程可以在服务器运行时以“热”的方式在运行时发生。</p>
+<p>基本上，当碎片超过某个级别（见下面的配置选项）时，Redis将开始利用某些特定的Jemalloc特性在连续内存区域中创建值的新副本（以便了解分配是否导致碎片并将其分配到更好的位置），同时，将释放数据的旧拷贝。这个过程，对所有键进行增量重复，将使得碎片降回正常值。</p>
+<p>需要了解的重要事项：</p>
+<ul>
+<li>此功能在默认情况下是禁用的，并且仅当您编译Redis以使用我们随Redis源代码提供的Jemalloc副本时才起作用。这是Linux版本的默认设置。</li>
+<li>如果没有碎片问题，就不需要启用此功能。</li>
+<li>一旦遇到碎片，可以在需要时使用命令“CONFIG SET activedefrag yes”启用此功能。</li>
+</ul>
+<p>配置参数能够微调碎片整理过程的行为。如果您不确定它们的含义，那么最好保持默认值不变。</p>
+<p><strong>1、activedefrag</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：是否开启碎片整理</p>
+</li>
+<li><p>示例：</p>
+<pre><code>activedefrag no</code></pre>
+</li>
+</ul>
+<p><strong>2、 active-defrag-ignore-bytes</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：碎片浪费的内存大小</p>
+</li>
+<li><p>说明：启动活动碎片整理的最小碎片大小</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text"> active-defrag-ignore-bytes 100mb</code></pre>
+</li>
+</ul>
+<p><strong>3、active-defrag-threshold-lower</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：一个整数表示百分比</p>
+</li>
+<li><p>说明：启动活动碎片整理的最小碎片百分比</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">active-defrag-threshold-lower</code></pre>
+</li>
+</ul>
+<p><strong>4、active-defrag-threshold-upper</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：一个整数表示百分比</p>
+</li>
+<li><p>说明：内存碎片超过 100%，则尽最大努力整理</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">active-defrag-threshold-upper 100</code></pre>
+</li>
+</ul>
+<p><strong>5、active-defrag-cycle-min</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：百分比</p>
+</li>
+<li><p>说明：占用的CPU资源百分比，在达到较低阈值时使用</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">active-defrag-cycle-min 1</code></pre>
+</li>
+</ul>
+<p><strong>6、active-defrag-cycle-max</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：百分比</p>
+</li>
+<li><p>说明：占用的CPU资源百分比，在达到最高阈值时使用</p>
+</li>
+<li><p>示例：</p>
+<pre><code>active-defrag-cycle-max 25</code></pre>
+</li>
+</ul>
+<p><strong>7、active-defrag-max-scan-fields</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>取值：一个正整数</p>
+</li>
+<li><p>说明：碎片整理 扫描set/hash/zset/list时，仅当 set/hash/zset/list 的长度小于此阀值时，才会将此key加入碎片整理</p>
+</li>
+<li><p>示例</p>
+<pre class=" language-text"><code class="language-text">active-defrag-max-scan-fields 1000</code></pre>
+</li>
+</ul>
+<p><strong>8、jemalloc-bg-thread</strong></p>
+<ul>
+<li><p>默认：yes</p>
+</li>
+<li><p>取值：yes | no</p>
+</li>
+<li><p>说明：默认情况下，将启用用于清除的Jemalloc后台线程</p>
+</li>
+<li><p>示例：</p>
+<pre class=" language-text"><code class="language-text">jemalloc-bg-thread yestexy</code></pre>
+</li>
+</ul>
+<p><strong>9、固定redis线程或进程所用的CPU核心</strong></p>
+<ul>
+<li><p>默认：未配置</p>
+</li>
+<li><p>说明：可以将Redis的不同线程和进程固定到系统中的特定cpu上，以最大限度地提高服务器的性能。将不同的Redis线程固定在不同的cpu中非常有用，同时也可以确保在同一主机上运行的多个Redis实例将被固定到不同的cpu上。</p>
+<p>通常，您可以使用“taskset”命令来执行此操作，但是也可以通过Redis配置直接执行此操作，无论是在Linux还是FreeBSD中。<br>您可以固定服务器/IO线程、bio线程、aof重写子进程和bgsave子进程。指定cpu列表的语法与taskset命令相同：</p>
+<p>将redis服务器/io线程与cpu核心0,2,4,6 绑定：</p>
+<pre class=" language-text"><code class="language-text">server_cpulist 0-7:2</code></pre>
+<p>将bio线程与cpu核心1,3 绑定：</p>
+<pre class=" language-text"><code class="language-text">bio_cpulist 1,3</code></pre>
+<p>将aof rewrite子进程与cpu核心8、9、10、11 绑定：</p>
+<pre class=" language-text"><code class="language-text">aof_rewrite_cpulist 8-11</code></pre>
+<p>将bgsave子进程与cpu 核心 1,10,11 绑定：</p>
+<pre class=" language-text"><code class="language-text">bgsave_cpulist 1,10-11</code></pre>
+</li>
+</ul>
 <h2 id="官方完整配置"><a href="#官方完整配置" class="headerlink" title="官方完整配置"></a>官方完整配置</h2><p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/redis/redis/6.0/redis.conf">=========================传送门=========================</a> </p>
 
             </div>
@@ -1120,12 +1936,12 @@ user default on nopass ~* &* +@all</code></pre>
                                     <span class="chip bg-color">REDIS</span>
                                 </a>
                             
-                                <a href="/tags/NOSQL/">
-                                    <span class="chip bg-color">NOSQL</span>
-                                </a>
-                            
                                 <a href="/tags/CONFIG/">
                                     <span class="chip bg-color">CONFIG</span>
+                                </a>
+                            
+                                <a href="/tags/NOSQL/">
+                                    <span class="chip bg-color">NOSQL</span>
                                 </a>
                             
                         </div>
@@ -1339,12 +2155,12 @@ user default on nopass ~* &* +@all</code></pre>
                         <span class="chip bg-color">REDIS</span>
                     </a>
                     
-                    <a href="/tags/NOSQL/">
-                        <span class="chip bg-color">NOSQL</span>
-                    </a>
-                    
                     <a href="/tags/CONFIG/">
                         <span class="chip bg-color">CONFIG</span>
+                    </a>
+                    
+                    <a href="/tags/NOSQL/">
+                        <span class="chip bg-color">NOSQL</span>
                     </a>
                     
                 </div>
