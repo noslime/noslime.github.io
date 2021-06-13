@@ -184,7 +184,7 @@ DROP INDEX index_name on table_name;
 
 ​	而在MySQL数据库中一页一般为16kb，MySQL基于页的形式进行索引的管理，结构大致如下图所示，这种数据结构叫做**B+Tree**，B+Tree只有叶子存储实际数据信息，其他节点只存储键值信息，大大降低了树的高度，从而减少了磁盘IO的次数。
 
-![](C:\Document\hexo\blog\source\images\mysql_index01.png)
+![](https://cdn.jsdelivr.net/gh/noslime/noslime.github.io@master/source/images/mysql_index01.png)
 
 ​																				图 一
 
